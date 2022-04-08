@@ -1,2 +1,2 @@
-public class Ore {
+public class Ore extends ResourceCard{
 }

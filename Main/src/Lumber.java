@@ -1,2 +1,2 @@
-public class Lumber {
+public class Lumber extends ResourceCard{
 }

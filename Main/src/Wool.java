@@ -1,2 +1,2 @@
-public class Wool {
+public class Wool extends ResourceCard{
 }

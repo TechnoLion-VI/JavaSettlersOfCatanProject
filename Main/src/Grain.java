@@ -1,2 +1,2 @@
-public class Grain {
+public class Grain extends ResourceCard{
 }
