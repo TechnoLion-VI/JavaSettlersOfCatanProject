@@ -8,5 +8,10 @@ public class ResourceCard {
     }
 
     public String getType() {
-        return type; }
+        return type;
+    }
+
+    public BufferedImage getImg() {
+        return img;
+    }
 }
