@@ -22,8 +22,7 @@ public class Board {
 
     public void buildRoad(Player p, Edge e){
         if(e.canPlace(p)) {
-            int r = p.getRoadsLeft();
-            r--;
+            p.decrementRoadsLeft();
             ArrayList<ResourceCard> rc = p.getResourceCards();
         }
     }

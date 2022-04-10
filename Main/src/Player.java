@@ -89,4 +89,7 @@ public class Player {
     public void addToPlayedKnightCards() {
         playedKnightCards++;
     }
+    public void decrementRoadsLeft() {roadsLeft--;}
+    public void decrementStlmtsLeft() {stlmtsLeft--;}
+    public void decrementCitiesLeft() {citiesLeft--;}
 }
