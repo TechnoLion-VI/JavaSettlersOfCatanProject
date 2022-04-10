@@ -11,8 +11,12 @@ public class Tile {
     private int[] location = new int[2];
     private ArrayList<Player> players;
 
-    public Tile(){
-
+    public Tile(int n, boolean isDesert, ResourceCard type, BufferedImage b){
+        assignedNum=n;
+        canGive=isDesert;
+        resource=type;
+        img=b;
+        //figure out how to add the intersections, edges, and location
     }
 
     public void giveResource(){
