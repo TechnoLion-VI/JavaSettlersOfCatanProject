@@ -1,6 +1,9 @@
 public class ResourceCard {
     private String type;
-    private int numLeft;
+
+    public ResourceCard(String type) {
+        this.type = type;
+    }
 
     public String getType() { return type; }
 }

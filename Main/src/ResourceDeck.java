@@ -25,14 +25,19 @@ public class ResourceDeck {
         return false; //to be coded
     }
 
+    //get number of cards left in the deck of a specified type
     public int getNumLeft(String type) {
-        switch (type) {
-            case "Brick" -> return brickDeck.size();
-            case "Grain" -> return grainDeck.size();
-            case "Lumber" -> return lumberDeck.size();
-            case "Ore" -> return oreDeck.size();
-            case "Wool" -> return woolDeck.size();
-        }
-        return -1;
+        return switch (type) {
+            case "Brick" -> brickDeck.size();
+            case "Grain" -> grainDeck.size();
+            case "Lumber" -> lumberDeck.size();
+            case "Ore" -> oreDeck.size();
+            case "Wool" -> woolDeck.size();
+            default -> -1;
+        };
+    }
+    //same as above, just with the specified type being a ResourceCard instead of a String
+    public int getNumLeft(ResourceCard rc) {
+        return getNumLeft(rc.getType());
     }
 }
