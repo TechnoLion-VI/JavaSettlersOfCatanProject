@@ -5,5 +5,6 @@ public class ResourceCard {
         this.type = type;
     }
 
-    public String getType() { return type; }
+    public String getType() {
+        return type; }
 }
