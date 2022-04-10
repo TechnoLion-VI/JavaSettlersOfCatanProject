@@ -91,5 +91,5 @@ public class Player {
     }
     public void decrementRoadsLeft() {roadsLeft--;}
     public void decrementStlmtsLeft() {stlmtsLeft--;}
-    public void decrementCitiesLeft() {citiesLeft--;}
+    public void decrementCitiesLeft() {citiesLeft--;stlmtsLeft++;}
 }

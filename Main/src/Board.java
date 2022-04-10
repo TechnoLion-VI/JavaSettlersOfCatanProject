@@ -23,16 +23,20 @@ public class Board {
     public void buildRoad(Player p, Edge e){
         if(e.canPlace(p)) {
             p.decrementRoadsLeft();
-            ArrayList<ResourceCard> rc = p.getResourceCards();
+            e.setOwner(p);
         }
     }
 
     public void buildSettlement(Player p, Intersection i){
-
+        if (i.canPlace()) {
+            p.decrementStlmtsLeft();
+            i.setOwner(p);
+            i.setStlmt(true);
+        }
     }
 
     public void buildCity(Intersection i){
-
+        i.setCity();
     }
 
 

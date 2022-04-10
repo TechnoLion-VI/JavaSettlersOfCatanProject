@@ -52,4 +52,15 @@ public class Intersection {
         stlmt=p.getStlmtImage();
         city=p.getCityImage();
     }
+
+    public void setStlmt(boolean s) {
+        isStlmt = s;
+    }
+
+    public boolean setCity() {
+        if (owner == null) return false;
+        isCity = true;
+        setStlmt(false);
+        return true;
+    }
 }
