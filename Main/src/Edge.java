@@ -33,6 +33,10 @@ public class Edge {
     public int[][] getLocation() {
         return new int[][]{point1, point2};
     }
+    public void setLocation(int[] p1, int[] p2) {
+        point1 = p1;
+        point2 = p2;
+    }
 
     public Player getOwner() {
         return owner;
