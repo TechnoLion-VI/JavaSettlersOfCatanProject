@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -8,12 +9,15 @@ public class Player {
     private ArrayList<ResourceCard> resourceCards=new ArrayList<>();
     private ArrayList<DevelopmentCard> devCards=new ArrayList<>();
     private boolean hasLargestArmy, hasLongestRoad, hasPlayedDevCard;
+    private BufferedImage stlmt, city;
 
-    public Player(Color c) {
+    public Player(Color c, BufferedImage s, BufferedImage c) {
         myColor=c;
         stlmtsLeft=5;
         citiesLeft=4;
         roadsLeft=15;
+        stlmt=s;
+        city=c;
     }
 
     //accessor methods
@@ -21,6 +25,13 @@ public class Player {
         return myColor;
     }
     public int getPublicScore() {
+        publicScore=numStlmtsBuilt;
+        if (hasLargestArmy) {
+            publicScore+=2;
+        }
+        if (hasLongestRoad) {
+            publicScore+=2;
+        }
         return publicScore;
     }
     public int getSecretScore() {
@@ -55,14 +66,25 @@ public class Player {
         return hasLongestRoad;
     }
     public boolean canPlayDevCard() { return hasPlayedDevCard; }
+    public BufferedImage getStlmtImage() {
+        return stlmt;
+    }
+    public BufferedImage getCityImage() {
+        return city;
+    }
 
     //modifier methods
     public void addToVictoryCards() { //maybe this should take a devcard as a parameter
         victoryCards++;
     }
-    public void addToStlmts() {
+    public void buildStlmt() {
         numStlmtsBuilt++;
-        publicScore++;
+        stlmtsLeft--;
+    }
+    public void buildCity() {
+        numStlmtsBuilt++;
+        stlmtsLeft++;
+        citiesLeft--;
     }
     public void addToPlayedKnightCards() {
         playedKnightCards++;
