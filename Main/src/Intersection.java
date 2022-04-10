@@ -47,5 +47,9 @@ public class Intersection {
         }
         return true;
     }
-    public
+    public void setOwner(Player p) {
+        owner=p;
+        stlmt=p.getStlmtImage();
+        city=p.getCityImage();
+    }
 }
