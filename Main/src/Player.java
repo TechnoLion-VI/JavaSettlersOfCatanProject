@@ -12,12 +12,12 @@ public class Player {
     private BufferedImage stlmt, city;
 
     public Player(Color color, BufferedImage s, BufferedImage c) {
-        myColor=color;
-        stlmtsLeft=5;
-        citiesLeft=4;
-        roadsLeft=15;
-        stlmt=s;
-        city=c;
+        myColor=color; //player color
+        stlmtsLeft=5; //remaining settlements that this player can build
+        citiesLeft=4; //remaining cities that this player can build
+        roadsLeft=15; //remaining roads that this player can build
+        stlmt=s; //settlement image
+        city=c; //city image
     }
 
     //accessor methods

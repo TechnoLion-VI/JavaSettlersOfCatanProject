@@ -6,4 +6,7 @@ public class DevelopmentCard {
     public String getType() {
         return type;
     }
+    public boolean use(Player p) {
+        return false;
+    }
 }
