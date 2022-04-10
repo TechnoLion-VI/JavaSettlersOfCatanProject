@@ -8,8 +8,7 @@ public class Edge {
     public Edge(int x1, int y1, int x2, int y2, Intersection i1, Intersection i2) {
         owner = null;
         setIntersections(i1, i2);
-        point1 = new int[]{x1, y1};
-        point2 = new int[]{x2, y2};
+        setLocation(x1, y1, x2, y2);
     }
     //determines if the player can place a road on this edge
     public boolean canPlace(Player p) {
