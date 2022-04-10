@@ -20,9 +20,9 @@ public class ResourceDeck {
             woolDeck.add(new Wool());
         }
     }
-
-    public boolean give(int num, ResourceCard rc, Player p) {
-        return false; //to be coded
+    //adds ResourceCard to Player's hand
+    public boolean give(String type, int num, Player p) {
+        return false; // to be coded
     }
 
     //get number of cards left in the deck of a specified type
