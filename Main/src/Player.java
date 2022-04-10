@@ -11,8 +11,8 @@ public class Player {
     private boolean hasLargestArmy, hasLongestRoad, hasPlayedDevCard;
     private BufferedImage stlmt, city;
 
-    public Player(Color c, BufferedImage s, BufferedImage c) {
-        myColor=c;
+    public Player(Color color, BufferedImage s, BufferedImage c) {
+        myColor=color;
         stlmtsLeft=5;
         citiesLeft=4;
         roadsLeft=15;
