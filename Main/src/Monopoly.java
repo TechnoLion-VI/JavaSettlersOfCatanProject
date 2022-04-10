@@ -1,8 +1,7 @@
 public class Monopoly extends DevelopmentCard{
-    private String type;
-    public Monopoly(String t){
+    private String type = "monopoly";
+    public Monopoly(){
         super();
-        type = t;
     }
     public boolean monopoly(Player p){
         boolean canPlay = isLegal(p);
