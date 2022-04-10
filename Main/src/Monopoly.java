@@ -11,8 +11,6 @@ public class Monopoly extends DevelopmentCard{
             if(player1.resourceCards)
             return true;
         }
-        else{
-            return false;
-        }
+        return false;
     }
 }
