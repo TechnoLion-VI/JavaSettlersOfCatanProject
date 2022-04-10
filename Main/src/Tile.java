@@ -47,4 +47,8 @@ public class Tile {
         return location;
     }
 
+    public int getAssignedNum(){
+        return assignedNum;
+    }
+
 }
