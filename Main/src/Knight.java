@@ -4,6 +4,12 @@ public class Knight extends DevelopmentCard{
         super();
     }
     public boolean knightCard(Player p){
-        return true; //not official
+        boolean canPlay = isLegal(p);
+        if(canPlay == true){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
