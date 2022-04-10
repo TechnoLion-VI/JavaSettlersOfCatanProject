@@ -4,8 +4,11 @@ public class Monopoly extends DevelopmentCard{
         super();
     }
     public boolean monopoly(Player p){
-        boolean canPlay = isLegal(p);
+        boolean canPlay = p.isLegal;
         if(canPlay == true){
+            //allow the player to choose which type of resource card they want and put it in resourceCard typeWanted
+            resourceCard typeWanted;
+            if(player1.resourceCards)
             return true;
         }
         else{
