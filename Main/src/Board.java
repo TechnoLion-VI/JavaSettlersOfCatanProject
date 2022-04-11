@@ -20,19 +20,23 @@ public class Board {
         }
     }
 
-    public void buildRoad(Player p, Edge e){
+    public boolean buildRoad(Player p, Edge e){
         if(e.canPlace(p)) {
             p.decrementRoadsLeft();
             e.setOwner(p);
+            return true;
         }
+        return false;
     }
 
-    public void buildSettlement(Player p, Intersection i){
+    public boolean buildSettlement(Player p, Intersection i){
         if (i.canPlace()) {
             p.decrementStlmtsLeft();
             i.setOwner(p);
             i.setStlmt(true);
+            return true;
         }
+        return false;
     }
 
     public boolean buildCity(Intersection i){
