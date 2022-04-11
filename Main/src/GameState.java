@@ -14,27 +14,15 @@ public class GameState {
 
     }
 
-    public void domesticTrade(Player p1, Player p2, ArrayList offer1, ArrayList offer2){
+    public Intersection getIntersection(int x, int y){
 
     }
 
-    public void maritimeTrade(ArrayList offer, ResourceCard need){
+    public Edge getEdge(int x, int y){
 
     }
 
-    public void harborTrade(Edge e, ResourceCard need){
-
-    }
-
-    public void getIntersection(int x, int y){
-
-    }
-
-    public void getEdge(int x, int y){
-
-    }
-
-    public void getTile(int x, int y){
+    public Tile getTile(int x, int y){
 
     }
 
