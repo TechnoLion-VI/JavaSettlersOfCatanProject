@@ -35,8 +35,8 @@ public class Board {
         }
     }
 
-    public void buildCity(Intersection i){
-        i.setCity();
+    public boolean buildCity(Intersection i){
+        return i.setCity();
     }
 
 

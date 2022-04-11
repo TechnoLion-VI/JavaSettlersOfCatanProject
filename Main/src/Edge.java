@@ -28,9 +28,12 @@ public class Edge {
         }
         return false;
     }
-    //getter and setter for location
-    public int[][] getLocation() {
+    //getter and setter for endpoints and location
+    public int[][] getEndpoints() {
         return new int[][]{point1, point2};
+    }
+    public int[] getLocation() {
+        return new int[]{(point1[0] + point2[0]) / 2, (point1[1] + point2[1]) / 2};
     }
     public void setPoint1(int[] p) {
         point1 = p;
