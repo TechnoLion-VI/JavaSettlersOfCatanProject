@@ -14,5 +14,39 @@ public class GameState {
 
     }
 
-    public
+    public void domesticTrade(Player p1, Player p2, ArrayList offer1, ArrayList offer2){
+
+    }
+
+    public void maritimeTrade(ArrayList offer, ResourceCard need){
+
+    }
+
+    public void harborTrade(Edge e, ResourceCard need){
+
+    }
+
+    public void getIntersection(int x, int y){
+
+    }
+
+    public void getEdge(int x, int y){
+
+    }
+
+    public void getTile(int x, int y){
+
+    }
+
+    public void rollDice(){
+
+    }
+
+    public int getDiceNum(){
+
+    }
+
+    public void moveRobber(){
+
+    }
 }
