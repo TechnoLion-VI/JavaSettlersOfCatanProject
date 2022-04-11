@@ -16,7 +16,7 @@ public class Tile {
         canGive=isDesert;
         resource=type;
         img=b;
-        //figure out how to add the intersections, edges, and location
+        //figure out how to add the intersections, edges, location, and player arraylist
     }
 
     public void giveResource(){
