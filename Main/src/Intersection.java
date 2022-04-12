@@ -53,14 +53,14 @@ public class Intersection {
         city=p.getCityImage();
     }
 
-    public void setStlmt(boolean s) {
+    public void setIsStlmt(boolean s) {
         isStlmt = s;
     }
 
-    public boolean setCity() {
+    public boolean setIsCity() {
         if (owner == null) return false;
         isCity = true;
-        setStlmt(false);
+        setIsStlmt(false);
         return true;
     }
 }
