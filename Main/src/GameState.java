@@ -14,24 +14,26 @@ public class GameState {
 
     }
 
-    public Intersection getIntersection(int x, int y){
+    public void getIntersection(int x, int y){
 
     }
 
-    public Edge getEdge(int x, int y){
+    public void getEdge(int x, int y){
 
     }
 
-    public Tile getTile(int x, int y){
+    public void getTile(int x, int y){
 
     }
 
     public void rollDice(){
-
+        int dice1=(int)(Math.random()*6)+1; //these two lines aren't necessary unless we want to show the dice
+        int dice2=(int)(Math.random()*6)+1;
+        diceNum=dice1+dice2;
     }
 
     public int getDiceNum(){
-
+        return diceNum;
     }
 
     public void moveRobber(){
