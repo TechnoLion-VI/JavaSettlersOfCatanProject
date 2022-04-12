@@ -90,6 +90,6 @@ public class Player {
         playedKnightCards++;
     }
     public void decrementRoadsLeft() {roadsLeft--;}
-    public void decrementStlmtsLeft() {stlmtsLeft--;}
+    public void decrementStlmtsLeft() {stlmtsLeft--;}   // these methods are unnecessary; check buildStlmt and buildCity ^
     public void decrementCitiesLeft() {citiesLeft--;stlmtsLeft++;}
 }
