@@ -33,14 +33,14 @@ public class Board {
         if (i.canPlace()) {
             p.decrementStlmtsLeft();
             i.setOwner(p);
-            i.setStlmt(true);
+            i.setIsStlmt(true);
             return true;
         }
         return false;
     }
 
     public boolean buildCity(Intersection i){
-        return i.setCity();
+        return i.setIsCity();
     }
 
 
