@@ -21,7 +21,10 @@ public class ResourceDeck {
         }
     }
     //adds ResourceCard to Player's hand
-    public boolean give(String type, int num, Player p) {
+    public boolean remove(ResourceCard type, int num) {
+        if (getNumLeft(type)<num)
+            return false;
+
         return false; // to be coded
     }
 

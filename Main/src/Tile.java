@@ -18,7 +18,20 @@ public class Tile {
         img=b;
         //figure out how to add the intersections, edges, location, and player arraylist
     }
-
+    public int resourcesNeeded() {
+        int count=0;
+        for(int i = 0; i < players.size(); i++){
+            Player p = players.get(i);
+            for(int n = 0; n < intersections.length; n++) {
+                if (intersections[n].getOwner() == p && intersections[n].isStlmt() == true) {
+                    count++;
+                }
+                else if(intersections[n].getOwner() == p && intersections[n].isCity() == true) {
+                    count+=2;
+                }
+            }
+        }
+    }
     public void giveResource(){
         for(int i = 0; i < players.size(); i++){
             Player p = players.get(i);
@@ -46,9 +59,17 @@ public class Tile {
     public int[] getLocation(){
         return location;
     }
-
     public int getAssignedNum(){
         return assignedNum;
+    }]
+    public boolean canGive() {
+        return canGive;
+    }
+    public ResourceCard getResource() {
+        return resource;
+    }
+    public BufferedImage getImg() {
+        return img;
     }
 
 }

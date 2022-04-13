@@ -90,4 +90,7 @@ public class Player {
         playedKnightCards++;
     }
     public void decrementRoadsLeft() {roadsLeft--;}
+    public void setResourceCards(ArrayList<ResourceCard> newCards) {
+        resourceCards=newCards;
+    }
 }
