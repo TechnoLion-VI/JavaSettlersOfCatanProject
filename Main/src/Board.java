@@ -6,6 +6,7 @@ public class Board {
     private Edge[] edges;
     private Tile[] tiles;
 
+    //INITIALIZE THE FULL BOARD
     public Board() {
         intersections = new Intersection[54];
         edges = new Edge[72];
