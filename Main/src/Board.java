@@ -32,7 +32,6 @@ public class Board {
 
     public boolean buildSettlement(Player p, Intersection i){
         if (i.canPlace()) {
-            p.buildStlmt();
             i.setOwner(p);
             i.setIsStlmt(true);
             return true;
