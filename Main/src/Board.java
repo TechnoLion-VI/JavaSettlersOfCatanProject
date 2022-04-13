@@ -32,9 +32,8 @@ public class Board {
 
     public boolean buildSettlement(Player p, Intersection i){
         if (i.canPlace()) {
-            p.buildStlmt();
             i.setOwner(p);
-            i.setIsStlmt(true);
+            i.setIsStlmt(true); //check Intersection class
             return true;
         }
         return false;
@@ -42,7 +41,7 @@ public class Board {
 
     public boolean buildCity(Intersection i){
         return i.setIsCity();
-    }
+    } //check Intersection class
 
 
 

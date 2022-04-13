@@ -55,11 +55,13 @@ public class Intersection {
 
     public void setIsStlmt(boolean s) {
         isStlmt = s;
+        owner.buildStlmt();
     }
 
     public boolean setIsCity() {
         if (owner == null) return false;
         isCity = true;
+        owner.buildCity();
         setIsStlmt(false);
         return true;
     }
