@@ -32,20 +32,46 @@ public class TradeManager {
         return true;
     }
 
-    public boolean maritimeTrade(ArrayList<ResourceCard> offer, ResourceCard need){
-        if (offer.size()<4) //checks player is trading 4
-            return false;
+    public boolean maritimeTrade(ResourceCard offer, ResourceCard need){
         ArrayList<ResourceCard> rc=GameState.currentPlayer.getResourceCards();
-        for (ResourceCard r:offer) {    //checks player has 4 of that type
-            if (!rc.contains(r))
+        for (int i=0; i<4; i++) {    //checks player has 4 of what they're offering
+            if (!rc.contains(offer))
                 return false;
-            rc.remove(r);
+            rc.remove(offer);
         }
-
+        rc.add(need);
+        GameState.currentPlayer.setResourceCards(rc);
         return true; //temporary
     }
 
-    public boolean harborTrade(Edge e, ResourceCard need){
+    public boolean harborTrade(Edge e, ResourceCard offer, ResourceCard need){
+        if (!e.isHarbor())  //checks it's a harbor
+            return false;
+//        if (!e.hasBuildings())   //checks it has settlements at either end
+//            return false; //not necessary bc of next condition?
+        if (e.getIntersections()[0].getOwner()!=GameState.currentPlayer && e.getIntersections()[1].getOwner()!=GameState.currentPlayer) //checks current player owns of the intersections
+            return false;
+        ArrayList<ResourceCard> playerCards=GameState.currentPlayer.getResourceCards();
+        if (e.getType()!=null) {    //if it's true then it means the harbor is a 2:1
+            ResourceCard rc=e.getType();
+            if (rc!=offer)
+                return false;
+            for (int i=0; i<2; i++) {   //checks player has 2 of that type
+                if (!playerCards.contains(offer))
+                    return false;
+                playerCards.remove(offer);
+            }
+            playerCards.add(need);
+        }
+        else {
+            for (int i=0; i<3; i++) {
+                if (!playerCards.contains(offer))
+                    return false;
+                playerCards.remove(offer);
+            }
+            playerCards.add(need);
+        }
+        GameState.currentPlayer.setResourceCards(playerCards);
         return true; //temporary
     }
 }
