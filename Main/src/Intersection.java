@@ -42,7 +42,7 @@ public class Intersection {
 
     public boolean canPlace() {
         for (Edge e:edges) {
-            if (e.hasIntersection())
+            if (e.hasBuildings())
                 return false;
         }
         return true;

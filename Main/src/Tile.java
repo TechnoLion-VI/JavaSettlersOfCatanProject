@@ -62,7 +62,7 @@ public class Tile {
     }
     public int getAssignedNum(){
         return assignedNum;
-    }]
+    }
     public boolean canGive() {
         return canGive;
     }
