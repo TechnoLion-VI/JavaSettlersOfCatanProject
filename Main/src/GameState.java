@@ -5,7 +5,7 @@ public class GameState {
     public static ResourceDeck resourceDeck=new ResourceDeck();
     public static Player currentPlayer;
     private Board board;
-    private int diceNum;
+    public static int diceNum;
     private Player player1, player2, player3, player4;
     public static DevelopmentCardDeck devCardDeck;
     private HashMap<Integer, ArrayList<Tile>> resourceDist;
@@ -32,7 +32,7 @@ public class GameState {
         diceNum=dice1+dice2;
     }
 
-    public int getDiceNum(){
+    public static int getDiceNum(){
         return diceNum;
     }
 

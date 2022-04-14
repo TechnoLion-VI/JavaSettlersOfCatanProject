@@ -24,6 +24,9 @@ public class Player {
     public Color getColor() {
         return myColor;
     }
+    public String toString(Player p){
+        return p.getColor().toString() + " Player";
+    }
     public int getPublicScore() {
         publicScore=numStlmtsBuilt;
         if (hasLargestArmy) {
