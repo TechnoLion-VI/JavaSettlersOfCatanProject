@@ -31,6 +31,7 @@ public class Tile {
                 }
             }
         }
+        return count;
     }
     public void giveResource(){
         for(int i = 0; i < players.size(); i++){
