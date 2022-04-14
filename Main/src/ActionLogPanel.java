@@ -11,7 +11,10 @@ public class ActionLogPanel {
         JPanel panel = new JPanel();
         panel.setBounds(40, 80, 200, 200); //not final, just a filler
         panel.setBackground(Color.white); //color can be changed
-
+        f.add(panel);
+        f.setSize(400, 400); //not final, just a filler
+        f.setLayout(null);
+        f.setVisible(true);
 
     }
 
