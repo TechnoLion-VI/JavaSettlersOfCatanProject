@@ -4,11 +4,14 @@ public class Edge {
     private Intersection[] intersections;
     int[] point1;
     int[] point2;
+    private boolean isHarbor;
+    private ResourceCard type;
 
-    public Edge(int x1, int y1, int x2, int y2, Intersection i1, Intersection i2) {
+    public Edge(int x1, int y1, int x2, int y2, Intersection i1, Intersection i2, boolean harbor) {
         owner = null;
         setIntersections(i1, i2);
         setLocation(x1, y1, x2, y2);
+        isHarbor=harbor;
     }
     //determines if the player can place a road on this edge
     public boolean canPlace(Player p) {
@@ -22,7 +25,7 @@ public class Edge {
         return false;
     }
     //returns true if one of the intersections are owned
-    public boolean hasIntersection() {
+    public boolean hasBuildings() {
         for (Intersection i:intersections) {
             if (i.getOwner() != null) return true;
         }
@@ -70,4 +73,16 @@ public class Edge {
     public void setIntersections(Intersection i1, Intersection i2) {
         intersections = new Intersection[]{i1, i2};
     }
+    //accessor for isHarbor
+    public boolean isHarbor() {
+        return isHarbor;
+    }
+    //get and set type
+    public ResourceCard getType() {
+        return type;
+    }
+    public void setType(ResourceCard rc) {
+        type=rc;
+    }
+
 }
