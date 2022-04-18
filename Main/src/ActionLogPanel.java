@@ -7,7 +7,7 @@ public class ActionLogPanel {
     //private JPanel panel;
 
     public ActionLogPanel(){
-        JFrame f = new JFrame("frame");
+        JFrame f = new JFrame("Action Log Panel");
         JPanel panel = new JPanel();
         panel.setBounds(40, 80, 200, 200); //not final, just a filler
         panel.setBackground(Color.white); //color can be changed
