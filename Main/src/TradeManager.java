@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 
 public class TradeManager {
-
+    public static String p1offer, p2offer, p1receives, p2receives;
     public TradeManager(){
 
     }
 
     public boolean domesticTrade(Player p1, Player p2, ArrayList<ResourceCard> offer1, ArrayList<ResourceCard> offer2){
+        p1offer="";p2offer="";p1receives="";p2receives="";
         for (int i=0; i<offer1.size(); i++) {   //checks players aren't trading the same type of resource
             for (int j=0; j<offer2.size(); j++) {
                 if (offer1.get(i).equals(offer2.get(j)))
@@ -15,15 +16,33 @@ public class TradeManager {
         }
         ArrayList<ResourceCard> rc1 = p1.getResourceCards();
         ArrayList<ResourceCard> rc2 = p2.getResourceCards();
-        for (ResourceCard rc: offer1) { //checks player 1 has the resource cards needed
+        for (int i=0; i<offer1.size(); i++) { //checks player 1 has the resource cards needed
+            ResourceCard rc=offer1.get(i);
             if (!rc1.contains(rc))
                 return false;
-            rc1.remove(rc); //removes the card so it makes sure player has the amount needed in case they offer more than 1
+            rc1.remove(rc);//removes the card so it makes sure player has the amount needed in case they offer more than 1
+            if (i!=offer1.size()-1) {
+                p1offer+=rc.getType()+", ";
+                p2receives+=rc.getType()+", ";
+            }
+            else {
+                p1offer+="and "+rc.getType();
+                p2receives+="and "+rc.getType();
+            }
         }
-        for (ResourceCard rc: offer2) {
+        for (int i=0; i<offer2.size(); i++) {
+            ResourceCard rc=offer2.get(i);
             if (!rc2.contains(rc))
                 return false;
             rc2.remove(rc);
+            if (i!=offer2.size()-1) {
+                p2offer+=rc.getType()+", ";
+                p1receives+=rc.getType()+", ";
+            }
+            else {
+                p2offer+="and "+rc.getType();
+                p1receives+="and "+rc.getType();
+            }
         }
         rc1.addAll(offer2);
         rc2.addAll(offer1);
@@ -33,6 +52,7 @@ public class TradeManager {
     }
 
     public boolean maritimeTrade(ResourceCard offer, ResourceCard need){
+        p1offer="";p2offer="";p1receives="";p2receives="";
         ArrayList<ResourceCard> rc=GameState.currentPlayer.getResourceCards();
         for (int i=0; i<4; i++) {    //checks player has 4 of what they're offering
             if (!rc.contains(offer))
@@ -41,10 +61,13 @@ public class TradeManager {
         }
         rc.add(need);
         GameState.currentPlayer.setResourceCards(rc);
+        p1offer+=offer.getType();
+        p1receives+=need.getType();
         return true; //temporary
     }
 
     public boolean harborTrade(Edge e, ResourceCard offer, ResourceCard need){
+        p1offer="";p2offer="";p1receives="";p2receives="";
         if (!e.isHarbor())  //checks it's a harbor
             return false;
 //        if (!e.hasBuildings())   //checks it has settlements at either end
@@ -72,6 +95,9 @@ public class TradeManager {
             playerCards.add(need);
         }
         GameState.currentPlayer.setResourceCards(playerCards);
+        p1offer+=offer.getType();
+        p1receives+=need.getType();
         return true; //temporary
     }
+
 }
