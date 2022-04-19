@@ -2,6 +2,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException
 
 public class Player {
     private String myColor;
@@ -11,13 +14,17 @@ public class Player {
     private boolean hasLargestArmy, hasLongestRoad, hasPlayedDevCard;
     private BufferedImage stlmt, city;
 
-    public Player(String color, BufferedImage s, BufferedImage c) {
+    public Player(String color) {
         myColor=color; //player color
         stlmtsLeft=5; //remaining settlements that this player can build
         citiesLeft=4; //remaining cities that this player can build
         roadsLeft=15; //remaining roads that this player can build
-        stlmt=s; //settlement image
-        city=c; //city image
+        try {
+            stlmt = ImageIO.read(new File("Images/Final " + myColor + " Settlement.PNG")); //settlement image
+            city = ImageIO.read(new File("Images/Final " + myColor + " City.PNG")); //city image
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //accessor methods
