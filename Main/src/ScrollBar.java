@@ -18,11 +18,11 @@ public class ScrollBar extends JPanel {
             repaint();
         }
     }
-    public static void main(String s[]) {
+    /* public static void main(String s[]) {
         JFrame jFrame = new JFrame("scroll bar");
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setContentPane(new ScrollBar());
         jFrame.setSize(500, 150);
         jFrame.setVisible(true);
-    }
+    } */
 }
