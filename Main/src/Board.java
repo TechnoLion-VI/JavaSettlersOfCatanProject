@@ -8,9 +8,9 @@ public class Board {
 
     //INITIALIZE THE FULL BOARD
     public Board() {
+        tiles = new Tile[19];
         intersections = new Intersection[54];
         edges = new Edge[72];
-        tiles = new Tile[19];
     }
 
     public void giveResources(int numRolled){
