@@ -24,7 +24,7 @@ public class ActionLogPanel {
     }
 
     public void addAction(Player p, String s){
-        System.out.println(GameState.currentPlayer.toString() + " rolled a " + GameState.getDiceNum());
+
 
         /*
         roll dice

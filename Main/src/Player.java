@@ -4,14 +4,14 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player {
-    private Color myColor;
+    private String myColor;
     private int secretScore, publicScore, victoryCards, numStlmtsBuilt, playedKnightCards, roadLength, stlmtsLeft, citiesLeft, roadsLeft;
     private ArrayList<ResourceCard> resourceCards=new ArrayList<>();
     private ArrayList<DevelopmentCard> devCards=new ArrayList<>();
     private boolean hasLargestArmy, hasLongestRoad, hasPlayedDevCard;
     private BufferedImage stlmt, city;
 
-    public Player(Color color, BufferedImage s, BufferedImage c) {
+    public Player(String color, BufferedImage s, BufferedImage c) {
         myColor=color; //player color
         stlmtsLeft=5; //remaining settlements that this player can build
         citiesLeft=4; //remaining cities that this player can build
@@ -21,11 +21,11 @@ public class Player {
     }
 
     //accessor methods
-    public Color getColor() {
+    public String getColor() {
         return myColor;
     }
     public String toString(Player p){
-        return p.getColor().toString() + " Player";
+        return p.getColor() + " Player";
     }
     public int getPublicScore() {
         publicScore=numStlmtsBuilt;
