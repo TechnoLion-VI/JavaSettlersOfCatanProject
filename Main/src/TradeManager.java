@@ -20,7 +20,7 @@ public class TradeManager {
             ResourceCard rc=offer1.get(i);
             if (!rc1.contains(rc))
                 return false;
-            rc1.remove(rc);//removes the card so it makes sure player has the amount needed in case they offer more than 1
+            rc1.remove(rc); //removes the card making sure player has the amount needed in case they offer more than 1
             if (i!=offer1.size()-1) {
                 p1offer+=rc.getType()+", ";
                 p2receives+=rc.getType()+", ";

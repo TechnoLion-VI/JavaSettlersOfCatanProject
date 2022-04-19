@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.ArrayList;
 
 public class Board {
     private ArrayList<Integer> tokens = new ArrayList<>();
@@ -21,7 +21,7 @@ public class Board {
         }
     }
 
-    public boolean buildRoad(Player p, Edge e){
+    public static boolean buildRoad(Player p, Edge e){
         if(e.canPlace(p)) {
             p.decrementRoadsLeft();
             e.setOwner(p);
@@ -30,7 +30,7 @@ public class Board {
         return false;
     }
 
-    public boolean buildSettlement(Player p, Intersection i){
+    public static boolean buildSettlement(Player p, Intersection i){
         if (i.canPlace()) {
             i.setOwner(p);
             i.setIsStlmt(true); //check Intersection class
@@ -39,7 +39,7 @@ public class Board {
         return false;
     }
 
-    public boolean buildCity(Intersection i){
+    public static boolean buildCity(Intersection i){
         return i.setIsCity();
     } //check Intersection class
 
