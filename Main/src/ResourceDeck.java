@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.io.IOException;
 public class ResourceDeck {
     private ArrayList<Brick> brickDeck;
     private ArrayList<Grain> grainDeck;
@@ -13,11 +14,15 @@ public class ResourceDeck {
         oreDeck = new ArrayList<>();
         woolDeck = new ArrayList<>();
         for (int i = 0; i < 19; i++) {
-            brickDeck.add(new Brick());
-            grainDeck.add(new Grain());
-            lumberDeck.add(new Lumber());
-            oreDeck.add(new Ore());
-            woolDeck.add(new Wool());
+            try {
+                brickDeck.add(new Brick());
+                grainDeck.add(new Grain());
+                lumberDeck.add(new Lumber());
+                oreDeck.add(new Ore());
+                woolDeck.add(new Wool());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
     //adds ResourceCard to Player's hand
