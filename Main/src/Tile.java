@@ -2,7 +2,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Tile {
-    private boolean canGive;
+    private boolean isDesert, hasRobber;
     private int assignedNum;
     private ResourceCard resource;
     private BufferedImage img;
@@ -13,7 +13,8 @@ public class Tile {
 
     public Tile(int n, boolean isDesert, ResourceCard type, BufferedImage b){
         assignedNum=n;
-        canGive=isDesert;
+        this.isDesert=isDesert;
+        hasRobber = isDesert;
         resource=type;
         img=b;
         //figure out how to add the intersections, edges, location, and player arraylist
@@ -64,7 +65,7 @@ public class Tile {
         return assignedNum;
     }
     public boolean canGive() {
-        return canGive;
+        return !isDesert && !hasRobber;
     }
     public ResourceCard getResource() {
         return resource;
