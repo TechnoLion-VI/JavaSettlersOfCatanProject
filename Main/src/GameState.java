@@ -6,7 +6,8 @@ public class GameState {
     public static Player currentPlayer;
     private static Board board = new Board();
     public static int diceNum;
-    private static Player[] player = new Player[]{new Player("Blue"), new Player("Green"), new Player("Red"), new Player("Yellow")};
+    private static boolean isTurn;
+    private static Player[] players = new Player[]{new Player("Blue"), new Player("Green"), new Player("Red"), new Player("Yellow")};
     public static DevelopmentCardDeck devCardDeck = new DevelopmentCardDeck();
     private HashMap<Integer, ArrayList<Tile>> resourceDist;
 
@@ -36,9 +37,20 @@ public class GameState {
         return diceNum;
     }
 
-    public static Player[] getPlayers() { return player; }
+    public static Player[] getPlayers() { return players; }
 
-    public void moveRobber(){
+    public boolean moveRobber(Player p){
+        if(diceNum == 7){
+            for(int i = 0; i < players.length; i++){ //anyone with more than 7 resource cards discards half rounded down (chooses which ones) (not for knight card)
+                ArrayList <ResourceCard> rc = players[i].getResourceCards();
+                if(rc.size() > 7){
+                    //goes in graphics
+                }
+            }
+        }
 
+        //no one gets resources
+        //move robber to a new place
+        //player who moves robber can steal one random card from a player of their choice (adjacent to new hex)
     }
 }
