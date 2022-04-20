@@ -3,6 +3,7 @@ public class VictoryPoint extends DevelopmentCard {
         super("VictoryPoint");
     }
     public boolean use(Player p) {
-        p.addToVictoryCards(); return true;
+        p.addToVictoryCards();
+        return true;
     }
 }

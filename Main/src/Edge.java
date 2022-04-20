@@ -84,5 +84,4 @@ public class Edge {
     public void setType(ResourceCard rc) {
         type=rc;
     }
-
 }
