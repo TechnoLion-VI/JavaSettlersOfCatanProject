@@ -2,23 +2,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameState {
-    public static ResourceDeck resourceDeck;
+    public static ResourceDeck resourceDeck = new ResourceDeck();
     public static Player currentPlayer;
-    private Board board;
+    private static Board board = new Board();
     public static int diceNum;
-    private Player[] player;
-    public static DevelopmentCardDeck devCardDeck;
+    private static Player[] player = new Player[]{new Player("Blue"), new Player("Green"), new Player("Red"), new Player("Yellow")};
+    public static DevelopmentCardDeck devCardDeck = new DevelopmentCardDeck();
     private HashMap<Integer, ArrayList<Tile>> resourceDist;
 
     public GameState(){
-        resourceDeck = new ResourceDeck();
-        board = new Board();
-        player = new Player[4];
-        devCardDeck = new DevelopmentCardDeck();
-        player[0] = new Player("Blue");
-        player[1] = new Player("Green");
-        player[2] = new Player("Red");
-        player[3] = new Player("Yellow");
+
     }
 
     public void getIntersection(int x, int y){
@@ -42,6 +35,8 @@ public class GameState {
     public static int getDiceNum(){
         return diceNum;
     }
+
+    public static Player[] getPlayers() { return player; }
 
     public void moveRobber(){
 
