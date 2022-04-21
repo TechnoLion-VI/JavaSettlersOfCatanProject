@@ -64,6 +64,9 @@ public class Tile {
     public int getAssignedNum(){
         return assignedNum;
     }
+    public boolean getIsDesert() {return isDesert;}
+    public boolean getHasRobber() {return hasRobber;}
+    public void setHasRobber(boolean hR) {hasRobber = hR;}
     public boolean canGive() {
         return !isDesert && !hasRobber;
     }

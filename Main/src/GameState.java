@@ -39,7 +39,7 @@ public class GameState {
 
     public static Player[] getPlayers() { return players; }
 
-    public boolean moveRobber(Player p){
+    public boolean moveRobber(Player p, Tile t){
         if(diceNum == 7){
             for(int i = 0; i < players.length; i++){ //anyone with more than 7 resource cards discards half rounded down (chooses which ones) (not for knight card)
                 ArrayList <ResourceCard> rc = players[i].getResourceCards();
@@ -48,9 +48,12 @@ public class GameState {
                 }
             }
         }
-
         //no one gets resources
         //move robber to a new place
+        if (t.getHasRobber()) return false; else t.setHasRobber(true);
         //player who moves robber can steal one random card from a player of their choice (adjacent to new hex)
+        if (p == null || p == GameState.currentPlayer) return true;
+        GameState.currentPlayer.add(p.remove((int)(Math.random()*p.getResourceCards().size())));
+        return true;
     }
 }
