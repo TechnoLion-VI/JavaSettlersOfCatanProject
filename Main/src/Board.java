@@ -4,19 +4,22 @@ public class Board {
     private ArrayList<Integer> tokens = new ArrayList<>();
     private Intersection[] intersections;
     private Edge[] edges;
-    private Tile[] tiles;
+    private ArrayList<Tile> tilesList;
+    private Tile[][] tiles;
 
     //INITIALIZE THE FULL BOARD
     public Board() {
-        tiles = new Tile[19];
+        tilesList=new ArrayList<>();
+        tiles=new Tile[7][7];
         intersections = new Intersection[54];
         edges = new Edge[72];
     }
 
     public void giveResources(int numRolled){
-        for(int i = 0; i < tiles.length; i++){
-            if(tiles[i].getAssignedNum() == numRolled){
-                tiles[i].giveResource();
+        for(int r=0; r<tiles.length; r++){
+            for (int c=0; c<tiles[r].length; c++)
+            if(tiles[r][c].getAssignedNum() == numRolled){
+                tiles[r][c].giveResource();
             }
         }
     }
