@@ -39,7 +39,7 @@ public class GameState {
 
     public static Player[] getPlayers() { return players; }
 
-    public boolean moveRobber(Player p, Tile t){
+    public boolean moveRobber(Player p, Tile t){ //p is the player you are stealing from
         if(diceNum == 7){
             for(int i = 0; i < players.length; i++){ //anyone with more than 7 resource cards discards half rounded down (chooses which ones) (not for knight card)
                 ArrayList <ResourceCard> rc = players[i].getResourceCards();
