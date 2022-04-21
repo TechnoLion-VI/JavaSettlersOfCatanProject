@@ -1,4 +1,7 @@
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Tile {
@@ -11,12 +14,16 @@ public class Tile {
     private int[] location = new int[2];
     private ArrayList<Player> players;
 
-    public Tile(int n, boolean isDesert, ResourceCard type, BufferedImage b){
+    public Tile(int n, boolean isDesert, ResourceCard type){
         assignedNum=n;
         this.isDesert=isDesert;
         hasRobber = isDesert;
         resource=type;
-        img=b;
+        try {
+            img = ImageIO.read(new File("Images/Final " + type.getType() + " Tile.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //figure out how to add the intersections, edges, location, and player arraylist
     }
     public int resourcesNeeded() {
