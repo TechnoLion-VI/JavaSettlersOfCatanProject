@@ -51,6 +51,7 @@ public class GameState {
         //no one gets resources
         //move robber to a new place
         if (t.getHasRobber()) return false; else t.setHasRobber(true);
+        //disable hasRobber in old place
         //player who moves robber can steal one random card from a player of their choice (adjacent to new hex)
         if (p == null || p == GameState.currentPlayer) return true;
         GameState.currentPlayer.add(p.remove((int)(Math.random()*p.getResourceCards().size())));
