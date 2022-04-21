@@ -9,5 +9,6 @@ public class YearOfPlenty extends DevelopmentCard {
             return false;
         GameState.currentPlayer.getResourceCards().add(type1);
         GameState.currentPlayer.getResourceCards().add(type2);
+        return true;
     }
 }
