@@ -6,6 +6,7 @@ public class ResourceCard {
     public ResourceCard(String type, BufferedImage img) {
         this.type = type; this.img = img;
     }
+
     //type getter
     public String getType() {
         return type;
