@@ -19,7 +19,7 @@ public class ActionLogPanel {
         panel.HorizontalScroll.Enabled = false;
         panel.HorizontalScroll.Visible = false;
         panel.HorizontalScroll.Maximum = 0;
-        panel.AutoScroll = true;/*
+        panel.AutoScroll = true;*/
 
     }
 
