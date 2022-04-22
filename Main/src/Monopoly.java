@@ -6,7 +6,7 @@ public class Monopoly extends DevelopmentCard{
         //take cards of type rc from all players and add it to player's hand
         Player[] p = GameState.getPlayers();
         ArrayList<ResourceCard> cards = new ArrayList<>();
-
+        //put resource cards of type rc in cards ArrayList
         for (int i = p[0].size() - 1; i >= 0; i--) {
             if (p[0].get(i).getType().equals(rc))
                 cards.add(p[0].remove(i));

@@ -103,6 +103,7 @@ public class Player {
     public void setResourceCards(ArrayList<ResourceCard> newCards) {
         resourceCards=newCards;
     }
+    //ArrayList methods
     public void add(ResourceCard rc) {resourceCards.add(rc);}
     public void addToHand(ArrayList<ResourceCard> rc) {resourceCards.addAll(rc);}
     public ResourceCard remove(int index) {return resourceCards.remove(index);}
