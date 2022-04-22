@@ -96,6 +96,9 @@ public class Player {
         stlmtsLeft++;
         citiesLeft--;
     }
+    public void setHasPlayedDevCard(boolean b) {
+        hasPlayedDevCard=b;
+    }
     public void addToPlayedKnightCards() {
         playedKnightCards++;
     }
