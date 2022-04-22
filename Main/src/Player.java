@@ -106,4 +106,6 @@ public class Player {
     public void add(ResourceCard rc) {resourceCards.add(rc);}
     public void addToHand(ArrayList<ResourceCard> rc) {resourceCards.addAll(rc);}
     public ResourceCard remove(int index) {return resourceCards.remove(index);}
+    public ResourceCard get(int index) {return resourceCards.get(index);}
+    public int size() {return resourceCards.size();}
 }

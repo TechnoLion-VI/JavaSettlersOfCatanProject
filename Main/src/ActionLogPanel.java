@@ -41,7 +41,7 @@ public class ActionLogPanel {
         return actions;
     }
 
-    public void paint(Graphics g){
+    /*public void paint(Graphics g){
         g.drawString(GameState.currentPlayer.toString() + " rolled a " + GameState.getDiceNum(), 10, 0); //if dice rolled
         g.drawString(GameState.currentPlayer.toString() + " traded " + TradeManager.p1offer, 10, 5);
         g.drawString(GameState.currentPlayer.toString() + " built a " , 10, 10); //how do we check if they built a city or stlmnt
@@ -50,5 +50,5 @@ public class ActionLogPanel {
         g.drawString(GameState.currentPlayer.toString() + " acquired the longest road card.", 10, 25);
         g.drawString(GameState.currentPlayer.toString() + " rolled a seven and moved the robber.", 10, 30);
         g.drawString(GameState.currentPlayer.toString() + " claimed win.", 10, 35);
-    }
+    } */
 }
