@@ -6,6 +6,7 @@ public class Edge {
     int[] point2;
     private boolean isHarbor;
     private ResourceCard type;
+    private int id;
 
     public Edge(int x1, int y1, int x2, int y2, Intersection i1, Intersection i2, boolean harbor) {
         owner = null;
@@ -13,6 +14,11 @@ public class Edge {
         setLocation(x1, y1, x2, y2);
         isHarbor=harbor;
     }
+
+    public Edge(int id) {
+        this.id = id;
+    }
+
     //determines if the player can place a road on this edge
     public boolean canPlace(Player p) {
         if (owner != null) return false;

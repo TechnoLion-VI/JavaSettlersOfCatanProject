@@ -12,6 +12,11 @@ public class Intersection {
         location[1]=y;
         //add the initializing of edges
     }
+
+    public Intersection() {
+        location[0] = -1;
+        location[1] = -1;
+    }
     public int[] getLocation() {
         return location;
     }
