@@ -25,8 +25,8 @@ public class Board {
         tiles[0] = new Tile[3];
         tiles[1] = new Tile[4];
         tiles[2] = new Tile[5];
-        tiles[3] = new Tile[3];
-        tiles[4] = new Tile[4];
+        tiles[3] = new Tile[4];
+        tiles[4] = new Tile[3];
 
         // 1 desert, 3 ore, 3 brick, 4 wheat, 4 lumber, 4 wool
         ArrayList<Tile> tilesArray = new ArrayList<>();
