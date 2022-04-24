@@ -20,6 +20,7 @@ public class MainPanel extends JPanel implements MouseListener {
         log = new JTextArea();
         PrintStream printStream = new PrintStream(new ActionLogPanel(log));
         System.setOut(printStream);
+        this.add(new JScrollPane(log)); //to be edited
     }
 
     public void paint(Graphics g) {
