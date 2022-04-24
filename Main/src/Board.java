@@ -1,3 +1,5 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,6 +9,7 @@ public class Board {
     private Edge[] edges;
     private ArrayList<Tile> tilesList;
     private Tile[][] tiles;
+    private BufferedImage brick, grain, lumber, ore, wool;
 
     //INITIALIZE THE FULL BOARD
     public Board() {
@@ -14,7 +17,17 @@ public class Board {
         tiles=new Tile[5][];
         intersections = new Intersection[54];
         edges = new Edge[72];
-
+        try {
+            brick=ImageIO.read(Board.class.getResource("/Images/brick tile.png"));
+            grain=ImageIO.read(Board.class.getResource("/Images/grain tile.png"));
+            lumber=ImageIO.read(Board.class.getResource("/Images/lumber tile.png"));
+            ore=ImageIO.read(Board.class.getResource("/Images/ore tile.png"));
+            wool=ImageIO.read(Board.class.getResource("/Images/wool tile.png"));
+        }
+        catch(Exception e) {
+            System.out.println("Board (Tile) Images Error");
+            return;
+        }
         fillTiles();
         setAdjacentTiles();
         fillEdges();
@@ -32,14 +45,14 @@ public class Board {
         ArrayList<Tile> tilesArray = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            tilesArray.add(new Tile(new ResourceCard("ore", null)));
-            tilesArray.add(new Tile(new ResourceCard("brick", null)));
+            tilesArray.add(new Tile(new ResourceCard("ore", ore)));
+            tilesArray.add(new Tile(new ResourceCard("brick", brick)));
         }
 
         for (int i = 0; i < 4; i++) {
-            tilesArray.add(new Tile(new ResourceCard("grain", null)));
-            tilesArray.add(new Tile(new ResourceCard("lumber", null)));
-            tilesArray.add(new Tile(new ResourceCard("wool", null)));
+            tilesArray.add(new Tile(new ResourceCard("grain", grain)));
+            tilesArray.add(new Tile(new ResourceCard("lumber", lumber)));
+            tilesArray.add(new Tile(new ResourceCard("wool", wool)));
         }
 
         tilesArray.add(new Tile(new ResourceCard("desert", null)));
