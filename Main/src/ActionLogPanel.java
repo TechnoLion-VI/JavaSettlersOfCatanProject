@@ -1,44 +1,18 @@
-import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
+import javax.swing.JTextArea;
+import java.io.OutputStream;
 
-public class ActionLogPanel {
-    private ArrayList<String> actions;
-    //private JPanel panel;
+public class ActionLogPanel extends OutputStream{
+    private JTextArea textArea;
 
-    public ActionLogPanel(){
-        JFrame f = new JFrame("Action Log Panel");
-        JPanel panel = new JPanel();
-        panel.setBounds(40, 80, 200, 200); //not final, just a filler
-        panel.setBackground(Color.white); //color can be changed
-        f.add(panel);
-        f.setSize(400, 400); //not final, just a filler
-        f.setLayout(null);
-        f.setVisible(true);
-        /*panel.AutoScroll = false;
-        panel.HorizontalScroll.Enabled = false;
-        panel.HorizontalScroll.Visible = false;
-        panel.HorizontalScroll.Maximum = 0;
-        panel.AutoScroll = true;*/
-
+    public ActionLogPanel(JTextArea textArea) {
+        this.textArea = textArea;
     }
 
-    public void addAction(Player p, String s){
-
-
-        /*
-        roll dice
-        trade
-        build/buy
-        use development card
-        longest army and longest road
-        robber (rolled a 7)
-        claim win
-         */
-    }
-
-    public ArrayList<String> getActions(){
-        return actions;
+    public void write(int b) {
+        // redirects data to the text area
+        textArea.append(String.valueOf((char)b));
+        // scrolls the text area to the end of data
+        textArea.setCaretPosition(textArea.getDocument().getLength());
     }
 
     /*public void paint(Graphics g){
@@ -51,4 +25,5 @@ public class ActionLogPanel {
         g.drawString(GameState.currentPlayer.toString() + " rolled a seven and moved the robber.", 10, 30);
         g.drawString(GameState.currentPlayer.toString() + " claimed win.", 10, 35);
     } */
+
 }
