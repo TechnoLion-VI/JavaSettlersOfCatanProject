@@ -19,7 +19,8 @@ public class Tile {
 
     public Tile(ResourceCard r, BufferedImage b, int[] coords) {
         resource=r;
-        img=bboolean tileOneExists = adjacentTileOne != null;
+        img=b;
+        boolean tileOneExists = adjacentTileOne != null;
         boolean tileTwoExists = adjacentTileTwo != null;
 
         boolean vertexExists = false;
@@ -85,9 +86,6 @@ public class Tile {
                 adjacentTileTwo.setIntersection(intersection, tileTwoVertexOrientation);
             }
         }
-    }
-}
-            };
         location=coords;
         assignedNum=0;
 
