@@ -18,8 +18,17 @@ public class Tile {
     private Tile[] adjacentTiles;
 
     public Tile(ResourceCard r, BufferedImage b, int[] coords) {
-        resource=r;
-        img=b;
+        resource = r;
+        img = b;
+        Tile adjacentTileOne = adjacentTiles[0];
+        Tile adjacentTileTwo = adjacentTiles[1];
+        location = coords;
+        assignedNum = 0;
+        edges = new Edge[6];
+        intersections = new Intersection[6];
+        adjacentTiles = new Tile[6];
+    }
+    public void setAdjacentVertex(int vertexOrientation) {
         Tile adjacentTileOne = adjacentTiles[0];
         Tile adjacentTileTwo = adjacentTiles[1];
         boolean tileOneExists = adjacentTileOne != null;
@@ -88,13 +97,8 @@ public class Tile {
                 adjacentTileTwo.setIntersection(intersection, tileTwoVertexOrientation);
             }
         }
-        location=coords;
-        assignedNum=0;
-
-        edges = new Edge[6];
-        intersections = new Intersection[6];
-        adjacentTiles = new Tile[6];
     }
+
     public Tile(ResourceCard r) {
         this(r, null, null);
     }
