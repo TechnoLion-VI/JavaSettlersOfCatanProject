@@ -1,6 +1,18 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+
 public class Knight extends DevelopmentCard{
-    public Knight(){
+    public Knight() {
         super("Knight");
+        BufferedImage card;
+        try {
+            card= ImageIO.read(Knight.class.getResource("/Image/ "));
+        }
+        catch (Exception e) {
+            System.out.println("Knight Card Image Error");
+            return;
+        }
+        setImg(card);
     }
     public boolean use(Player p){
         p.addToPlayedKnightCards();
