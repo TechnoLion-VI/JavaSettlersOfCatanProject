@@ -374,13 +374,14 @@ public class Board {
         if (i.canPlace()) {
             i.setOwner(p);
             i.setIsStlmt(true); //check Intersection class
-            return true;
+            return true;    //also needs to increase player's vp
         }
         return false;
     }
 
     public static boolean buildCity(Intersection i){
         return i.setIsCity();
+        //also needs to increase player's vp
     } //check Intersection class
 
 
