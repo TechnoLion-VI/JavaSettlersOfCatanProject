@@ -19,7 +19,75 @@ public class Tile {
 
     public Tile(ResourceCard r, BufferedImage b, int[] coords) {
         resource=r;
-        img=b;
+        img=bboolean tileOneExists = adjacentTileOne != null;
+        boolean tileTwoExists = adjacentTileTwo != null;
+
+        boolean vertexExists = false;
+
+        int tileOneVertexOrientation = -1;
+        int tileTwoVertexOrientation = -1;
+
+        switch (vertexOrientation) {
+            case 0: {
+                tileOneVertexOrientation = 2;
+                tileTwoVertexOrientation = 3;
+                break;
+            }
+            case 1: {
+                tileOneVertexOrientation = 4;
+                tileTwoVertexOrientation = 5;
+                break;
+            }
+            case 2: {
+                tileOneVertexOrientation = 0;
+                tileTwoVertexOrientation = 1;
+                break;
+            }
+            case 3: { // fix
+                tileOneVertexOrientation = 2;
+                tileTwoVertexOrientation = 3;
+                break;
+            }
+            case 4: {
+                tileOneVertexOrientation = 0;
+                tileTwoVertexOrientation = 5;
+                break;
+            }
+            case 5: {
+                tileOneVertexOrientation = 1;
+                tileTwoVertexOrientation = 3;
+            }
+        }
+
+        if (tileOneExists) {
+            Intersection temp = adjacentTileOne.getIntersections()[tileTwoVertexOrientation];
+
+            if (temp != null) {
+                intersections[vertexOrientation] = temp;
+
+                if (tileTwoExists) {
+                    adjacentTileTwo.setIntersection(temp, vertexOrientation);
+                }
+
+                vertexExists = true;
+            }
+        }
+
+        if (!vertexExists) {
+            Intersection intersection = new Intersection();
+            intersections[vertexOrientation] = intersection;
+
+            if (tileOneExists) {
+                adjacentTileOne.setIntersection(intersection, tileOneVertexOrientation);
+            }
+
+            if (tileTwoExists) {
+                adjacentTileTwo.setIntersection(intersection, tileTwoVertexOrientation);
+            }
+        }
+    }
+}
+            };
         location=coords;
         assignedNum=0;
 
