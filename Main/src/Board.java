@@ -67,7 +67,7 @@ public class Board {
         }
     }
 
-    // NW = 0, N = 1, NE = 2, SE = 3, S = 4, SW = 5
+    // NW = 0, NE = 1, E = 2, SE = 3, SW = 4, W = 5
     public void setAdjacentTiles() {
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles[x].length; y++) {
