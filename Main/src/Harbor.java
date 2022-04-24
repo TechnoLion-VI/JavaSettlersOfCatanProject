@@ -14,4 +14,9 @@ public class Harbor {
         return null;
     }
 
+    public String getType() {
+        if (resource == null) return "Generic";
+        return resource;
+    }
+
 }
