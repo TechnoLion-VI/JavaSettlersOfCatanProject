@@ -383,8 +383,4 @@ public class Board {
         return i.setIsCity();
         //also needs to increase player's vp
     } //check Intersection class
-
-
-
-
 }
