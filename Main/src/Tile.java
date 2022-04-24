@@ -1,10 +1,16 @@
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Tile {
+    private boolean isDesert, hasRobber;
     private int assignedNum;
+    private ResourceCard resource;
     private BufferedImage img;
     private int[] location = new int[2];
-    private ResourceCard resource;
+    private ArrayList<Player> players;
 
     // NW = 0, N = 1, NE = 2, SE = 3, S = 4, SW = 5
     private Edge[] edges;
@@ -21,11 +27,24 @@ public class Tile {
         intersections = new Intersection[6];
         adjacentTiles = new Tile[6];
     }
-
     public Tile(ResourceCard r) {
         this(r, null, null);
     }
-
+    public int resourcesNeeded() {
+        int count=0;
+        for(int i = 0; i < players.size(); i++){
+            Player p = players.get(i);
+            for(int n = 0; n < intersections.length; n++) {
+                if (intersections[n].getOwner() == p && intersections[n].isStlmt() == true) {
+                    count++;
+                }
+                else if(intersections[n].getOwner() == p && intersections[n].isCity() == true) {
+                    count+=2;
+                }
+            }
+        }
+        return count;
+    }
     public void setLocation(int x, int y) {
         this.location = new int[]{x, y};
     }
@@ -53,7 +72,29 @@ public class Tile {
     public Intersection[] getIntersections() {
         return intersections;
     }
+    public void giveResource(){
+        for(int i = 0; i < players.size(); i++){
+            Player p = players.get(i);
+            ArrayList<ResourceCard> rc = p.getResourceCards();
+            for(int n = 0; n < intersections.length; n++) {
+                if (intersections[n].getOwner() == p && intersections[n].isStlmt() == true) {
+                    rc.add(resource);
+                }
+                else if(intersections[n].getOwner() == p && intersections[n].isCity() == true) {
+                    rc.add(resource);
+                    rc.add(resource);
+                }
+            }
+        }
+    }
 
+    public void addPlayer(Player p) {
+        for (int i = 0; i < intersections.length; i++) {
+            if (intersections[i].getOwner() == p) {
+                players.add(p);
+            }
+        }
+    }
     public int getAssignedNum(){
         return assignedNum;
     }
@@ -66,10 +107,13 @@ public class Tile {
     public BufferedImage getImg() {
         return img;
     }
-    public void giveResource() {
-
-    }
     public ResourceCard getResource() {
         return resource;
+    }
+    public boolean getIsDesert() {return isDesert;}
+    public boolean getHasRobber() {return hasRobber;}
+    public void setHasRobber(boolean hR) {hasRobber = hR;}
+    public boolean canGive() {
+        return !isDesert && !hasRobber;
     }
 }
