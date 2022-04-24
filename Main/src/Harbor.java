@@ -1,13 +1,17 @@
 public class Harbor {
-    private Edge edge;
+    private Intersection[] ints;
+    private String resource;
 
-    public Harbor(Edge e){
-        edge = e;
+    public Harbor(Intersection i1, Intersection i2, String r){
+        ints = new Intersection[]{i1, i2};
+        resource = r;
     }
 
-    public Edge getEdge(){
-        return edge;
+    public Player getOwner() {
+        for (Intersection i:ints) {
+            if (i.getOwner() != null) return i.getOwner();
+        }
+        return null;
     }
-
 
 }
