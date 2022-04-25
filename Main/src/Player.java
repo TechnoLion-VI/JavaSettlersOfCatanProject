@@ -99,6 +99,9 @@ public class Player {
     public void setHasPlayedDevCard(boolean b) {
         hasPlayedDevCard=b;
     }
+    public void setHasLargestArmy(boolean b) {
+        hasLargestArmy=b;
+    }
     public void addToPlayedKnightCards() {
         playedKnightCards++;
     }
