@@ -31,6 +31,7 @@ public class GameState {
         int diceOne = (int)(Math.random() * 6) + 1;
         int diceTwo = (int)(Math.random() * 6) + 1;
         diceNum = diceOne + diceTwo;
+        ActionLogPanel.rollDice();
     }
 
     public static int getDiceNum(){
