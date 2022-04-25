@@ -15,6 +15,10 @@ public class ActionLogPanel extends OutputStream{
         textArea.setCaretPosition(textArea.getDocument().getLength());
     }
 
+    public static void rollDice() {
+        System.out.println(GameState.currentPlayer.toString() + " rolled a " + GameState.getDiceNum());
+    }
+
     /*public void paint(Graphics g){
         g.drawString(GameState.currentPlayer.toString() + " rolled a " + GameState.getDiceNum(), 10, 0); //if dice rolled
         g.drawString(GameState.currentPlayer.toString() + " traded " + TradeManager.p1offer, 10, 5);
