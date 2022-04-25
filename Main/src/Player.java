@@ -106,6 +106,9 @@ public class Player {
         playedKnightCards++;
     }
     public void decrementRoadsLeft() {roadsLeft--;}
+    public void addToRoadLength() {
+        roadLength++;
+    }
     public void setResourceCards(ArrayList<ResourceCard> newCards) {
         resourceCards=newCards;
     }

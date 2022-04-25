@@ -374,13 +374,19 @@ public class Board {
         }
     }
 
-    public static boolean buildRoad(Player p, Edge e){
-        if(e.canPlace(p)) {
-            p.decrementRoadsLeft();
-            e.setOwner(p);
+    public static boolean buildRoad(Edge e){
+        if(e.canPlace(GameState.currentPlayer)) {
+            GameState.currentPlayer.decrementRoadsLeft();
+            e.setOwner(GameState.currentPlayer);
+            checkHasLongestRoad(GameState.currentPlayer);
             return true;
         }
         return false;
+    }
+
+    public static boolean checkHasLongestRoad(Player p){
+
+        return true;
     }
 
     public static boolean buildSettlement(Player p, Intersection i){
