@@ -6,10 +6,10 @@ public class Knight extends DevelopmentCard{
         super("Knight");
         BufferedImage card;
         try {
-            card= ImageIO.read(Knight.class.getResource("/Images/ "));
+            card= ImageIO.read(Knight.class.getResource("/Images/Knight.png"));
         }
         catch (Exception e) {
-            System.out.println("Knight Card Image Error");
+            System.out.println("Knight Image Error");
             return;
         }
         setImg(card);

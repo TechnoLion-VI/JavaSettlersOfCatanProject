@@ -1,6 +1,19 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 public class Monopoly extends DevelopmentCard{
-    public Monopoly() { super("Monopoly"); }
+    public Monopoly() {
+        super("Monopoly");
+        BufferedImage card;
+        try {
+            card=ImageIO.read(Monopoly.class.getResource("/Images/Monopoly.png"));
+        }
+        catch (Exception e) {
+            System.out.println("Monopoly Image Error");
+            return;
+        }
+        setImg(card);
+    }
     public boolean use(String rc) {
         //check if card can be played
         //take cards of type rc from all players and add it to player's hand
@@ -26,7 +39,7 @@ public class Monopoly extends DevelopmentCard{
             if (p[3].get(i).getType().equals(rc))
                 cards.add(p[3].remove(i));
         }
-        //put cards in currentPlayer's hand
+
         GameState.currentPlayer.addToHand(cards);
         return true;
     }

@@ -1,6 +1,18 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+
 public class YearOfPlenty extends DevelopmentCard {
     public YearOfPlenty() {
         super("YearOfPlenty");
+        BufferedImage card;
+        try {
+            card= ImageIO.read(YearOfPlenty.class.getResource("/Images/YearOfPlenty.png"));
+        }
+        catch (Exception e) {
+            System.out.println("Year of Plenty Image Error");
+            return;
+        }
+        setImg(card);
     }
     public boolean use(ResourceCard type1, ResourceCard type2) {
         if (GameState.resourceDeck.getNumLeft(type1)<=0||GameState.resourceDeck.getNumLeft(type2)<=0)   //checks deck has enough
