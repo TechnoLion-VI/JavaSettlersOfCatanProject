@@ -28,9 +28,7 @@ public class GameState {
     }
 
     public void rollDice(){
-        int dice1=(int)(Math.random()*6)+1; //these two lines aren't necessary unless we want to show the dice
-        int dice2=(int)(Math.random()*6)+1;
-        diceNum=dice1+dice2;
+        diceNum = (int)(Math.random()*12)+1;
     }
 
     public static int getDiceNum(){

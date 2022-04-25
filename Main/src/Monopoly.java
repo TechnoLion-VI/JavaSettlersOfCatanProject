@@ -26,7 +26,7 @@ public class Monopoly extends DevelopmentCard{
             if (p[3].get(i).getType().equals(rc))
                 cards.add(p[3].remove(i));
         }
-        //put cards in currentPlayer's hand
+
         GameState.currentPlayer.addToHand(cards);
         return true;
     }
