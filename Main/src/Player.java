@@ -54,9 +54,6 @@ public class Player {
     public ArrayList<DevelopmentCard> getDevCards() {
         return devCards;
     }
-    public void setHasLongestRoad(boolean b) {
-        hasLongestRoad = b;
-    }
     public int getPlayedKnightCards() {
         return playedKnightCards;
     }
@@ -101,6 +98,9 @@ public class Player {
     }
     public void setHasLargestArmy(boolean b) {
         hasLargestArmy=b;
+    }
+    public void setHasLongestRoad(boolean b) {
+        hasLongestRoad = b;
     }
     public void addToPlayedKnightCards() {
         playedKnightCards++;
