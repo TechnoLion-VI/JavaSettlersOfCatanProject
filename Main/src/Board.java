@@ -397,21 +397,21 @@ public class Board {
     }
     private static int checkHasLongestRoad(Player p, Edge e) {
         Intersection[] ints = e.getIntersections();
-        return 1 + Math.max(checkHasLongestRoad(ints[0], e), checkHasLongestRoad(ints[1], e));
+        return 1 + Math.max(checkHasLongestRoad(ints[0], e, p), checkHasLongestRoad(ints[1], e, p));
     }
-    private static int checkHasLongestRoad(Intersection i, Edge e) {
-        if (i.getOwner() != null && i.getOwner() != GameState.currentPlayer) return 0;
+    private static int checkHasLongestRoad(Intersection i, Edge e, Player p) {
+        if (i.getOwner() != null && i.getOwner() != p) return 0;
         Edge[] edges = i.getEdges();
-        if (edges[0] == e) return Math.max(checkHasLongestRoad(edges[1], i), checkHasLongestRoad(edges[2], i));
-        else if (edges[1] == e) return Math.max(checkHasLongestRoad(edges[0], i), checkHasLongestRoad(edges[2], i));
-        else if (edges[2] == e) return Math.max(checkHasLongestRoad(edges[0], i), checkHasLongestRoad(edges[1], i));
+        if (edges[0] == e) return Math.max(checkHasLongestRoad(edges[1], i, p), checkHasLongestRoad(edges[2], i, p));
+        else if (edges[1] == e) return Math.max(checkHasLongestRoad(edges[0], i, p), checkHasLongestRoad(edges[2], i, p));
+        else if (edges[2] == e) return Math.max(checkHasLongestRoad(edges[0], i, p), checkHasLongestRoad(edges[1], i, p));
         return 0; //sanity check
     }
-    private static int checkHasLongestRoad(Edge e, Intersection i) {
-        if (e.getOwner() != GameState.currentPlayer) return 0;
+    private static int checkHasLongestRoad(Edge e, Intersection i, Player p) {
+        if (e.getOwner() != p) return 0;
         Intersection[] ints = e.getIntersections();
-        if (ints[0] == i) return 1 + checkHasLongestRoad(ints[1], e);
-        return 1 + checkHasLongestRoad(ints[0], e);
+        if (ints[0] == i) return 1 + checkHasLongestRoad(ints[1], e, p);
+        return 1 + checkHasLongestRoad(ints[0], e, p);
     }
 
     public static boolean buildSettlement(Player p, Intersection i){
