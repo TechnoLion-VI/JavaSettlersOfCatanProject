@@ -147,14 +147,20 @@ public class Tile {
     public void giveResource(){
         for(int i = 0; i < players.size(); i++){
             Player p = players.get(i);
-            ArrayList<ResourceCard> rc = p.getResourceCards();
             for(int n = 0; n < intersections.length; n++) {
                 if (intersections[n].getOwner() == p && intersections[n].isStlmt() == true) {
-                    rc.add(resource);
+                    if(ResourceDeck.getDeck().size() >= 1) {
+                        ResourceDeck.getDeck(resource.getType()).remove(0);
+                        p.add(resource);
+                    }
+                    else {
+                        continue;
+                    }
                 }
-                else if(intersections[n].getOwner() == p && intersections[n].isCity() == true) {
-                    rc.add(resource);
-                    rc.add(resource);
+            }
+                else(intersections[n].getOwner() == p && intersections[n].isCity() == true) {
+                    p.add(resource);
+                    p.add(resource);
                 }
             }
         }

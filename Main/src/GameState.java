@@ -27,6 +27,12 @@ public class GameState {
 
     }
 
+    public boolean claimWin(){
+        if(currentPlayer.getSecretScore() >= 10){
+            return true;
+        }
+    }
+
     public void rollDice(){
         int diceOne = (int)(Math.random() * 6) + 1;
         int diceTwo = (int)(Math.random() * 6) + 1;
@@ -55,6 +61,7 @@ public class GameState {
         //player who moves robber can steal one random card from a player of their choice (adjacent to new hex)
         if (p == null || p == GameState.currentPlayer) return true;
         GameState.currentPlayer.add(p.remove((int)(Math.random()*p.getResourceCards().size())));
+        ActionLogPanel.robber();
         return true;
     }
     public void checkLargestArmyPlayer() {
@@ -65,6 +72,7 @@ public class GameState {
                 size=players[i].getPlayedKnightCards();
             }
         }
+        ActionLogPanel.largestArmy();
 
     }
 }

@@ -19,15 +19,32 @@ public class ActionLogPanel extends OutputStream{
         System.out.println(GameState.currentPlayer.toString() + " rolled a " + GameState.getDiceNum());
     }
 
-    /*public void paint(Graphics g){
-        g.drawString(GameState.currentPlayer.toString() + " rolled a " + GameState.getDiceNum(), 10, 0); //if dice rolled
-        g.drawString(GameState.currentPlayer.toString() + " traded " + TradeManager.p1offer, 10, 5);
-        g.drawString(GameState.currentPlayer.toString() + " built a " , 10, 10); //how do we check if they built a city or stlmnt
-        g.drawString(GameState.currentPlayer.toString() + " bought a development card.", 10, 15);
-        g.drawString(GameState.currentPlayer.toString() + " acquired the longest army card.", 10, 20);
-        g.drawString(GameState.currentPlayer.toString() + " acquired the longest road card.", 10, 25);
-        g.drawString(GameState.currentPlayer.toString() + " rolled a seven and moved the robber.", 10, 30);
-        g.drawString(GameState.currentPlayer.toString() + " claimed win.", 10, 35);
-    } */
+    public static void trade(){
+        System.out.println(GameState.currentPlayer.toString() + " traded " + TradeManager.p1offer);
+    }
+
+    public static void build(){
+        System.out.println(GameState.currentPlayer.toString() + " built a "); //not done
+    }
+
+    public static void buy(){
+        System.out.println(GameState.currentPlayer.toString() + " bought a development card.");
+    }
+
+    public static void largestArmy(){
+        System.out.println(GameState.currentPlayer.toString() + " acquired the largest army card.");
+    }
+
+    public static void longestRoad(){
+        System.out.println(GameState.currentPlayer.toString() + " acquired the longest road card.");
+    }
+
+    public static void robber(){
+        System.out.println(GameState.currentPlayer.toString() + " rolled a seven and moved the robber.");
+    }
+
+    public static void claimWin() {
+        System.out.println(GameState.currentPlayer.toString() + " claimed win.");
+    }
 
 }
