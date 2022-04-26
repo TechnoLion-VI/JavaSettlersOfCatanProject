@@ -386,9 +386,9 @@ public class Board {
     }
     //Please double-check my recursion
     public static void checkHasLongestRoad(Edge e) {
-        int lRL = checkHasLongestRoad(GameState.currentPlayer, e);
-        if (lRL > longestRoadLength) {
-            longestRoadLength = lRL;
+        int lengthLongestRoad = checkHasLongestRoad(GameState.currentPlayer, e);
+        if (lengthLongestRoad > longestRoadLength) {
+            longestRoadLength = lengthLongestRoad;
             for (Player player:GameState.getPlayers()) {
                 player.setHasLongestRoad(false);
             }
