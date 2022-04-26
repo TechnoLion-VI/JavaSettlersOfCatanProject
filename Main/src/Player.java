@@ -54,8 +54,8 @@ public class Player {
     public ArrayList<DevelopmentCard> getDevCards() {
         return devCards;
     }
-    public int getRoadLength() {
-        return roadLength;
+    public void setHasLongestRoad(boolean b) {
+        hasLongestRoad = b;
     }
     public int getPlayedKnightCards() {
         return playedKnightCards;
