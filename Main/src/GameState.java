@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class GameState {
     public static ResourceDeck resourceDeck = new ResourceDeck();
-    public static Player currentPlayer;
+    public static Player currentPlayer, largestArmyPlayer;
     private static Board board = new Board();
     public static int diceNum;
     private static boolean isTurn;
@@ -33,7 +33,6 @@ public class GameState {
         diceNum = diceOne + diceTwo;
         ActionLogPanel.rollDice();
     }
-
     public static int getDiceNum(){
         return diceNum;
     }
@@ -57,5 +56,15 @@ public class GameState {
         if (p == null || p == GameState.currentPlayer) return true;
         GameState.currentPlayer.add(p.remove((int)(Math.random()*p.getResourceCards().size())));
         return true;
+    }
+    public void checkLargestArmyPlayer() {
+        int playerindex=-1, size=3;
+        for (int i=0; i<players.length; i++) {
+            if (players[i].getPlayedKnightCards()>=size) {
+                playerindex=i;
+                size=players[i].getPlayedKnightCards();
+            }
+        }
+
     }
 }
