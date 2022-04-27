@@ -48,6 +48,7 @@ public class TradeManager {
         rc2.addAll(offer1);
         p1.setResourceCards(rc1);
         p2.setResourceCards(rc2);
+        ActionLogPanel.trade();
         return true;
     }
 
@@ -63,6 +64,7 @@ public class TradeManager {
         GameState.currentPlayer.setResourceCards(rc);
         p1offer+=offer.getType();
         p1receives+=need.getType();
+        ActionLogPanel.trade();
         return true; //temporary
     }
 
@@ -97,6 +99,7 @@ public class TradeManager {
         GameState.currentPlayer.setResourceCards(playerCards);
         p1offer+=offer.getType();
         p1receives+=need.getType();
+        ActionLogPanel.trade();
         return true; //temporary
     }
 

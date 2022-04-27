@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 import java.io.IOException;
 public class ResourceDeck {
-    private ArrayList<Brick> brickDeck;
-    private ArrayList<Grain> grainDeck;
-    private ArrayList<Lumber> lumberDeck;
-    private ArrayList<Ore> oreDeck;
-    private ArrayList<Wool> woolDeck;
+//    public static ArrayList<Brick> brickDeck;
+//    public static ArrayList<Grain> grainDeck;
+//    public static ArrayList<Lumber> lumberDeck;
+//    public static ArrayList<Ore> oreDeck;
+//    public static ArrayList<Wool> woolDeck;
+    public static ArrayList<ResourceCard> brickDeck, grainDeck, lumberDeck, oreDeck, woolDeck;
 
     public ResourceDeck() {
         brickDeck = new ArrayList<>();
@@ -43,6 +44,17 @@ public class ResourceDeck {
             case "Wool" -> woolDeck.size();
             default -> -1;
         };
+    }
+
+    public static ArrayList<ResourceCard> getDeck(String s){
+        return switch (s) {
+            case "Brick" -> brickDeck;
+            case "Grain" -> grainDeck;
+            case "Lumber" -> lumberDeck;
+            case "Ore" -> oreDeck;
+            case "Wool" -> woolDeck;
+            default -> null;
+        }
     }
     //same as above, just with the specified type being a ResourceCard instead of a String
     public int getNumLeft(ResourceCard rc) {
