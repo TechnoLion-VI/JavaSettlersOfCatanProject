@@ -397,7 +397,7 @@ public class Board {
     }
     private static int checkHasLongestRoad(Player p, Edge e) {
         Intersection[] ints = e.getIntersections();
-        return 1 + Math.max(checkHasLongestRoad(ints[0], e, p), checkHasLongestRoad(ints[1], e, p));
+        return 1 + checkHasLongestRoad(ints[0], e, p) + checkHasLongestRoad(ints[1], e, p);
     }
     private static int checkHasLongestRoad(Intersection i, Edge e, Player p) {
         if (i.getOwner() != null && i.getOwner() != p) return 0;
