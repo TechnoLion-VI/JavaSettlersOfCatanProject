@@ -20,8 +20,8 @@ public class Tile {
     public Tile(ResourceCard r, BufferedImage b, int[] coords) {
         resource = r;
         img = b;
-        Tile adjacentTileOne = adjacentTiles[0];
-        Tile adjacentTileTwo = adjacentTiles[1];
+//        Tile adjacentTileOne = adjacentTiles[0];
+//        Tile adjacentTileTwo = adjacentTiles[1];
         location = coords;
         assignedNum = 0;
         edges = new Edge[6];
