@@ -118,4 +118,12 @@ public class Player {
     public ResourceCard remove(int index) {return resourceCards.remove(index);}
     public ResourceCard get(int index) {return resourceCards.get(index);}
     public int size() {return resourceCards.size();}
+
+    public void checkRoadLength() {
+        roadLength = 0;
+        for (Edge e:Board.getEdges()) {
+            roadLength = Math.max(roadLength, Board.checkRoadLength(this, e));
+        }
+    }
+    public int getRoadLength() { return roadLength; }
 }
