@@ -43,7 +43,7 @@ public class ActionLogPanel extends OutputStream{
         System.out.println(GameState.currentPlayer.toString() + " rolled a seven and moved the robber.");
     }
 
-    public static void claimWin() {
+    public static void winClaimed() {
         System.out.println(GameState.currentPlayer.toString() + " claimed win.");
     }
 

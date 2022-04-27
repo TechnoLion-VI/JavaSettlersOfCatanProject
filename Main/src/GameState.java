@@ -30,6 +30,7 @@ public class GameState {
 
     public boolean claimWin(){
         if(currentPlayer.getSecretScore() >= 10){
+            ActionLogPanel.winClaimed();
             return true;
         }
         return false;

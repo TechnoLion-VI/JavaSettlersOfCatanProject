@@ -396,6 +396,7 @@ public class Board {
                 if (p != max && p.getRoadLength() == maxLen) return;
             }
             max.setHasLongestRoad(true);
+            ActionLogPanel.longestRoad();
         }
     }
 
