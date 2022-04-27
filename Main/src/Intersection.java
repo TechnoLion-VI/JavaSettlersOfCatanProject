@@ -45,12 +45,14 @@ public class Intersection {
         else return null;
     }
 
-    public boolean canPlace() {
-        for (Edge e:edges) {
-            if (e.hasBuildings())
-                return false;
-        }
+    public boolean canPlaceInitial() {
+        for (Edge e:edges) if (e.hasBuildings()) return false;
         return true;
+    }
+    public boolean canPlace() {
+        if (!canPlaceInitial()) return false;
+        for (Edge e:edges) if (e.getOwner() == owner) return true;
+        return false;
     }
     public void setOwner(Player p) {
         owner=p;
