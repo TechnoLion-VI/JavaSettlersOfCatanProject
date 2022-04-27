@@ -32,6 +32,7 @@ public class GameState {
         if(currentPlayer.getSecretScore() >= 10){
             return true;
         }
+        return false;
     }
 
     public void rollDice(){
