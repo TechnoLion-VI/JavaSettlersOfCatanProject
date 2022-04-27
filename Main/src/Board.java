@@ -388,11 +388,9 @@ public class Board {
                 max = p; maxLen = max.getRoadLength();
             }
         }
-        if (max == null) return;
-        if (maxLen == GameState.currentPlayer.getRoadLength()) {
+        if (max == null) return; //sanity check
+        if (max == GameState.currentPlayer) {
             if (maxLen >= 5) GameState.currentPlayer.setHasLongestRoad(true);
-        } else {
-            if (maxLen >= 5) max.setHasLongestRoad(true);
         }
     }
 
@@ -405,7 +403,7 @@ public class Board {
         }
         return false;
     }
-    //Please double-check my recursion
+
     public static int checkRoadLength(Player p, Edge e) {
         if (p == null || e.getOwner() != p) return 0;
         Intersection[] ints = e.getIntersections();
