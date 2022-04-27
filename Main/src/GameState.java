@@ -7,7 +7,7 @@ public class GameState {
     public static Board board = new Board();
     public static int diceNum;
     private static boolean isTurn;
-    private static Player[] players = new Player[]{new Player("Blue"), new Player("Green"), new Player("Red"), new Player("Yellow")};
+    private static Player[] players = new Player[]{new Player("Blue"), new Player("White"), new Player("Red"), new Player("Orange")};
     public static DevelopmentCardDeck devCardDeck = new DevelopmentCardDeck();
     private HashMap<Integer, ArrayList<Tile>> resourceDist;
     private int currentLargestArmySize;
