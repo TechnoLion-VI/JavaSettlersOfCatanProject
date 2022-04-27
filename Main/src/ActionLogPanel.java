@@ -35,8 +35,8 @@ public class ActionLogPanel extends OutputStream{
         System.out.println(GameState.currentPlayer.toString() + " acquired the largest army card.");
     }
 
-    public static void longestRoad(){
-        System.out.println(GameState.currentPlayer.toString() + " acquired the longest road card.");
+    public static void longestRoad(Player p){
+        System.out.println(p.toString() + " acquired the longest road card.");
     }
 
     public static void robber(){

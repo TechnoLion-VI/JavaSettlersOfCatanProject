@@ -15,6 +15,6 @@ public class RoadBuilding extends DevelopmentCard{
         setImg(card);
     }
     public boolean use(Edge a, Edge b) {
-        return Board.buildRoad(GameState.currentPlayer, a) && Board.buildRoad(GameState.currentPlayer, b);
+        return Board.buildRoad(a) && Board.buildRoad(b);
     }
 }
