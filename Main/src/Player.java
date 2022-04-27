@@ -13,6 +13,7 @@ public class Player {
     private ArrayList<DevelopmentCard> devCards=new ArrayList<>();
     private boolean hasLargestArmy, hasLongestRoad, hasPlayedDevCard;
     private BufferedImage stlmt, city;
+    public static boolean isTurn;
 
     public Player(String color) {
         myColor=color; //player color
