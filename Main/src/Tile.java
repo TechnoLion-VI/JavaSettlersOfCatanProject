@@ -158,15 +158,13 @@ public class Tile {
                     }
                 }
                 else if(intersections[n].getOwner() == p && intersections[n].isCity() == true) {
-                        if(ResourceDeck.getDeck(resource.getType()).size() >= 2){
-                            ResourceDeck.getDeck(resource.getType()).remove(0);
-                            ResourceDeck.getDeck(resource.getType()).remove(0);
-                            p.add(resource);
-                            p.add(resource);
+                    if(ResourceDeck.getDeck(resource.getType()).size() >= 2){
+                        ResourceDeck.getDeck(resource.getType()).remove(0);
+                        ResourceDeck.getDeck(resource.getType()).remove(0);
+                        p.add(resource);
+                        p.add(resource);
                     }
                 }
-            }
-
             }
         }
     }
