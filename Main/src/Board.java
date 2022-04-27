@@ -389,8 +389,13 @@ public class Board {
             }
         }
         if (max == null) return; // sanity check
-        if (max == GameState.currentPlayer) {
+        if (maxLen == GameState.currentPlayer.getRoadLength()) {
             if (maxLen >= 5) max.setHasLongestRoad(true);
+        } else {
+            for (Player p:GameState.getPlayers()) {
+                if (p != max && p.getRoadLength() == maxLen) return;
+            }
+            max.setHasLongestRoad(true);
         }
     }
 
