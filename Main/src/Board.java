@@ -9,7 +9,7 @@ public class Board {
     private static Edge[] edges;
     private ArrayList<Tile> tilesList;
     private Tile[][] tiles;
-    private BufferedImage brick, grain, lumber, ore, wool;
+    private BufferedImage brick, grain, lumber, ore, wool, desert;
 
     //INITIALIZE THE FULL BOARD
     public Board() {
@@ -23,9 +23,10 @@ public class Board {
             lumber=ImageIO.read(Board.class.getResource("/Images/lumber tile.png"));
             ore=ImageIO.read(Board.class.getResource("/Images/ore tile.png"));
             wool=ImageIO.read(Board.class.getResource("/Images/wool tile.png"));
+            desert=ImageIO.read(Board.class.getResource("/Images/desert tile.png"));
         }
         catch(Exception e) {
-            System.out.println("Board (Tile) Images Error");
+            System.out.println("Reading in Tile Images Error");
             return;
         }
         fillTiles();
@@ -43,24 +44,21 @@ public class Board {
 
         // 1 desert, 3 ore, 3 brick, 4 wheat, 4 lumber, 4 wool
         ArrayList<Tile> tilesArray = new ArrayList<>();
-
         for (int i = 0; i < 3; i++) {
-            tilesArray.add(new Tile(new ResourceCard("ore", ore)));
-            tilesArray.add(new Tile(new ResourceCard("brick", brick)));
+            tilesArray.add(new Tile(ore));
+            tilesArray.add(new Tile(brick));
         }
 
         for (int i = 0; i < 4; i++) {
-            tilesArray.add(new Tile(new ResourceCard("grain", grain)));
-            tilesArray.add(new Tile(new ResourceCard("lumber", lumber)));
-            tilesArray.add(new Tile(new ResourceCard("wool", wool)));
+            tilesArray.add(new Tile(grain));
+            tilesArray.add(new Tile(lumber));
+            tilesArray.add(new Tile(wool));
         }
-
-        tilesArray.add(new Tile(new ResourceCard("desert", null)));
-
+        tilesArray.add(new Tile(desert));
         Collections.shuffle(tilesArray);
 
         for (int x = 0; x < tiles.length; x++) {
-            for (int y = 0; y < tiles[y].length; y++) {
+            for (int y = 0; y < tiles[x].length; y++) {
                 tiles[x][y] = tilesArray.remove(0);
                 tiles[x][y].setLocation(x, y);
             }

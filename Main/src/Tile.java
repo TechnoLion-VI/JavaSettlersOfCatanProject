@@ -16,21 +16,20 @@ public class Tile {
     private Edge[] edges;
     private Intersection[] intersections;
     private Tile[] adjacentTiles;
+    private Tile adjacentTileOne, adjacentTileTwo;
 
-    public Tile(ResourceCard r, BufferedImage b, int[] coords) {
-        resource = r;
+    public Tile(BufferedImage b) {
         img = b;
-        Tile adjacentTileOne = adjacentTiles[0];
-        Tile adjacentTileTwo = adjacentTiles[1];
-        location = coords;
+//        adjacentTileOne = adjacentTiles[0];
+//        adjacentTileTwo = adjacentTiles[1];
         assignedNum = 0;
         edges = new Edge[6];
         intersections = new Intersection[6];
         adjacentTiles = new Tile[6];
     }
     public void setAdjacentVertex(int vertexOrientation) {
-        Tile adjacentTileOne = adjacentTiles[0];
-        Tile adjacentTileTwo = adjacentTiles[1];
+        adjacentTileOne = adjacentTiles[0];
+        adjacentTileTwo = adjacentTiles[1];
         boolean tileOneExists = adjacentTileOne != null;
         boolean tileTwoExists = adjacentTileTwo != null;
 
@@ -98,10 +97,12 @@ public class Tile {
             }
         }
     }
-
-    public Tile(ResourceCard r) {
-        this(r, null, null);
+    public void setResource(ResourceCard rc) {
+        resource=rc;
     }
+//    public Tile(ResourceCard r) {
+//        this(r, null, null);
+//    }
     public int resourcesNeeded() {
         int count=0;
         for(int i = 0; i < players.size(); i++){
