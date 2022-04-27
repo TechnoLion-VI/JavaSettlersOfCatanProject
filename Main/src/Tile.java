@@ -144,21 +144,19 @@ public class Tile {
     public Intersection[] getIntersections() {
         return intersections;
     }
-    public void giveResource(){
-        for(int i = 0; i < players.size(); i++){
+    public void giveResource() {
+        for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
-            for(int n = 0; n < intersections.length; n++) {
+            for (int n = 0; n < intersections.length; n++) {
                 if (intersections[n].getOwner() == p && intersections[n].isStlmt() == true) {
                     if (ResourceDeck.getDeck(resource.getType()).size() >= 1) {
                         ResourceDeck.getDeck(resource.getType()).remove(0);
                         p.add(resource);
-                    }
-                    else {
+                    } else {
                         continue;
                     }
-                }
-                else if(intersections[n].getOwner() == p && intersections[n].isCity() == true) {
-                    if(ResourceDeck.getDeck(resource.getType()).size() >= 2){
+                } else if (intersections[n].getOwner() == p && intersections[n].isCity() == true) {
+                    if (ResourceDeck.getDeck(resource.getType()).size() >= 2) {
                         ResourceDeck.getDeck(resource.getType()).remove(0);
                         ResourceDeck.getDeck(resource.getType()).remove(0);
                         p.add(resource);
@@ -167,6 +165,7 @@ public class Tile {
                 }
             }
         }
+    }
 
     public void addPlayer(Player p) {
         for (int i = 0; i < intersections.length; i++) {
