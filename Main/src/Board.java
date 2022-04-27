@@ -388,7 +388,7 @@ public class Board {
                 max = p; maxLen = max.getRoadLength();
             }
         }
-        if (max == null) return; //sanity check
+        if (max == null) return; // sanity check
         if (max == GameState.currentPlayer) {
             if (maxLen >= 5) max.setHasLongestRoad(true);
         }
