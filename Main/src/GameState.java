@@ -10,6 +10,7 @@ public class GameState {
     private static Player[] players = new Player[]{new Player("Blue"), new Player("Green"), new Player("Red"), new Player("Yellow")};
     public static DevelopmentCardDeck devCardDeck = new DevelopmentCardDeck();
     private HashMap<Integer, ArrayList<Tile>> resourceDist;
+    private int currentLargestArmySize;
 
     public GameState(){
 
@@ -72,7 +73,13 @@ public class GameState {
                 size=players[i].getPlayedKnightCards();
             }
         }
-        ActionLogPanel.largestArmy();
 
+        if (currentLargestArmySize<size && !largestArmyPlayer.equals(players[playerindex])) {
+            largestArmyPlayer.setHasLargestArmy(false);
+            players[playerindex].setHasLargestArmy(true);
+            largestArmyPlayer=players[playerindex];
+            currentLargestArmySize=size;
+        }
+        ActionLogPanel.largestArmy();
     }
 }

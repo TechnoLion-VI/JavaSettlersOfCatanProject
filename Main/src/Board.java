@@ -5,12 +5,11 @@ import java.util.Collections;
 
 public class Board {
     private ArrayList<Integer> tokens = new ArrayList<>();
-    private Intersection[] intersections;
-    private Edge[] edges;
+    private static Intersection[] intersections;
+    private static Edge[] edges;
     private ArrayList<Tile> tilesList;
     private Tile[][] tiles;
     private BufferedImage brick, grain, lumber, ore, wool;
-    private static int longestRoadLength = 0;
 
     //INITIALIZE THE FULL BOARD
     public Board() {
@@ -375,49 +374,63 @@ public class Board {
         }
     }
 
+    public static Edge[] getEdges() { return edges; }
+
+    public static Intersection[] getIntersections() { return intersections; }
+
+    public static void setLongestRoad() {
+        Player max = null;
+        int maxLen = 0;
+        for (Player p:GameState.getPlayers()) {
+            p.checkRoadLength();
+            p.setHasLongestRoad(false);
+            if (p.getRoadLength() > maxLen) {
+                max = p; maxLen = max.getRoadLength();
+            }
+        }
+        if (max == null) return;
+        if (maxLen == GameState.currentPlayer.getRoadLength()) {
+            if (maxLen >= 5) GameState.currentPlayer.setHasLongestRoad(true);
+        } else {
+            if (maxLen >= 5) max.setHasLongestRoad(true);
+        }
+    }
+
     public static boolean buildRoad(Edge e){
         if(e.canPlace(GameState.currentPlayer)) {
             GameState.currentPlayer.decrementRoadsLeft();
             e.setOwner(GameState.currentPlayer);
-            checkHasLongestRoad(e);
+            setLongestRoad();
             return true;
         }
         return false;
     }
     //Please double-check my recursion
-    public static void checkHasLongestRoad(Edge e) {
-        int lengthLongestRoad = checkHasLongestRoad(GameState.currentPlayer, e);
-        if (lengthLongestRoad > longestRoadLength) {
-            longestRoadLength = lengthLongestRoad;
-            for (Player player:GameState.getPlayers()) {
-                player.setHasLongestRoad(false);
-            }
-            if (longestRoadLength >= 5) GameState.currentPlayer.setHasLongestRoad(true);
-        }
-    }
-    private static int checkHasLongestRoad(Player p, Edge e) {
+    public static int checkRoadLength(Player p, Edge e) {
+        if (p == null || e.getOwner() != p) return 0;
         Intersection[] ints = e.getIntersections();
-        return 1 + Math.max(checkHasLongestRoad(ints[0], e), checkHasLongestRoad(ints[1], e));
+        return 1 + checkRoadLength(ints[0], e, p) + checkRoadLength(ints[1], e, p);
     }
-    private static int checkHasLongestRoad(Intersection i, Edge e) {
-        if (i.getOwner() != null && i.getOwner() != GameState.currentPlayer) return 0;
+    private static int checkRoadLength(Intersection i, Edge e, Player p) {
+        if (i.getOwner() != null && i.getOwner() != p) return 0;
         Edge[] edges = i.getEdges();
-        if (edges[0] == e) return Math.max(checkHasLongestRoad(edges[1], i), checkHasLongestRoad(edges[2], i));
-        else if (edges[1] == e) return Math.max(checkHasLongestRoad(edges[0], i), checkHasLongestRoad(edges[2], i));
-        else if (edges[2] == e) return Math.max(checkHasLongestRoad(edges[0], i), checkHasLongestRoad(edges[1], i));
+        if (edges[0] == e) return Math.max(checkRoadLength(edges[1], i, p), checkRoadLength(edges[2], i, p));
+        else if (edges[1] == e) return Math.max(checkRoadLength(edges[0], i, p), checkRoadLength(edges[2], i, p));
+        else if (edges[2] == e) return Math.max(checkRoadLength(edges[0], i, p), checkRoadLength(edges[1], i, p));
         return 0; //sanity check
     }
-    private static int checkHasLongestRoad(Edge e, Intersection i) {
-        if (e.getOwner() != GameState.currentPlayer) return 0;
+    private static int checkRoadLength(Edge e, Intersection i, Player p) {
+        if (e.getOwner() != p) return 0;
         Intersection[] ints = e.getIntersections();
-        if (ints[0] == i) return 1 + checkHasLongestRoad(ints[1], e);
-        return 1 + checkHasLongestRoad(ints[0], e);
+        if (ints[0] == i) return 1 + checkRoadLength(ints[1], e, p);
+        return 1 + checkRoadLength(ints[0], e, p);
     }
 
     public static boolean buildSettlement(Player p, Intersection i){
         if (i.canPlace()) {
             i.setOwner(p);
             i.setIsStlmt(true); //check Intersection class
+            setLongestRoad();
             return true;    //also needs to increase player's vp
         }
         return false;

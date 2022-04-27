@@ -54,9 +54,6 @@ public class Player {
     public ArrayList<DevelopmentCard> getDevCards() {
         return devCards;
     }
-    public void setHasLongestRoad(boolean b) {
-        hasLongestRoad = b;
-    }
     public int getPlayedKnightCards() {
         return playedKnightCards;
     }
@@ -102,6 +99,9 @@ public class Player {
     public void setHasLargestArmy(boolean b) {
         hasLargestArmy=b;
     }
+    public void setHasLongestRoad(boolean b) {
+        hasLongestRoad = b;
+    }
     public void addToPlayedKnightCards() {
         playedKnightCards++;
     }
@@ -118,4 +118,12 @@ public class Player {
     public ResourceCard remove(int index) {return resourceCards.remove(index);}
     public ResourceCard get(int index) {return resourceCards.get(index);}
     public int size() {return resourceCards.size();}
+    //solved Longest Road issues
+    public void checkRoadLength() {
+        roadLength = 0;
+        for (Edge e:Board.getEdges()) {
+            roadLength = Math.max(roadLength, Board.checkRoadLength(this, e));
+        }
+    }
+    public int getRoadLength() { return roadLength; }
 }

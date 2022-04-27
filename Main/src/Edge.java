@@ -21,7 +21,7 @@ public class Edge {
 
     //determines if the player can place a road on this edge
     public boolean canPlace(Player p) {
-        if (owner != null) return false;
+        if (owner != null || p.getRoadsLeft() <= 0) return false;
         for (Intersection i:intersections) {
             if (i.getOwner().equals(p)) return true;
             for (Edge e:i.getEdges()) {
