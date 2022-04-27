@@ -438,6 +438,7 @@ public class Board {
             i.setOwner(p);
             i.setIsStlmt(true); //check Intersection class
             setLongestRoad();
+            ActionLogPanel.builtSettlement();
             return true;    //also needs to increase player's vp
         }
         return false;

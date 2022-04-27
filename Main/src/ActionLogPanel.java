@@ -23,8 +23,12 @@ public class ActionLogPanel extends OutputStream{
         System.out.println(GameState.currentPlayer.toString() + " traded " + TradeManager.p1offer);
     }
 
-    public static void build(){
-        System.out.println(GameState.currentPlayer.toString() + " built a "); //not done
+    public static void builtSettlement(){
+        System.out.println(GameState.currentPlayer.toString() + " built a settlement."); //not done
+    }
+
+    public static void builtRoad(){
+        System.out.println(GameState.currentPlayer.toString() + " built a road.");
     }
 
     public static void buy(){

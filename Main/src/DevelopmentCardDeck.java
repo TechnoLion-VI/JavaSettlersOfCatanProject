@@ -41,6 +41,7 @@ public class DevelopmentCardDeck {
         Collections.shuffle(deck);
     }
     public DevelopmentCard draw() {
+        ActionLogPanel.buy();
         return deck.remove(0);
     }
 }
