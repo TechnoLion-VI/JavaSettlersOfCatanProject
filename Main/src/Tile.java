@@ -152,7 +152,8 @@ public class Tile {
                     if (ResourceDeck.getDeck(resource.getType()).size() >= 1) {
                         ResourceDeck.getDeck(resource.getType()).remove(0);
                         p.add(resource);
-                    } else {
+                    }
+                    else {
                         continue;
                     }
                 }
