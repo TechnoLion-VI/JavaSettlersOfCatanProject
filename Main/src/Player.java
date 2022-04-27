@@ -118,7 +118,7 @@ public class Player {
     public ResourceCard remove(int index) {return resourceCards.remove(index);}
     public ResourceCard get(int index) {return resourceCards.get(index);}
     public int size() {return resourceCards.size();}
-
+    //solved Longest Road issues
     public void checkRoadLength() {
         roadLength = 0;
         for (Edge e:Board.getEdges()) {
