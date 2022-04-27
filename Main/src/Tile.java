@@ -169,7 +169,6 @@ public class Tile {
 
             }
         }
-    }
 
     public void addPlayer(Player p) {
         for (int i = 0; i < intersections.length; i++) {

@@ -54,7 +54,7 @@ public class ResourceDeck {
             case "Ore" -> oreDeck;
             case "Wool" -> woolDeck;
             default -> null;
-        }
+        };
     }
     //same as above, just with the specified type being a ResourceCard instead of a String
     public int getNumLeft(ResourceCard rc) {
