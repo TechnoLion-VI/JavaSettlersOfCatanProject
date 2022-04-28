@@ -16,7 +16,6 @@ public class MainPanel extends JPanel implements MouseListener {
     private JTextArea log;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator;
-    private String vicpoint1,vicpoint2,vicpoint3,vicpoint4;
     private Font playerTitleFont;
 
     public MainPanel() {
@@ -59,7 +58,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString("Player Four: " + GameState.players[3].getPublicScore(),11,248);
         g2.drawLine(15,380,525,380);
         g2.drawLine(15,380,15,425);
-        g.drawString("PLAYED DEVELOPEMENT CARDS",15,375);
+        g.drawString("PLAYED DEVELOPMENT CARDS",15,375);
     }
 
     @Override
