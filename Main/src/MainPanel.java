@@ -23,7 +23,7 @@ public class MainPanel extends JPanel implements MouseListener {
         gameState = new GameState();
         try {
             playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("Images/Screenshot_2022-04-26_185231-removebg-preview.png")));
-            Font playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
+            playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(playerTitleFont);
         } catch (Exception e) {
@@ -53,10 +53,10 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.setStroke(new BasicStroke(4));
         g2.drawLine(7,152,319,152);
         g2.drawLine(7,152,7,255);
-        g.drawString("Player One: " + vicpoint1,11,176);
-        g.drawString("Player Two: " + vicpoint2,11,200);
-        g.drawString("Player Three: " + vicpoint3,11,224);
-        g.drawString("Player Four: " + vicpoint4,11,248);
+        g.drawString("Player One: " + GameState.players[0].getPublicScore(),11,176);
+        g.drawString("Player Two: " + GameState.players[1].getPublicScore(),11,200);
+        g.drawString("Player Three: " + GameState.players[2].getPublicScore(),11,224);
+        g.drawString("Player Four: " + GameState.players[3].getPublicScore(),11,248);
         g2.drawLine(15,380,525,380);
         g2.drawLine(15,380,15,425);
         g.drawString("PLAYED DEVELOPEMENT CARDS",15,375);
