@@ -12,7 +12,7 @@ import java.util.Objects;
 public class MainPanel extends JPanel implements MouseListener {
     private int[] xCoords;  //add values later
     private int[] yCoords;
-    private Board board;
+    private GameState gameState;
     private JTextArea log;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator;
@@ -20,7 +20,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private Font playerTitleFont;
 
     public MainPanel() {
-        //board = new Board();
+        gameState = new GameState();
         try {
             playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("Images/Screenshot_2022-04-26_185231-removebg-preview.png")));
             Font playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
