@@ -23,7 +23,7 @@ public class MainPanel extends JPanel implements MouseListener {
         gameState = new GameState();
         try {
             playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("Images/Screenshot_2022-04-26_185231-removebg-preview.png")));
-            Font playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
+            playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(playerTitleFont);
         } catch (Exception e) {
