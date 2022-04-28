@@ -1,3 +1,4 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -6,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainPanel extends JPanel implements MouseListener {
     private int[] xCoords;  //add values later
