@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class MainPanel extends JPanel implements MouseListener {
     private int[] xCoords;  //add values later
     private int[] yCoords;
-    private Board board;
+    private GameState gameState;
     private JTextArea log;
 
     public MainPanel() throws IOException {
-        board = new Board();
+        gameState = new GameState();
     }
 
     public void initComponents() {
