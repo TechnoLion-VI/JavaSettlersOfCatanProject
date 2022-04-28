@@ -31,6 +31,8 @@ public class ActionLogPanel extends OutputStream{
         System.out.println(GameState.currentPlayer.toString() + " built a road.");
     }
 
+    public static void builtCity(){ System.out.println(GameState.currentPlayer.toString() + " built a city.")};
+
     public static void buy(){
         System.out.println(GameState.currentPlayer.toString() + " bought a development card.");
     }

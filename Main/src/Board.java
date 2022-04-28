@@ -205,6 +205,7 @@ public class Board {
                 // NE Edge
                 Tile tileNE = tiles[x][y].getAdjacentTile(2);
                 if (tileNE != null) {
+
                     if (tileNE.getEdges()[5] != null) {
                         adjacentEdges[2] = tileNE.getEdges()[5];
                     } else {
@@ -408,6 +409,7 @@ public class Board {
             GameState.currentPlayer.decrementRoadsLeft();
             e.setOwner(GameState.currentPlayer);
             setLongestRoad();
+            ActionLogPanel.builtRoad();
             return true;
         }
         return false;
@@ -445,6 +447,7 @@ public class Board {
     }
 
     public static boolean buildCity(Intersection i){
+        ActionLogPanel.builtCity();
         return i.setIsCity();
         //also needs to increase player's vp
     } //check Intersection class
