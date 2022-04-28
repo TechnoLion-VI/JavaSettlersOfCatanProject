@@ -12,7 +12,7 @@ public class GameState {
     private int currentLargestArmySize;
 
     public GameState(){
-
+        currentPlayer=players[0];   //temporary
     }
 
     public void getIntersection(int x, int y){

@@ -32,8 +32,8 @@ public class Player {
     public String getColor() {
         return myColor;
     }
-    public String toString(Player p){
-        return p.getColor() + " Player";
+    public String toString(){
+        return getColor() + " Player";
     }
     public int getPublicScore() {
         publicScore=numStlmtsBuilt;

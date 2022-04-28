@@ -16,15 +16,16 @@ public class MainPanel extends JPanel implements MouseListener {
     private JTextArea log;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator;
-    private Font playerTitleFont;
+    //private Font playerTitleFont;
+    private int x, y;
 
     public MainPanel() {
         gameState = new GameState();
         try {
             playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("Images/Screenshot_2022-04-26_185231-removebg-preview.png")));
-            playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
+            //playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(playerTitleFont);
+            //ge.registerFont(playerTitleFont);
         } catch (Exception e) {
             System.out.println("Exception error");
         }
@@ -42,11 +43,14 @@ public class MainPanel extends JPanel implements MouseListener {
     public void paint(Graphics g) {
         g.setColor(new Color(255, 230, 153));
         g.fillRect(0, 0, 1600, 900);
-        g.drawImage(playerIndicator, -10, -15, 385, 139, null);
+        g.drawImage(playerIndicator, -10, -15, 500, 139, null);
         g.setColor(Color.black);
+        Font playerTitleFont = new Font("Serif", Font.BOLD, 50);
         g.setFont (playerTitleFont);
-        g.drawString("PLAYER ONE", 30, 75);
+        g.drawString(GameState.currentPlayer.toString(), 20, 75);
         //g.setFont(myFontsmall);
+        Font victoryScoreFont = new Font("Serif", Font.BOLD, 15);
+        g.setFont(victoryScoreFont);
         g.drawString("PUBLIC VICTORY POINTS",5,145);
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
@@ -63,7 +67,9 @@ public class MainPanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        x=e.getX();
+        y=e.getY();
+        System.out.println("("+x+", "+y+")");
     }
 
     @Override
