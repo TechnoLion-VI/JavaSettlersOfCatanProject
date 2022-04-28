@@ -49,19 +49,21 @@ public class MainPanel extends JPanel implements MouseListener {
         g.setFont (playerTitleFont);
         g.drawString(GameState.currentPlayer.toString(), 20, 75);
         //g.setFont(myFontsmall);
-        Font victoryScoreFont = new Font("Serif", Font.BOLD, 15);
-        g.setFont(victoryScoreFont);
+        Font victoryTitleFont = new Font("Serif", Font.BOLD, 20);
+        g.setFont(victoryTitleFont);
         g.drawString("PUBLIC VICTORY POINTS",5,145);
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
         g2.drawLine(7,152,319,152);
         g2.drawLine(7,152,7,255);
+        Font victoryPointFont = new Font("Serif", Font.BOLD, 15);
         g.drawString("Player One: " + GameState.players[0].getPublicScore(),11,176);
         g.drawString("Player Two: " + GameState.players[1].getPublicScore(),11,200);
         g.drawString("Player Three: " + GameState.players[2].getPublicScore(),11,224);
         g.drawString("Player Four: " + GameState.players[3].getPublicScore(),11,248);
         g2.drawLine(15,380,525,380);
         g2.drawLine(15,380,15,425);
+        g.setFont(victoryTitleFont);
         g.drawString("PLAYED DEVELOPMENT CARDS",15,375);
     }
 
