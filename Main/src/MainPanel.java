@@ -1,4 +1,3 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -6,12 +5,12 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Objects;
+import java.util.ArrayList;
 
-public class MainPanel extends JFrame implements MouseListener {
+public class MainPanel extends JPanel implements MouseListener {
     private int[] xCoords;  //add values later
     private int[] yCoords;
-    //private Board;
+    private Board board;
     private JTextArea log;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator;
