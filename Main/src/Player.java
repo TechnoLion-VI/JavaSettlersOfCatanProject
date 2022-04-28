@@ -21,8 +21,8 @@ public class Player {
         citiesLeft=4; //remaining cities that this player can build
         roadsLeft=15; //remaining roads that this player can build
         try {
-            stlmt = ImageIO.read(new File("Images/Final " + myColor + " Settlement.PNG")); //settlement image
-            city = ImageIO.read(new File("Images/Final " + myColor + " City.PNG")); //city image
+            stlmt = ImageIO.read(Player.class.getResource("/Images/" + myColor + " Settlement.PNG")); //settlement image
+            city = ImageIO.read(Player.class.getResource("/Images/" + myColor + " City.PNG")); //city image
         } catch (IOException e) {
             e.printStackTrace();
         }
