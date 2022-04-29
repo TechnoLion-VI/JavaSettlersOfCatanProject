@@ -59,7 +59,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString("Player Four: " + vicpoint4,11,248);
         g2.drawLine(15,380,525,380);
         g2.drawLine(15,380,15,425);
-        g.drawString("PLAYED DEVELOPEMENT CARDS",15,375);
+        g.drawString("PLAYED DEVELOPMENT CARDS",15,375);
     }
 
     @Override

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class TradeManager {
+public class kTradeManager {
     public static String p1offer, p2offer, p1receives, p2receives;
     public TradeManager(){
 
