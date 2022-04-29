@@ -55,10 +55,10 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.drawLine(7,152,319,152);
         g2.drawLine(7,152,7,255);
         Font victoryPointFont = new Font("Serif", Font.BOLD, 15);
-        g.drawString("Player One: " + GameState.players[0].getPublicScore(),11,176);
-        g.drawString("Player Two: " + GameState.players[1].getPublicScore(),11,200);
-        g.drawString("Player Three: " + GameState.players[2].getPublicScore(),11,224);
-        g.drawString("Player Four: " + GameState.players[3].getPublicScore(),11,248);
+        g.drawString("Player Blue: " + GameState.players[0].getPublicScore(),11,176);
+        g.drawString("Player Orange: " + GameState.players[1].getPublicScore(),11,200);
+        g.drawString("Player Red: " + GameState.players[2].getPublicScore(),11,224);
+        g.drawString("Player White: " + GameState.players[3].getPublicScore(),11,248);
         g2.drawLine(7,380,319,380);
         g2.drawLine(7,380,7,425);
         g.setFont(victoryTitleFont);
