@@ -4,9 +4,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainPanel extends JPanel implements MouseListener {
@@ -14,57 +12,79 @@ public class MainPanel extends JPanel implements MouseListener {
     private int[] yCoords;
     private GameState gameState;
     private JTextArea log;
+    private JScrollPane logPanel;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator;
-    private String vicpoint1,vicpoint2,vicpoint3,vicpoint4;
-    private Font playerTitleFont;
+    //private Font playerTitleFont;
+    private int x, y;
 
     public MainPanel() {
         gameState = new GameState();
         try {
-            playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("Images/Screenshot_2022-04-26_185231-removebg-preview.png")));
-            Font playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
+            playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("Images/Player Indicator.png")));
+            //playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(playerTitleFont);
+            //ge.registerFont(playerTitleFont);
         } catch (Exception e) {
-            System.out.println("Exception error");
+            e.printStackTrace();
         }
+        setLayout(null);
+        initComponents();
     }
 
 
 
     public void initComponents() {
-        log = new JTextArea();
+        log = new JTextArea("This is the action log \n", 50, 50);
+        log.setBackground(Color.BLACK);
+        log.setForeground(Color.LIGHT_GRAY);
+        log.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        logPanel = new JScrollPane(log);
         PrintStream printStream = new PrintStream(new ActionLogPanel(log));
         System.setOut(printStream);
-        this.add(new JScrollPane(log)); //to be edited later
+        logPanel.setBounds(1000, 10, 500, 500);
+        logPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        logPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        this.add(logPanel); //to be edited later
     }
 
     public void paint(Graphics g) {
         g.setColor(new Color(255, 230, 153));
         g.fillRect(0, 0, 1600, 900);
-        g.drawImage(playerIndicator, -10, -15, 385, 139, null);
+        g.drawImage(playerIndicator, -10, -15, 500, 139, null);
         g.setColor(Color.black);
+        Font playerTitleFont = new Font("Serif", Font.BOLD, 50);
         g.setFont (playerTitleFont);
-        g.drawString("PLAYER ONE", 30, 75);
+        g.drawString(GameState.currentPlayer.toString(), 20, 75);
         //g.setFont(myFontsmall);
+        Font victoryTitleFont = new Font("Serif", Font.BOLD, 20);
+        g.setFont(victoryTitleFont);
         g.drawString("PUBLIC VICTORY POINTS",5,145);
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
         g2.drawLine(7,152,319,152);
         g2.drawLine(7,152,7,255);
-        g.drawString("Player One: " + vicpoint1,11,176);
-        g.drawString("Player Two: " + vicpoint2,11,200);
-        g.drawString("Player Three: " + vicpoint3,11,224);
-        g.drawString("Player Four: " + vicpoint4,11,248);
-        g2.drawLine(15,380,525,380);
-        g2.drawLine(15,380,15,425);
-        g.drawString("PLAYED DEVELOPMENT CARDS",15,375);
+        Font victoryPointFont = new Font("Serif", Font.BOLD, 15);
+        g.drawString("Player Blue: " + GameState.players[0].getPublicScore(),11,176);
+        g.drawString("Player Orange: " + GameState.players[1].getPublicScore(),11,200);
+        g.drawString("Player Red: " + GameState.players[2].getPublicScore(),11,224);
+        g.drawString("Player White: " + GameState.players[3].getPublicScore(),11,248);
+        g2.drawLine(7,380,319,380);
+        g2.drawLine(7,380,7,425);
+        g.setFont(victoryTitleFont);
+        g.drawString("PLAYED DEVELOPMENT CARDS",15,395);
+        g.drawRect(500,10,400,75);
+        Font diceRollFont = new Font("Serif", Font.BOLD, 35);
+        g.setFont(diceRollFont);
+        g.drawString("DICE ROLL TOTAL: " + GameState.getDiceNum(), 510, 60);
+
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        x=e.getX();
+        y=e.getY();
+        System.out.println("("+x+", "+y+")");
     }
 
     @Override

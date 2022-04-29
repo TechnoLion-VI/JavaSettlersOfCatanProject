@@ -3,7 +3,6 @@ import java.awt.image.BufferedImage;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 
 public class Player {
@@ -21,8 +20,8 @@ public class Player {
         citiesLeft=4; //remaining cities that this player can build
         roadsLeft=15; //remaining roads that this player can build
         try {
-            stlmt = ImageIO.read(new File("Images/Final " + myColor + " Settlement.PNG")); //settlement image
-            city = ImageIO.read(new File("Images/Final " + myColor + " City.PNG")); //city image
+            stlmt = ImageIO.read(Player.class.getResource("/Images/" + myColor + " Settlement.PNG")); //settlement image
+            city = ImageIO.read(Player.class.getResource("/Images/" + myColor + " City.PNG")); //city image
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,8 +31,8 @@ public class Player {
     public String getColor() {
         return myColor;
     }
-    public String toString(Player p){
-        return p.getColor() + " Player";
+    public String toString(){
+        return getColor() + " Player";
     }
     public int getPublicScore() {
         publicScore=numStlmtsBuilt;
