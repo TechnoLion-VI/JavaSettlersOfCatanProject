@@ -62,7 +62,12 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.drawLine(7,380,319,380);
         g2.drawLine(7,380,7,425);
         g.setFont(victoryTitleFont);
-        g.drawString("PLAYED DEVELOPMENT CARDS",15,375);
+        g.drawString("PLAYED DEVELOPMENT CARDS",15,395);
+        g.drawRect(500,10,400,75);
+        Font diceRollFont = new Font("Serif", Font.BOLD, 35);
+        g.setFont(diceRollFont);
+        g.drawString("DICE ROLL TOTAL: " + GameState.getDiceNum(), 510, 60);
+
     }
 
     @Override
