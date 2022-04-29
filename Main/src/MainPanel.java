@@ -59,8 +59,8 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString("Player Two: " + GameState.players[1].getPublicScore(),11,200);
         g.drawString("Player Three: " + GameState.players[2].getPublicScore(),11,224);
         g.drawString("Player Four: " + GameState.players[3].getPublicScore(),11,248);
-        g2.drawLine(15,380,525,380);
-        g2.drawLine(15,380,15,425);
+        g2.drawLine(7,380,319,380);
+        g2.drawLine(7,380,7,425);
         g.setFont(victoryTitleFont);
         g.drawString("PLAYED DEVELOPMENT CARDS",15,375);
     }
