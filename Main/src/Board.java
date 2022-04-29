@@ -374,7 +374,9 @@ public class Board {
     }
 
     public static Edge[] getEdges() { return edges; }
-
+    public Tile[][] getTiles() {
+        return tiles;
+    }
     public static Intersection[] getIntersections() { return intersections; }
 
     public static void setLongestRoad() {
@@ -445,7 +447,6 @@ public class Board {
         }
         return false;
     }
-
     public static boolean buildCity(Intersection i){
         ActionLogPanel.builtCity();
         return i.setIsCity();

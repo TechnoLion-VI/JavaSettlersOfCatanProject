@@ -63,6 +63,10 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.drawLine(7,380,7,425);
         g.setFont(victoryTitleFont);
         g.drawString("PLAYED DEVELOPMENT CARDS",15,375);
+        g.drawImage(GameState.board.getTiles()[0][0].getImg(), 100, 100, 110, 146, null);
+        g.drawImage(GameState.board.getTiles()[0][1].getImg(), 210, 100, 110, 146, null);
+        g.drawImage(GameState.board.getTiles()[1][0].getImg(), 45, 209, 110, 146, null);
+        g.drawImage(GameState.board.getTiles()[1][1].getImg(), 155, 209, 110, 146, null);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class GameState {
     }
 
     public void getIntersection(int x, int y){
-        System.out.println("chair");
+
     }
 
     public void getEdge(int x, int y){
