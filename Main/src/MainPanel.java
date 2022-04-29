@@ -12,6 +12,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private int[] yCoords;
     private GameState gameState;
     private JTextArea log;
+    private JScrollPane logPanel;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator;
     //private Font playerTitleFont;
@@ -27,15 +28,24 @@ public class MainPanel extends JPanel implements MouseListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        setLayout(null);
+        initComponents();
     }
 
 
 
     public void initComponents() {
-        log = new JTextArea();
+        log = new JTextArea("This is the action log \n", 50, 50);
+        log.setBackground(Color.BLACK);
+        log.setForeground(Color.LIGHT_GRAY);
+        log.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        logPanel = new JScrollPane(log);
         PrintStream printStream = new PrintStream(new ActionLogPanel(log));
         System.setOut(printStream);
-        this.add(new JScrollPane(log)); //to be edited later
+        logPanel.setBounds(1000, 10, 500, 500);
+        logPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        logPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        this.add(logPanel); //to be edited later
     }
 
     public void paint(Graphics g) {
