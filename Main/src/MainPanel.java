@@ -36,20 +36,19 @@ public class MainPanel extends JPanel implements MouseListener {
 
     public void initComponents() {
         log = new JTextArea("This is the action log \n", 50, 50);
-        log.setBackground(Color.BLACK);
-        log.setForeground(Color.LIGHT_GRAY);
+        //exact color from mockup
+        log.setBackground(new Color(255, 220, 100));
+        //change font later
         log.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        logPanel = new JScrollPane(log);
         PrintStream printStream = new PrintStream(new ActionLogPanel(log));
         System.setOut(printStream);
-        logPanel.setBounds(1000, 10, 500, 500);
-        logPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        logPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        this.add(logPanel); //to be edited later
+        logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        logPanel.setBounds(1000, 10, 500, 200);
+        this.add(logPanel);
     }
 
-    public void paint(Graphics g) {
-        g.setColor(new Color(255, 230, 153));
+    public void paintComponent(Graphics g) {
+        g.setColor(new Color(255, 230, 150));
         g.fillRect(0, 0, 1600, 900);
         g.drawImage(playerIndicator, -10, -15, 500, 139, null);
         g.setColor(Color.black);
