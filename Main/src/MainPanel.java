@@ -112,14 +112,29 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString("DICE ROLL TOTAL: " + GameState.getDiceNum(), 510, 60);
         for (int i=0; i<3; i++) {
             g.drawImage(GameState.board.getTiles()[0][i].getImg(), 560+i*110, 142, 110, 146, null);
+            GameState.board.getTiles()[0][i].setPixel(560+i*110, 142);
             g.drawImage(GameState.board.getTiles()[4][i].getImg(), 560+i*110, 578, 110, 146, null);
+            GameState.board.getTiles()[4][i].setPixel(560+i*110, 578);
         }
         for (int i=0; i<4; i++) {
             g.drawImage(GameState.board.getTiles()[1][i].getImg(), 505+i*110, 251, 110, 146, null);
+            GameState.board.getTiles()[1][i].setPixel(505+i*110, 251);
             g.drawImage(GameState.board.getTiles()[3][i].getImg(), 505+i*110, 469, 110, 146, null);
+            GameState.board.getTiles()[3][i].setPixel(505+i*110, 469);
         }
         for (int i=0; i<5; i++) {
             g.drawImage(GameState.board.getTiles()[2][i].getImg(), 450+i*110, 360, 110, 146, null);
+            GameState.board.getTiles()[2][i].setPixel(450+i*110, 360);
+        }
+        GameState.board.setTilesIntersectionsLocations();
+        //temporary section for checking intersection locations
+        g.setColor(Color.BLUE);
+        for (Tile[] tiles: GameState.board.getTiles()) {
+            for (Tile tile:tiles) {
+                for (Intersection i:tile.getIntersections()) {
+                    g.fillRect(i.getLocation()[0], i.getLocation()[1], 10, 10);
+                }
+            }
         }
         g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
         g.setFont(victoryTitleFont);
