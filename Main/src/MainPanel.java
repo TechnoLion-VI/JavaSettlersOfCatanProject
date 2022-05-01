@@ -82,7 +82,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString("DICE ROLL TOTAL: " + GameState.getDiceNum(), 510, 60);
         g.setColor(Color.BLUE);
         for (int i=0; i<5; i++) {
-            g.drawImage(GameState.board.getTiles()[2][i].getImg(), 340+i*110, 360, 110, 146, null);
+            g.drawImage(GameState.board.getTiles()[2][i].getImg(), 450+i*110, 360, 110, 146, null);
         }
     }
 
