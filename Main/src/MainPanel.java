@@ -1,9 +1,8 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.awt.event.*;
 import java.io.PrintStream;
 import java.util.Objects;
 
@@ -11,10 +10,9 @@ public class MainPanel extends JPanel implements MouseListener {
     private int[] xCoords;  //add values later
     private int[] yCoords;
     private GameState gameState;
-    private JTextArea log;
-    private JScrollPane logPanel;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator;
+    private JButton endTurn, claimWin;
     //private Font playerTitleFont;
     private int x, y;
 
@@ -31,13 +29,14 @@ public class MainPanel extends JPanel implements MouseListener {
         setLayout(null);
         initComponents();
         addMouseListener(this);
-
+        gameState.rollDice();
     }
 
 
 
     public void initComponents() {
-        log = new JTextArea("This is the action log \n", 50, 50);
+        /* ACTION LOG STUFF */
+        JTextArea log = new JTextArea(50, 50);
         //exact color from mockup
         log.setBackground(new Color(255, 220, 100));
         //change font later
@@ -46,9 +45,40 @@ public class MainPanel extends JPanel implements MouseListener {
         log.setLineWrap(true);
         PrintStream printStream = new PrintStream(new ActionLogPanel(log));
         System.setOut(printStream);
-        logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         logPanel.setBounds(1100, 10, 400, 200);
         this.add(logPanel);
+        /* END TURN AND CLAIM WIN BUTTONS */
+        endTurn = new JButton("End Turn");
+        endTurn.setBounds(650, 650, 100, 100);
+        endTurn.setBackground(new Color(255, 200, 100));
+        endTurn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(GameState.currentPlayer.toString() + " has ended their turn.");
+                for (int i = 0; i < 4; i++) {
+                    if (GameState.currentPlayer == GameState.getPlayers()[i]) {
+                        GameState.currentPlayer = GameState.getPlayers()[(i + 1) % 4];
+                        break;
+                    }
+                }
+                gameState.rollDice();
+                repaint();
+            }
+        });
+        claimWin = new JButton("Claim Win");
+        claimWin.setBounds(850, 650, 100, 100);
+        claimWin.setBackground(new Color(255, 200, 100));
+        claimWin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (GameState.currentPlayer.getSecretScore() >= 10) {
+                    System.out.println(GameState.currentPlayer.toString() + " wins!");
+                } else {
+                    System.out.println(GameState.currentPlayer.toString() + " cannot claim their win yet.");
+                }
+            }
+        });
+        add(endTurn);
+        add(claimWin);
     }
 
     public void paintComponent(Graphics g) {
