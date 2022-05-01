@@ -28,6 +28,7 @@ public class Player {
     }
 
     //accessor methods
+    public int getNumStlmtsBuilt() {return numStlmtsBuilt;}
     public String getColor() {
         return myColor;
     }
@@ -118,12 +119,22 @@ public class Player {
     public ResourceCard remove(int index) {return resourceCards.remove(index);}
     public ResourceCard get(int index) {return resourceCards.get(index);}
     public int size() {return resourceCards.size();}
+
     //solved Longest Road issues
     public void checkRoadLength() {
         roadLength = 0;
         for (Edge e:Board.getEdges()) {
             roadLength = Math.max(roadLength, Board.checkRoadLength(this, e));
         }
+    }
+    public int getNumResources(String resource){
+        int numResources = 0;
+        for(int i = 0; i < resourceCards.size(); i++) {
+            if (resourceCards.get(i).getType().equals(resource)) {
+                numResources++;
+            }
+        }
+        return numResources;
     }
     public int getRoadLength() { return roadLength; }
 }
