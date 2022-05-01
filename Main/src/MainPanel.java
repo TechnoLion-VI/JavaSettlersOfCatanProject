@@ -12,6 +12,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private int[] yCoords;
     private GameState gameState;
     private JTextArea log;
+    private JScrollPane logPanel;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator;
     //private Font playerTitleFont;
@@ -27,19 +28,27 @@ public class MainPanel extends JPanel implements MouseListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        setLayout(null);
+        initComponents();
     }
 
 
 
     public void initComponents() {
-        log = new JTextArea();
+        log = new JTextArea("This is the action log \n", 50, 50);
+        //exact color from mockup
+        log.setBackground(new Color(255, 220, 100));
+        //change font later
+        log.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         PrintStream printStream = new PrintStream(new ActionLogPanel(log));
         System.setOut(printStream);
-        this.add(new JScrollPane(log)); //to be edited later
+        logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        logPanel.setBounds(1000, 10, 500, 200);
+        this.add(logPanel);
     }
 
-    public void paint(Graphics g) {
-        g.setColor(new Color(255, 230, 153));
+    public void paintComponent(Graphics g) {
+        g.setColor(new Color(255, 230, 150));
         g.fillRect(0, 0, 1600, 900);
         g.drawImage(playerIndicator, -10, -15, 500, 139, null);
         g.setColor(Color.black);
@@ -55,13 +64,19 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.drawLine(7,152,319,152);
         g2.drawLine(7,152,7,255);
         Font victoryPointFont = new Font("Serif", Font.BOLD, 15);
-        g.drawString("Player One: " + GameState.players[0].getPublicScore(),11,176);
-        g.drawString("Player Two: " + GameState.players[1].getPublicScore(),11,200);
-        g.drawString("Player Three: " + GameState.players[2].getPublicScore(),11,224);
-        g.drawString("Player Four: " + GameState.players[3].getPublicScore(),11,248);
+        g.drawString("Player Blue: " + GameState.players[0].getPublicScore(),11,176);
+        g.drawString("Player Orange: " + GameState.players[1].getPublicScore(),11,200);
+        g.drawString("Player Red: " + GameState.players[2].getPublicScore(),11,224);
+        g.drawString("Player White: " + GameState.players[3].getPublicScore(),11,248);
         g2.drawLine(7,380,319,380);
         g2.drawLine(7,380,7,425);
         g.setFont(victoryTitleFont);
+        g.drawString("PLAYED DEVELOPMENT CARDS",13,405);
+        g.drawRect(500,10,400,75);
+        Font diceRollFont = new Font("Serif", Font.BOLD, 35);
+        g.setFont(diceRollFont);
+        g.drawString("DICE ROLL TOTAL: " + GameState.getDiceNum(), 510, 60);
+
         g.drawString("PLAYED DEVELOPMENT CARDS",15,375);
         g.drawImage(GameState.board.getTiles()[0][0].getImg(), 100, 100, 110, 146, null);
         g.drawImage(GameState.board.getTiles()[0][1].getImg(), 210, 100, 110, 146, null);
