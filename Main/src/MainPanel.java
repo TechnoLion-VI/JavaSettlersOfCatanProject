@@ -121,6 +121,11 @@ public class MainPanel extends JPanel implements MouseListener {
         for (int i=0; i<5; i++) {
             g.drawImage(GameState.board.getTiles()[2][i].getImg(), 450+i*110, 360, 110, 146, null);
         }
+        g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
+        g.setFont(victoryTitleFont);
+        g.drawString(GameState.currentPlayer.getSecretScore() + "", 40, 680);
+        g.drawString(GameState.currentPlayer.getPlayedKnightCards() + "", 80, 680);
+        g.drawString(GameState.currentPlayer.getNumResources("Brick") + "", 120, 680);
 
     }
 
