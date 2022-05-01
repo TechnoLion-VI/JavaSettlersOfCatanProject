@@ -46,7 +46,7 @@ public class MainPanel extends JPanel implements MouseListener {
         PrintStream printStream = new PrintStream(new ActionLogPanel(log));
         System.setOut(printStream);
         logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        logPanel.setBounds(1000, 10, 500, 200);
+        logPanel.setBounds(1100, 10, 400, 200);
         this.add(logPanel);
     }
 
