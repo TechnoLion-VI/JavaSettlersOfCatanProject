@@ -191,7 +191,7 @@ public class Board {
                     }
                 }
 
-                // N Edge
+                // NE Edge
                 Tile tileN = tiles[x][y].getAdjacentTile(1);
                 if (tileN != null) {
                     if (tileN.getEdges()[4] != null) {
@@ -202,7 +202,7 @@ public class Board {
                     }
                 }
 
-                // NE Edge
+                // E Edge
                 Tile tileNE = tiles[x][y].getAdjacentTile(2);
                 if (tileNE != null) {
 
@@ -225,7 +225,7 @@ public class Board {
                     }
                 }
 
-                // S Edge
+                // SW Edge
                 Tile tileS = tiles[x][y].getAdjacentTile(4);
                 if (tileS != null) {
                     if (tileS.getEdges()[1] != null) {
@@ -236,7 +236,7 @@ public class Board {
                     }
                 }
 
-                // SW Edge
+                // W Edge
                 Tile tileSW = tiles[x][y].getAdjacentTile(5);
                 if (tileSW != null) {
                     if (tileSW.getEdges()[2] != null) {
