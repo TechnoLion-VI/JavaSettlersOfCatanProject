@@ -49,18 +49,54 @@ public class MainPanel extends JPanel implements MouseListener {
         logPanel.setBounds(1100, 10, 400, 200);
         this.add(logPanel);
         /* END TURN, CLAIM WIN, BUILD BUTTONS */
-        build = new JButton("Build");
+        build = new JButton("Build/Buy");
         build.setBounds(675, 730, 100, 50);
         build.setBackground(new Color(255, 200, 100));
         build.addActionListener(new ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent evt){
                 String[] options = new String[] {"Road", "Settlement", "City", "Development Card"};
-                int response = JOptionPane.showOptionDialog(null, "Choose what you want to build/buy.", "Build",
+                int response = JOptionPane.showOptionDialog(null, "Choose what you want to build/buy.", "Build/Buy",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                             null, options, options[0]);
-                //if(response == 0){
+                if(response == 0){
+                    if(GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber")){
+                        GameState.currentPlayer.getResourceCards().remove("Brick");
+                        GameState.currentPlayer.getResourceCards().remove("Lumber");
+                        //let them select where they want to place road, check if they can
+                        System.out.println(GameState.currentPlayer.toString() + " has built a road.");
+                    }
+                if(response == 1){
+                    if(GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber") && GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Grain")){
+                        GameState.currentPlayer.getResourceCards().remove("Brick");
+                        GameState.currentPlayer.getResourceCards().remove("Lumber");
+                        GameState.currentPlayer.getResourceCards().remove("Wool");
+                        GameState.currentPlayer.getResourceCards().remove("Grain");
+                        //let them select where they want to place settlement, check if they can
+                        System.out.println(GameState.currentPlayer.toString() + " has built a settlement.");
+                }
+                if(response == 2){
+                    if(GameState.currentPlayer.getResourceCards().contains("Ore") && GameState.currentPlayer.getResourceCards().contains("Ore") &&GameState.currentPlayer.getResourceCards().contains("Ore") && GameState.currentPlayer.getResourceCards().contains("Grain") && GameState.currentPlayer.getResourceCards().contains("Grain")){
+                        for(int i = 0; i < 3; i++){
+                            GameState.currentPlayer.getResourceCards().remove("Ore");
+                        }
+                        GameState.currentPlayer.getResourceCards().remove("Grain");
+                        GameState.currentPlayer.getResourceCards().remove("Grain");
+                        //let them select a settlement of theirs
+                        System.out.println(GameState.currentPlayer.toString() + " has built a city.");
+                    }
+                if(response == 3){
+                    if(GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Ore") && GameState.currentPlayer.getResourceCards().contains("Grain")){
+                        GameState.currentPlayer.getResourceCards().remove("Wool");
+                        GameState.currentPlayer.getResourceCards().remove("Grain");
+                        GameState.currentPlayer.getResourceCards().remove("Ore");
+                        //take it from development card deck and display it visually
+                        System.out.println(GameState.currentPlayer.toString() + " has bought a development card.");
+                    }
+                }
+                }
 
-                //}
+                }
+                }
                 //JOptionPane optionPane = new JOptionPane("Choose what you want to build/buy.", JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION); //not done
                 //JDialog dialog = optionPane.createDialog("Dialog");
                 //dialog.setVisible(true);
