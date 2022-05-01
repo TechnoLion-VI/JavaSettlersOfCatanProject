@@ -5,17 +5,15 @@ public class Intersection {
     private Player owner;
     private Edge[] edges=new Edge[3];
     private BufferedImage stlmt, city;
-    private int[] location =new int[2];
+    private int[] location;
 
     public Intersection(int x, int y) {
-        location[0]=x;
-        location[1]=y;
+        location = new int[]{x, y};
         //add the initializing of edges
     }
 
     public Intersection() {
-        location[0] = -1;
-        location[1] = -1;
+        this(-1, -1);
     }
     public int[] getLocation() {
         return location;
