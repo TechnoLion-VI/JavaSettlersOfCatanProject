@@ -48,15 +48,22 @@ public class MainPanel extends JPanel implements MouseListener {
         JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         logPanel.setBounds(1100, 10, 400, 200);
         this.add(logPanel);
-        /* END TURN AND CLAIM WIN BUTTONS */
+        /* END TURN, CLAIM WIN, BUILD BUTTONS */
         build = new JButton("Build");
         build.setBounds(675, 730, 100, 50);
         build.setBackground(new Color(255, 200, 100));
         build.addActionListener(new ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent evt){
-                JOptionPane optionPane = new JOptionPane("Choose what you want to build/buy.", JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION);
-                JDialog dialog = optionPane.createDialog("Dialog");
-                dialog.setVisible(true);
+                String[] options = new String[] {"Road", "Settlement", "City", "Development Card"};
+                int response = JOptionPane.showOptionDialog(null, "Choose what you want to build/buy.", "Build",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                            null, options, options[0]);
+                //if(response == 0){
+
+                //}
+                //JOptionPane optionPane = new JOptionPane("Choose what you want to build/buy.", JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION); //not done
+                //JDialog dialog = optionPane.createDialog("Dialog");
+                //dialog.setVisible(true);
             }
         });
 
