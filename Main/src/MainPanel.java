@@ -80,6 +80,17 @@ public class MainPanel extends JPanel implements MouseListener {
         Font diceRollFont = new Font("Serif", Font.BOLD, 35);
         g.setFont(diceRollFont);
         g.drawString("DICE ROLL TOTAL: " + GameState.getDiceNum(), 510, 60);
+        for (int i=0; i<3; i++) {
+            g.drawImage(GameState.board.getTiles()[0][i].getImg(), 560+i*110, 142, 110, 146, null);
+            g.drawImage(GameState.board.getTiles()[4][i].getImg(), 560+i*110, 578, 110, 146, null);
+        }
+        for (int i=0; i<4; i++) {
+            g.drawImage(GameState.board.getTiles()[1][i].getImg(), 505+i*110, 251, 110, 146, null);
+            g.drawImage(GameState.board.getTiles()[3][i].getImg(), 505+i*110, 469, 110, 146, null);
+        }
+        for (int i=0; i<5; i++) {
+            g.drawImage(GameState.board.getTiles()[2][i].getImg(), 450+i*110, 360, 110, 146, null);
+        }
 
     }
 

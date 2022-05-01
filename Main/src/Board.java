@@ -451,4 +451,8 @@ public class Board {
         return i.setIsCity();
         //also needs to increase player's vp
     } //check Intersection class
+
+    public Tile[][] getTiles() {
+        return tiles;
+    }
 }
