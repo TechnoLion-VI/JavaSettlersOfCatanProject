@@ -8,7 +8,7 @@ public class Intersection {
     private int[] location;
 
     public Intersection(int x, int y) {
-        location = new int[]{x, y};
+        setLocation(x, y);
         //add the initializing of edges
     }
 
@@ -18,6 +18,9 @@ public class Intersection {
     public int[] getLocation() {
         return location;
     }
+    public void setLocation (int x, int y) { location = new int[]{x, y}; }
+    public void setX(int x) { location[0] = x; }
+    public void setY(int y) { location[1] = y; }
     public boolean isStlmt() {
         return isStlmt;
     }
