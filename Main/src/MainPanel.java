@@ -30,6 +30,8 @@ public class MainPanel extends JPanel implements MouseListener {
         }
         setLayout(null);
         initComponents();
+        addMouseListener(this);
+
     }
 
 
@@ -40,6 +42,7 @@ public class MainPanel extends JPanel implements MouseListener {
         log.setBackground(new Color(255, 220, 100));
         //change font later
         log.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        log.setEditable(false);
         PrintStream printStream = new PrintStream(new ActionLogPanel(log));
         System.setOut(printStream);
         logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
