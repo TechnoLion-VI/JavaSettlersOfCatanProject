@@ -12,7 +12,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private GameState gameState;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator;
-    private JButton endTurn, claimWin;
+    private JButton endTurn, claimWin, build;
     //private Font playerTitleFont;
     private int x, y;
 
@@ -49,6 +49,17 @@ public class MainPanel extends JPanel implements MouseListener {
         logPanel.setBounds(1100, 10, 400, 200);
         this.add(logPanel);
         /* END TURN AND CLAIM WIN BUTTONS */
+        build = new JButton("Build");
+        build.setBounds(675, 730, 100, 50);
+        build.setBackground(new Color(255, 200, 100));
+        build.addActionListener(new ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt){
+                JOptionPane optionPane = new JOptionPane("Choose what you want to build/buy.", JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION);
+                JDialog dialog = optionPane.createDialog("Dialog");
+                dialog.setVisible(true);
+            }
+        });
+
         endTurn = new JButton("End Turn");
         endTurn.setBounds(550, 730, 100, 50);
         endTurn.setBackground(new Color(255, 200, 100));
@@ -77,8 +88,10 @@ public class MainPanel extends JPanel implements MouseListener {
                 }
             }
         });
+
         add(endTurn);
         add(claimWin);
+        add(build);
     }
 
     public void paintComponent(Graphics g) {
@@ -105,7 +118,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.drawLine(7,380,319,380);
         g2.drawLine(7,380,7,425);
         g.setFont(victoryTitleFont);
-        g.drawString("PLAYED DEVELOPMENT CARDS",5,373);
+        g.drawString("DEVELOPMENT CARDS",5,373);
         g.drawRect(500,10,400,75);
         Font diceRollFont = new Font("Serif", Font.BOLD, 35);
         g.setFont(diceRollFont);
@@ -126,7 +139,10 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.currentPlayer.getSecretScore() + "", 40, 680);
         g.drawString(GameState.currentPlayer.getPlayedKnightCards() + "", 80, 680);
         g.drawString(GameState.currentPlayer.getNumResources("Brick") + "", 120, 680);
-
+        g.drawString(GameState.currentPlayer.getNumResources("Ore") + "", 40, 710);
+        g.drawString(GameState.currentPlayer.getNumResources("Grain") + "", 80, 710);
+        g.drawString(GameState.currentPlayer.getNumResources("Lumber") + "", 120, 710);
+        g.drawString(GameState.currentPlayer.getNumResources("Wool") + "", 160, 710);
     }
 
     @Override
