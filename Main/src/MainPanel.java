@@ -141,7 +141,6 @@ public class MainPanel extends JPanel implements MouseListener {
         }
         GameState.board.setTilesIntersectionsLocations();
         //temporary section for checking intersection locations
-        g.setColor(Color.BLUE);
         for (Tile[] tiles: GameState.board.getTiles()) {
             for (Tile tile:tiles) {
                 for (Intersection i:tile.getIntersections()) {
