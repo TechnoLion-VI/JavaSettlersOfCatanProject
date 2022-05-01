@@ -43,6 +43,7 @@ public class MainPanel extends JPanel implements MouseListener {
         //change font later
         log.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         log.setEditable(false);
+        log.setLineWrap(true);
         PrintStream printStream = new PrintStream(new ActionLogPanel(log));
         System.setOut(printStream);
         logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
