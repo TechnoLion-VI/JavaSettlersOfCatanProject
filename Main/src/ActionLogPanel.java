@@ -16,15 +16,15 @@ public class ActionLogPanel extends OutputStream{
     }
 
     public static void rollDice() {
-        System.out.println(GameState.currentPlayer.toString() + " rolled a " + GameState.getDiceNum());
+        System.out.println(GameState.currentPlayer.toString() + " rolled a " + GameState.getDiceNum() + ".");
     }
 
     public static void trade(){
-        System.out.println(GameState.currentPlayer.toString() + " traded " + TradeManager.p1offer);
+        System.out.println(GameState.currentPlayer.toString() + " traded " + TradeManager.p1offer + ".");
     }
 
     public static void builtSettlement(){
-        System.out.println(GameState.currentPlayer.toString() + " built a settlement."); //not done
+        System.out.println(GameState.currentPlayer.toString() + " built a settlement.");
     }
 
     public static void builtRoad(){

@@ -50,7 +50,7 @@ public class MainPanel extends JPanel implements MouseListener {
         this.add(logPanel);
         /* END TURN AND CLAIM WIN BUTTONS */
         endTurn = new JButton("End Turn");
-        endTurn.setBounds(650, 650, 100, 100);
+        endTurn.setBounds(550, 730, 100, 50);
         endTurn.setBackground(new Color(255, 200, 100));
         endTurn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -66,7 +66,7 @@ public class MainPanel extends JPanel implements MouseListener {
             }
         });
         claimWin = new JButton("Claim Win");
-        claimWin.setBounds(850, 650, 100, 100);
+        claimWin.setBounds(800, 730, 100, 50);
         claimWin.setBackground(new Color(255, 200, 100));
         claimWin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
