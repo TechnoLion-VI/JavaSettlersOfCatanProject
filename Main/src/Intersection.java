@@ -15,6 +15,8 @@ public class Intersection {
     public Intersection() {
         this(-1, -1);
     }
+
+
     public int[] getLocation() {
         return location;
     }
