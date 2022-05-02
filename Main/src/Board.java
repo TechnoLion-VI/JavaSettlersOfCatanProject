@@ -252,6 +252,7 @@ public class Board {
     }
 
     public void fillIntersections() {
+        int count=0;
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles[x].length; y++) {
                 Tile tile = tiles[x][y];
@@ -349,7 +350,8 @@ public class Board {
 
                     if (!vertexExists) {
                         Intersection intersection = new Intersection();
-                        intersections[vertexOrientation] = intersection;
+                        intersections[count] = intersection;
+                        count++;
 
                         if (tileOneExists) {
                             adjacentTileOne.setIntersection(intersection, tileOneVertexOrientation);
