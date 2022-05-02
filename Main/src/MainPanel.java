@@ -12,7 +12,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private GameState gameState;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator;
-    private JButton endTurn, claimWin, build;
+    private JButton endTurn, build;
     //private Font playerTitleFont;
     private int x, y;
 
@@ -23,8 +23,7 @@ public class MainPanel extends JPanel implements MouseListener {
             //playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             //ge.registerFont(playerTitleFont);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception e) {            e.printStackTrace();
         }
         setLayout(null);
         initComponents();
@@ -50,7 +49,7 @@ public class MainPanel extends JPanel implements MouseListener {
         this.add(logPanel);
         /* END TURN, CLAIM WIN, BUILD BUTTONS */
         build = new JButton("Build/Buy");
-        build.setBounds(675, 730, 100, 50);
+        build.setBounds(800, 730, 100, 50);
         build.setBackground(new Color(255, 200, 100));
         build.addActionListener(new ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent evt){
@@ -119,7 +118,7 @@ public class MainPanel extends JPanel implements MouseListener {
                 repaint();
             }
         });
-        claimWin = new JButton("Claim Win");
+        /*claimWin = new JButton("Claim Win");
         claimWin.setBounds(800, 730, 100, 50);
         claimWin.setBackground(new Color(255, 200, 100));
         claimWin.addActionListener(new ActionListener() {
@@ -130,10 +129,10 @@ public class MainPanel extends JPanel implements MouseListener {
                     System.out.println(GameState.currentPlayer.toString() + " cannot claim their win yet.");
                 }
             }
-        });
+        });*/
 
         add(endTurn);
-        add(claimWin);
+        //add(claimWin);
         add(build);
     }
 
@@ -166,6 +165,8 @@ public class MainPanel extends JPanel implements MouseListener {
         Font diceRollFont = new Font("Serif", Font.BOLD, 35);
         g.setFont(diceRollFont);
         g.drawString("DICE ROLL TOTAL: " + GameState.getDiceNum(), 510, 60);
+        g.drawRect(915, 10, 75, 75);
+        g.drawRect(1000, 10, 75, 75);
         for (int i=0; i<3; i++) {
             g.drawImage(GameState.board.getTiles()[0][i].getImg(), 560+i*110, 142, 110, 146, null);
             GameState.board.getTiles()[0][i].setPixel(560+i*110, 142);
