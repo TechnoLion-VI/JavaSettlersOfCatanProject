@@ -10,6 +10,7 @@ public class Tile {
     private BufferedImage img;
     private int[] location = new int[2];
     private ArrayList<Player> players;
+    private int xPixel, yPixel;
 
     // NW = 0, N = 1, NE = 2, SE = 3, S = 4, SW = 5
     private Edge[] edges;
@@ -24,6 +25,10 @@ public class Tile {
         assignedNum = 0;
         edges = new Edge[6];
         intersections = new Intersection[6];
+        for (int i=0; i<6; i++) {
+            Intersection temp=new Intersection();
+            intersections[i]=temp;
+        }
         adjacentTiles = new Tile[6];
     }
     public void setAdjacentVertex(int vertexOrientation) {
@@ -116,6 +121,16 @@ public class Tile {
             }
         }
         return count;
+    }
+    public void setPixel(int x, int y) {
+        xPixel=x;
+        yPixel=y;
+    }
+    public int getxPixel() {
+        return xPixel;
+    }
+    public int getyPixel() {
+        return yPixel;
     }
     public void setLocation(int x, int y) {
         this.location = new int[]{x, y};

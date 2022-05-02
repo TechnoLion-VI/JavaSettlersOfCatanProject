@@ -8,10 +8,10 @@ public class Edge {
     private ResourceCard type;
     private int id;
 
-    public Edge(int x1, int y1, int x2, int y2, Intersection i1, Intersection i2, boolean harbor) {
+    public Edge(Intersection i1, Intersection i2, boolean harbor) {
         owner = null;
         setIntersections(i1, i2);
-        setLocation(x1, y1, x2, y2);
+        setLocation(i1.getLocation(), i2.getLocation());
         isHarbor=harbor;
     }
 

@@ -5,21 +5,21 @@ public class Intersection {
     private Player owner;
     private Edge[] edges=new Edge[3];
     private BufferedImage stlmt, city;
-    private int[] location =new int[2];
+    private int[] location=new int[2];
 
     public Intersection(int x, int y) {
-        location[0]=x;
-        location[1]=y;
+        setLocation(x, y);
         //add the initializing of edges
     }
 
     public Intersection() {
-        location[0] = -1;
-        location[1] = -1;
+        this(-1, -1);
     }
     public int[] getLocation() {
         return location;
     }
+    public void setX(int x) { location[0] = x; }
+    public void setY(int y) { location[1] = y; }
     public boolean isStlmt() {
         return isStlmt;
     }
@@ -59,7 +59,10 @@ public class Intersection {
         stlmt=p.getStlmtImage();
         city=p.getCityImage();
     }
-
+    public void setLocation(int x, int y) {
+        location[0]=x;
+        location[1]=y;
+    }
     public void setIsStlmt(boolean s) {
         isStlmt = s;
         owner.buildStlmt();

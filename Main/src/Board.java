@@ -191,7 +191,7 @@ public class Board {
                     }
                 }
 
-                // N Edge
+                // NE Edge
                 Tile tileN = tiles[x][y].getAdjacentTile(1);
                 if (tileN != null) {
                     if (tileN.getEdges()[4] != null) {
@@ -202,7 +202,7 @@ public class Board {
                     }
                 }
 
-                // NE Edge
+                // E Edge
                 Tile tileNE = tiles[x][y].getAdjacentTile(2);
                 if (tileNE != null) {
 
@@ -225,7 +225,7 @@ public class Board {
                     }
                 }
 
-                // S Edge
+                // SW Edge
                 Tile tileS = tiles[x][y].getAdjacentTile(4);
                 if (tileS != null) {
                     if (tileS.getEdges()[1] != null) {
@@ -236,7 +236,7 @@ public class Board {
                     }
                 }
 
-                // SW Edge
+                // W Edge
                 Tile tileSW = tiles[x][y].getAdjacentTile(5);
                 if (tileSW != null) {
                     if (tileSW.getEdges()[2] != null) {
@@ -363,7 +363,20 @@ public class Board {
             }
         }
     }
-
+    public void setTilesIntersectionsLocations() {
+        for (Tile[] tileRow: tiles) {
+            for (Tile tile: tileRow) {
+                int tilex=tile.getxPixel();
+                int tiley=tile.getyPixel();
+                tile.getIntersections()[0].setLocation(tilex, tiley+36);
+                tile.getIntersections()[1].setLocation(tilex+55, tiley);
+                tile.getIntersections()[2].setLocation(tilex+110, tiley+36);
+                tile.getIntersections()[3].setLocation(tilex+110, tiley+109);
+                tile.getIntersections()[4].setLocation(tilex+55, tiley+146);
+                tile.getIntersections()[5].setLocation(tilex, tiley+109);
+            }
+        }
+    }
     public void giveResources(int numRolled){
         for(int r=0; r<tiles.length; r++){
             for (int c=0; c<tiles[r].length; c++)
@@ -451,4 +464,8 @@ public class Board {
         return i.setIsCity();
         //also needs to increase player's vp
     } //check Intersection class
+
+    public Tile[][] getTiles() {
+        return tiles;
+    }
 }
