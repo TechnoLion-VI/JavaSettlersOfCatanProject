@@ -259,7 +259,7 @@ public class Board {
                 Tile adjacentTileOne = null;
                 Tile adjacentTileTwo = null;
 
-                for (int vertexOrientation = 0; vertexOrientation < 6; vertexOrientation++) {
+                for (int vertexOrientation = 0; vertexOrientation < 6; vertexOrientation++) {   //0 is the intersection at the top
                     switch (vertexOrientation) {
                         case 0: {
                             adjacentTileOne = tile.getAdjacentTile(0);
@@ -301,35 +301,35 @@ public class Board {
                     int tileOneVertexOrientation = -1;
                     int tileTwoVertexOrientation = -1;
 
-                    switch (vertexOrientation) {
+                    switch (vertexOrientation) {    //comments are what the values were previously
                         case 0: {
                             tileOneVertexOrientation = 2;
-                            tileTwoVertexOrientation = 3;
+                            tileTwoVertexOrientation = 4;//3
                             break;
                         }
                         case 1: {
-                            tileOneVertexOrientation = 4;
+                            tileOneVertexOrientation = 3;//4
                             tileTwoVertexOrientation = 5;
                             break;
                         }
                         case 2: {
-                            tileOneVertexOrientation = 0;
-                            tileTwoVertexOrientation = 1;
+                            tileOneVertexOrientation = 4;//0
+                            tileTwoVertexOrientation = 0;//1
                             break;
                         }
-                        case 3: { // fix
-                            tileOneVertexOrientation = 2;
-                            tileTwoVertexOrientation = 3;
+                        case 3: {
+                            tileOneVertexOrientation = 5;//2
+                            tileTwoVertexOrientation = 2;//3
                             break;
                         }
                         case 4: {
                             tileOneVertexOrientation = 0;
-                            tileTwoVertexOrientation = 5;
+                            tileTwoVertexOrientation = 1;//5
                             break;
                         }
                         case 5: {
-                            tileOneVertexOrientation = 1;
-                            tileTwoVertexOrientation = 3;
+                            tileOneVertexOrientation = 3;//1
+                            tileTwoVertexOrientation = 1;//3
                         }
                     }
 

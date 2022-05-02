@@ -4,11 +4,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainPanel extends JPanel implements MouseListener {
-    private int[] xCoords;  //add values later
-    private int[] yCoords;
+    private ArrayList<Integer> xCoords;  //for intersections
+    private ArrayList<Integer> yCoords;
     private GameState gameState;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator;
