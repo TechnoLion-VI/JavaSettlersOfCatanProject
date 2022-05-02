@@ -18,6 +18,8 @@ public class Intersection {
     public int[] getLocation() {
         return location;
     }
+    public int getX() {return location[0]; }
+    public int getY() {return location[1];}
     public void setX(int x) { location[0] = x; }
     public void setY(int y) { location[1] = y; }
     public boolean isStlmt() {
