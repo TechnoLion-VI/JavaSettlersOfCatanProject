@@ -335,21 +335,19 @@ public class Board {
                     }
 
                     if (tileOneExists) {
-                        Intersection temp = adjacentTileOne.getIntersections()[tileOneVertexOrientation];   //used to be tileTwoVertexOrientation
+                        Intersection temp = adjacentTileOne.getIntersections()[tileTwoVertexOrientation];   //used to be tileTwoVertexOrientation
 
                         if (temp != null) {
                             if (tileTwoExists) {
-                                adjacentTileTwo.setIntersection(temp, vertexOrientation);
+                                adjacentTileTwo.setIntersection(temp, tileTwoVertexOrientation);
                             }
-
                             vertexExists = true;
                         }
                     }
-
                     if (!vertexExists) {
                         Intersection intersection = new Intersection();
-                        intersections[count] = intersection;
-                        count++;
+//                        intersections[count] = intersection;
+//                        count++;
 
                         if (tileOneExists) {
                             adjacentTileOne.setIntersection(intersection, tileOneVertexOrientation);
@@ -359,6 +357,19 @@ public class Board {
                             adjacentTileTwo.setIntersection(intersection, tileTwoVertexOrientation);
                         }
                     }
+                    //changes
+//                    Intersection temp = tile.getIntersections()[vertexOrientation];
+//                    if (temp==null) {
+//                        temp = new Intersection();
+//                        tile.setIntersection(temp, vertexOrientation);
+//                        intersections[count++] = temp;
+//                    }
+//                    if (tileOneExists) {
+//                        adjacentTileOne.setIntersection(temp, tileOneVertexOrientation);
+//                    }
+//                    if (tileTwoExists) {
+//                        adjacentTileTwo.setIntersection(temp, tileTwoVertexOrientation);
+//                    }
                 }
             }
         }
