@@ -335,11 +335,9 @@ public class Board {
                     }
 
                     if (tileOneExists) {
-                        Intersection temp = adjacentTileOne.getIntersections()[tileTwoVertexOrientation];
+                        Intersection temp = adjacentTileOne.getIntersections()[tileOneVertexOrientation];   //used to be tileTwoVertexOrientation
 
                         if (temp != null) {
-                            intersections[vertexOrientation] = temp;
-
                             if (tileTwoExists) {
                                 adjacentTileTwo.setIntersection(temp, vertexOrientation);
                             }
