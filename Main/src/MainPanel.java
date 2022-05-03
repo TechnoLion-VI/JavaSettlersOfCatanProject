@@ -111,8 +111,8 @@ public class MainPanel extends JPanel implements MouseListener {
             public void actionPerformed(ActionEvent e) {
                 System.out.println(GameState.currentPlayer.toString() + " has ended their turn.");
                 for (int i = 0; i < 4; i++) {
-                    if (GameState.currentPlayer == GameState.getPlayers()[i]) {
-                        GameState.currentPlayer = GameState.getPlayers()[(i + 1) % 4];
+                    if (GameState.currentPlayer == GameState.players[i]) {
+                        GameState.currentPlayer = GameState.players[(i + 1) % 4];
                         break;
                     }
                 }
