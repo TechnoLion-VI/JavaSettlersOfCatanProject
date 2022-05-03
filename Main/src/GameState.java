@@ -15,16 +15,16 @@ public class GameState {
         currentPlayer=players[0];   //temporary
     }
 
-    public void getIntersection(int x, int y){
-
+    public Intersection getIntersection(int x, int y){
+        return null;
     }
 
-    public void getEdge(int x, int y){
-
+    public Edge getEdge(int x, int y){
+        return null;
     }
 
-    public void getTile(int x, int y){
-
+    public Tile getTile(int x, int y){
+        return null;
     }
 
     public boolean claimWin(){

@@ -24,7 +24,8 @@ public class MainPanel extends JPanel implements MouseListener {
             //playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             //ge.registerFont(playerTitleFont);
-        } catch (Exception e) {            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         setLayout(null);
         initComponents();
