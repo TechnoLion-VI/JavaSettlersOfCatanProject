@@ -143,7 +143,7 @@ public class Board {
                             }
 
                             if (tiles[x - 1][x + 1] != null) {
-                                adjacentTiles[1] = tiles[x - 1][y + 3];
+                                adjacentTiles[1] = tiles[x - 1][y + 1];
                             }
 
                             if (tiles[x][y + 1] != null) {

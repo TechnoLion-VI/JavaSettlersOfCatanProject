@@ -12,7 +12,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> yCoords;
     private GameState gameState;
     private String playerIndStr = "PLAYER ONE";
-    private BufferedImage playerIndicator;
+    private BufferedImage playerIndicator, brick, ore, grain, lumber, wool;
     private JButton endTurn, build;
     //private Font playerTitleFont;
     private int x, y;
@@ -20,7 +20,12 @@ public class MainPanel extends JPanel implements MouseListener {
     public MainPanel() {
         gameState = new GameState();
         try {
-            playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("Images/Player Indicator.png")));
+            playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Player Indicator.png")));
+            brick = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Brick Resource Card.png")));
+            ore = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Ore Resource Card.png")));
+            grain = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Grain Resource Card.png")));
+            lumber = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Lumber Resource Card.png")));
+            wool = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Wool Resource Card.png")));
             //playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             //ge.registerFont(playerTitleFont);
@@ -75,14 +80,32 @@ public class MainPanel extends JPanel implements MouseListener {
                         System.out.println(GameState.currentPlayer.toString() + " has built a settlement.");
                 }
                 if(response == 2){
-                    if(GameState.currentPlayer.getResourceCards().contains("Ore") && GameState.currentPlayer.getResourceCards().contains("Ore") &&GameState.currentPlayer.getResourceCards().contains("Ore") && GameState.currentPlayer.getResourceCards().contains("Grain") && GameState.currentPlayer.getResourceCards().contains("Grain")){
-                        for(int i = 0; i < 3; i++){
+                    int ore = 0;
+                    for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                        ArrayList<ResourceCard> rc = GameState.currentPlayer.getResourceCards();
+                        if(rc.get(i).getType().equals("Ore")){
+                            ore++;
+                        }
+                    }
+                    if(ore >= 3) {
+                        for (int i = 0; i < 3; i++) {
                             GameState.currentPlayer.getResourceCards().remove("Ore");
                         }
-                        GameState.currentPlayer.getResourceCards().remove("Grain");
-                        GameState.currentPlayer.getResourceCards().remove("Grain");
-                        //let them select a settlement of theirs
-                        System.out.println(GameState.currentPlayer.toString() + " has built a city.");
+                    }
+                    int grain = 0;
+                    for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                        ArrayList<ResourceCard> rc = GameState.currentPlayer.getResourceCards();
+                        if(rc.get(i).getType().equals("Grain")){
+                            grain++;
+                        }
+                    }
+                    if(grain >= 2) {
+                        for (int i = 0; i < 2; i++) {
+                            GameState.currentPlayer.getResourceCards().remove("Grain");
+                        }
+                    }
+                    //let them select a settlement of theirs
+                    System.out.println(GameState.currentPlayer.toString() + " has built a city.");
                     }
                 if(response == 3){
                     if(GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Ore") && GameState.currentPlayer.getResourceCards().contains("Grain")){
@@ -100,7 +123,6 @@ public class MainPanel extends JPanel implements MouseListener {
                 //JOptionPane optionPane = new JOptionPane("Choose what you want to build/buy.", JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION); //not done
                 //JDialog dialog = optionPane.createDialog("Dialog");
                 //dialog.setVisible(true);
-            }
         });
 
         endTurn = new JButton("End Turn");
@@ -195,13 +217,18 @@ public class MainPanel extends JPanel implements MouseListener {
         }
         g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
         g.setFont(victoryTitleFont);
-        g.drawString(GameState.currentPlayer.getSecretScore() + "", 40, 680);
-        g.drawString(GameState.currentPlayer.getPlayedKnightCards() + "", 80, 680);
-        g.drawString(GameState.currentPlayer.getNumResources("Brick") + "", 120, 680);
-        g.drawString(GameState.currentPlayer.getNumResources("Ore") + "", 40, 710);
-        g.drawString(GameState.currentPlayer.getNumResources("Grain") + "", 80, 710);
-        g.drawString(GameState.currentPlayer.getNumResources("Lumber") + "", 120, 710);
-        g.drawString(GameState.currentPlayer.getNumResources("Wool") + "", 160, 710);
+        g.drawString(GameState.currentPlayer.getSecretScore() + "", 40, 700);
+        g.drawString(GameState.currentPlayer.getPlayedKnightCards() + "", 100, 700);
+        g.drawImage(brick, 125, 675, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getNumResources("Brick") + "", 160, 700);
+        g.drawImage(ore, 0, 725, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getNumResources("Ore") + "", 40, 750);
+        g.drawImage(grain, 60, 725, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getNumResources("Grain") + "", 100, 750);
+        g.drawImage(lumber, 120, 725, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getNumResources("Lumber") + "", 160, 750);
+        g.drawImage(wool, 180, 725, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getNumResources("Wool") + "", 220, 750);
     }
 
     @Override
