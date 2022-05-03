@@ -72,33 +72,43 @@ public class Board {
                 Tile[] adjacentTiles = new Tile[6];
 
                 switch(x) {
-                    case 0: case 1: {
-                        try {
-                            if (tiles[x - 1][y - 1] != null) {
-                                adjacentTiles[0] = tiles[x - 1][y - 1];
-                            }
-
-                            if (tiles[x - 1][y] != null) {
-                                adjacentTiles[1] = tiles[x - 1][y];
-                            }
-
-                            if (tiles[x][y + 1] != null) {
-                                adjacentTiles[2] = tiles[x][y + 1];
-                            }
-
-                            if (tiles[x + 1][y + 1] != null) {
-                                adjacentTiles[3] = tiles[x + 1][y + 1];
-                            }
-
-                            if (tiles[x + 1][y] != null) {
-                                adjacentTiles[4] = tiles[x + 1][y];
-                            }
-
-                            if (tiles[x][y - 1] != null) {
-                                adjacentTiles[5] = tiles[x][y - 1];
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            continue;
+                    case 0: {
+                        adjacentTiles[0]=null;
+                        adjacentTiles[1]=null;
+                        adjacentTiles[3] = tiles[x + 1][y];
+                        adjacentTiles[4] = tiles[x + 1][y - 1];
+                        if (y-1<0) {
+                            adjacentTiles[5]=null;
+                        }
+                        else {
+                            adjacentTiles[5] = tiles[x][y - 1];
+                        }
+                        if (y+1>2) {
+                            adjacentTiles[2] = null;
+                        }
+                        else {
+                            adjacentTiles[2] = tiles[x][y + 1];
+                        }
+                        break;
+                    }
+                    case 1: {
+                        if (tiles[x - 1][y - 1] != null) {
+                            adjacentTiles[0] = tiles[x - 1][y - 1];
+                        }
+                        if (tiles[x - 1][y] != null) {
+                            adjacentTiles[1] = tiles[x - 1][y];
+                        }
+                        if (tiles[x][y + 1] != null) {
+                            adjacentTiles[2] = tiles[x][y + 1];
+                        }
+                        if (tiles[x + 1][y] != null) {
+                            adjacentTiles[3] = tiles[x + 1][y];
+                        }
+                        if (tiles[x + 1][y - 1] != null) {
+                            adjacentTiles[4] = tiles[x + 1][y - 1];
+                        }
+                        if (tiles[x][y - 1] != null) {
+                            adjacentTiles[5] = tiles[x][y - 1];
                         }
 
                         break;
@@ -143,7 +153,7 @@ public class Board {
                             }
 
                             if (tiles[x - 1][x + 1] != null) {
-                                adjacentTiles[1] = tiles[x - 1][y + 1];
+                                adjacentTiles[1] = tiles[x - 1][y + 3];
                             }
 
                             if (tiles[x][y + 1] != null) {

@@ -29,7 +29,8 @@ public class MainPanel extends JPanel implements MouseListener {
             //playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             //ge.registerFont(playerTitleFont);
-        } catch (Exception e) {            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         setLayout(null);
         initComponents();
@@ -132,8 +133,8 @@ public class MainPanel extends JPanel implements MouseListener {
             public void actionPerformed(ActionEvent e) {
                 System.out.println(GameState.currentPlayer.toString() + " has ended their turn.");
                 for (int i = 0; i < 4; i++) {
-                    if (GameState.currentPlayer == GameState.getPlayers()[i]) {
-                        GameState.currentPlayer = GameState.getPlayers()[(i + 1) % 4];
+                    if (GameState.currentPlayer == GameState.players[i]) {
+                        GameState.currentPlayer = GameState.players[(i + 1) % 4];
                         break;
                     }
                 }
@@ -167,6 +168,7 @@ public class MainPanel extends JPanel implements MouseListener {
         Font playerTitleFont = new Font("Serif", Font.BOLD, 50);
         g.setFont (playerTitleFont);
         g.drawString(GameState.currentPlayer.toString(), 20, 75);
+
         //g.setFont(myFontsmall);
         Font victoryTitleFont = new Font("Serif", Font.BOLD, 20);
         g.setFont(victoryTitleFont);
@@ -180,10 +182,27 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString("Player Orange: " + GameState.players[1].getPublicScore(),11,200);
         g.drawString("Player Red: " + GameState.players[2].getPublicScore(),11,224);
         g.drawString("Player White: " + GameState.players[3].getPublicScore(),11,248);
-        g2.drawLine(7,380,319,380);
-        g2.drawLine(7,380,7,425);
+
         g.setFont(victoryTitleFont);
         g.drawString("DEVELOPMENT CARDS",5,373);
+        g2.drawLine(7,380,319,380);
+        g2.drawLine(7,380,7,425);
+         /* int cnt = 0;
+        for (DevelopmentCard dev:GameState.currentPlayer.getDevCards()) if (dev instanceof Knight) cnt++;
+        g.drawString("Knight: " + cnt, 11, 380 + 24);
+        cnt = 0;
+        for (DevelopmentCard dev:GameState.currentPlayer.getDevCards()) if (dev instanceof VictoryPoint) cnt++;
+        g.drawString("Victory Point: " + cnt, 11, 380 + 48);
+        cnt = 0;
+        for (DevelopmentCard dev:GameState.currentPlayer.getDevCards()) if (dev instanceof Monopoly) cnt++;
+        g.drawString("Monopoly: " + cnt, 11, 380 + 72);
+        cnt = 0;
+        for (DevelopmentCard dev:GameState.currentPlayer.getDevCards()) if (dev instanceof RoadBuilding) cnt++;
+        g.drawString("Road Building: " + cnt, 11, 380 + 96);
+        cnt = 0;
+        for (DevelopmentCard dev:GameState.currentPlayer.getDevCards()) if (dev instanceof YearOfPlenty) cnt++;
+        g.drawString("Year of Plenty: " + cnt, 11, 380 + 120);
+        cnt = 0; */
         g.drawRect(500,10,400,75);
         Font diceRollFont = new Font("Serif", Font.BOLD, 35);
         g.setFont(diceRollFont);
