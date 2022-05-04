@@ -12,8 +12,8 @@ public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> yCoords;
     private GameState gameState;
     private String playerIndStr = "PLAYER ONE";
-    private BufferedImage playerIndicator, brick, ore, grain, lumber, wool;
-    private JButton endTurn, build;
+    private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource;
+    private JButton endTurn, build, trade;
     private JPanel devCardPanel;
     private JScrollPane devCards;
     //private Font playerTitleFont;
@@ -28,6 +28,9 @@ public class MainPanel extends JPanel implements MouseListener {
             grain = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Grain Resource Card.png")));
             lumber = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Lumber Resource Card.png")));
             wool = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Wool Resource Card.png")));
+            sword = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/sword.png")));
+            trophy = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/trophy.png")));
+            resource = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/parchment.png")));
             //playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             //ge.registerFont(playerTitleFont);
@@ -62,7 +65,27 @@ public class MainPanel extends JPanel implements MouseListener {
         devCards = new JScrollPane(devCardPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         devCards.setBounds(12, 385, 350, 100);
         add(devCards);
-        /* END TURN, CLAIM WIN, BUILD BUTTONS */
+        /* END TURN, CLAIM WIN, BUILD, TRADE BUTTONS */
+        trade = new JButton("Trade");
+        trade.setBounds(675, 730, 100, 50);
+        trade.setBackground(new Color(255, 200, 100));
+        trade.addActionListener(new ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String[] options = new String[] {"Domestic", "Trade"};
+                int response = JOptionPane.showOptionDialog(null, "Choose what type of trade you wish to perform.", "Trade",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, options, options[0]);
+                if(response == 0){
+                    //domestic
+                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + TradeManager.p1offer + ".");
+                }
+                if(response == 1){
+                    //maritime
+                    System.out.println(GameState.currentPlayer.toString() + " has performed a maritime trade at a harbor."); //NOT DONE; need to specify kind of harbor
+                }
+                repaint();
+            }
+    });
         build = new JButton("Build/Buy");
         build.setBounds(800, 730, 100, 50);
         build.setBackground(new Color(255, 200, 100));
@@ -174,6 +197,7 @@ public class MainPanel extends JPanel implements MouseListener {
         add(endTurn);
         //add(claimWin);
         add(build);
+        add(trade);
     }
 
     public void paintComponent(Graphics g) {
@@ -188,16 +212,32 @@ public class MainPanel extends JPanel implements MouseListener {
         //g.setFont(myFontsmall);
         Font victoryTitleFont = new Font("Serif", Font.BOLD, 20);
         g.setFont(victoryTitleFont);
-        g.drawString("PUBLIC VICTORY POINTS",5,145);
+        g.drawString("PUBLIC PLAYER STATS",5,145);
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
         g2.drawLine(7,152,319,152);
         g2.drawLine(7,152,7,255);
         Font victoryPointFont = new Font("Serif", Font.BOLD, 15);
-        g.drawString("Player Blue: " + GameState.players[0].getPublicScore(),11,176);
-        g.drawString("Player Orange: " + GameState.players[1].getPublicScore(),11,200);
-        g.drawString("Player Red: " + GameState.players[2].getPublicScore(),11,224);
-        g.drawString("Player White: " + GameState.players[3].getPublicScore(),11,248);
+        g.drawString("Blue Player: ",11,180);
+        g.drawString("Orange Player: ",11,220);
+        g.drawString("Red Player: ",11,260);
+        g.drawString("White Player: ",11,300);
+        g.drawString(GameState.players[0].getPublicScore() + "", 190, 180);
+        g.drawImage(trophy, 150, 158, 30, 30, null);
+        g.drawString(GameState.players[1].getPublicScore() + "", 190, 220);
+        g.drawImage(trophy, 150, 198, 30, 30, null);
+        g.drawString(GameState.players[2].getPublicScore() + "", 190, 260);
+        g.drawImage(trophy, 150, 238, 30, 30, null);
+        g.drawString(GameState.players[3].getPublicScore() + "", 190, 300);
+        g.drawImage(trophy, 150, 278, 30, 30, null);
+        g.drawString(GameState.players[0].getResourceCards().size() + "", 260, 180);
+        g.drawImage(resource, 220, 158, 30, 30, null);
+        g.drawString(GameState.players[1].getResourceCards().size() + "", 260, 220);
+        g.drawImage(resource, 220, 198, 30, 30, null);
+        g.drawString(GameState.players[2].getResourceCards().size() + "", 260, 260);
+        g.drawImage(resource, 220, 238, 30, 30, null);
+        g.drawString(GameState.players[3].getResourceCards().size() + "", 260, 300);
+        g.drawImage(resource, 220, 278, 30, 30, null);
 
         g.setFont(victoryTitleFont);
         g.drawString("DEVELOPMENT CARDS",5,373);
@@ -236,9 +276,11 @@ public class MainPanel extends JPanel implements MouseListener {
         }
         g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
         g.setFont(victoryTitleFont);
+        g.drawImage(trophy, 0, 675, 40, 40, null);
         g.drawString(GameState.currentPlayer.getSecretScore() + "", 40, 700);
+        g.drawImage(sword, 60, 675, 40, 40, null);
         g.drawString(GameState.currentPlayer.getPlayedKnightCards() + "", 100, 700);
-        g.drawImage(brick, 125, 675, 40, 40, null);
+        g.drawImage(brick, 120, 675, 40, 40, null);
         g.drawString(GameState.currentPlayer.getNumResources("Brick") + "", 160, 700);
         g.drawImage(ore, 0, 725, 40, 40, null);
         g.drawString(GameState.currentPlayer.getNumResources("Ore") + "", 40, 750);
@@ -248,6 +290,10 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.currentPlayer.getNumResources("Lumber") + "", 160, 750);
         g.drawImage(wool, 180, 725, 40, 40, null);
         g.drawString(GameState.currentPlayer.getNumResources("Wool") + "", 220, 750);
+
+
+
+
     }
 
     public BufferedImage resize(BufferedImage img, int w, int h) {
