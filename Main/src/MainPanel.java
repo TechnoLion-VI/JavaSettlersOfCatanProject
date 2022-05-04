@@ -95,21 +95,27 @@ public class MainPanel extends JPanel implements MouseListener {
                 int response = JOptionPane.showOptionDialog(null, "Choose what you want to build/buy.", "Build/Buy",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                             null, options, options[0]);
-                if (response == 0){
-                    if (GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber")){
+                if (response == 0) {
+                    if (GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber")) {
                         GameState.currentPlayer.getResourceCards().remove("Brick");
                         GameState.currentPlayer.getResourceCards().remove("Lumber");
                         //let them select where they want to place road, check if they can
                         System.out.println(GameState.currentPlayer.toString() + " has built a road.");
+                    } else {
+                        System.out.println(GameState.currentPlayer.toString() + " is unable to build a road.");
                     }
-                if (response == 1){
-                    if (GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber") && GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Grain")){
+                }
+                if (response == 1) {
+                    if (GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber") && GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Grain")) {
                         GameState.currentPlayer.getResourceCards().remove("Brick");
                         GameState.currentPlayer.getResourceCards().remove("Lumber");
                         GameState.currentPlayer.getResourceCards().remove("Wool");
                         GameState.currentPlayer.getResourceCards().remove("Grain");
                         //let them select where they want to place settlement, check if they can
                         System.out.println(GameState.currentPlayer.toString() + " has built a settlement.");
+                    } else {
+                        System.out.println(GameState.currentPlayer.toString() + " is unable to build a settlement.");
+                    }
                 }
                 if (response == 2){
                     int ore = 0;
@@ -119,11 +125,6 @@ public class MainPanel extends JPanel implements MouseListener {
                             ore++;
                         }
                     }
-                    if (ore >= 3) {
-                        for (int i = 0; i < 3; i++) {
-                            GameState.currentPlayer.getResourceCards().remove("Ore");
-                        }
-                    }
                     int grain = 0;
                     for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
                         ArrayList<ResourceCard> rc = GameState.currentPlayer.getResourceCards();
@@ -131,14 +132,18 @@ public class MainPanel extends JPanel implements MouseListener {
                             grain++;
                         }
                     }
-                    if (grain >= 2) {
-                        for (int i = 0; i < 2; i++) {
-                            GameState.currentPlayer.getResourceCards().remove("Grain");
-                        }
+                    if (ore >= 3 && grain >= 2) {
+                        GameState.currentPlayer.getResourceCards().remove("Ore");
+                        GameState.currentPlayer.getResourceCards().remove("Ore");
+                        GameState.currentPlayer.getResourceCards().remove("Ore");
+                        GameState.currentPlayer.getResourceCards().remove("Grain");
+                        GameState.currentPlayer.getResourceCards().remove("Grain");
+                        System.out.println(GameState.currentPlayer.toString() + " has built a city.");
+                    } else {
+                        System.out.println(GameState.currentPlayer.toString() + " is unable to build a city.");
                     }
                     //let them select a settlement of theirs
-                    System.out.println(GameState.currentPlayer.toString() + " has built a city.");
-                    }
+                }
                 if (response == 3){
                     if (GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Ore") && GameState.currentPlayer.getResourceCards().contains("Grain")){
                         GameState.currentPlayer.getResourceCards().remove("Wool");
@@ -153,12 +158,11 @@ public class MainPanel extends JPanel implements MouseListener {
                             revalidate();
                         }
                         System.out.println(GameState.currentPlayer.toString() + " has bought a development card.");
+                    } else {
+                        System.out.println(GameState.currentPlayer.toString() + " is unable to buy a development card.");
                     }
                 }
-                }
-
-                }
-                }
+            }
                 //JOptionPane optionPane = new JOptionPane("Choose what you want to build/buy.", JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION); //not done
                 //JDialog dialog = optionPane.createDialog("Dialog");
                 //dialog.setVisible(true);
