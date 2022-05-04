@@ -72,100 +72,110 @@ public class Board {
                 Tile[] adjacentTiles = new Tile[6];
 
                 switch(x) {
-                    case 0: case 1: {
-                        try {
-                            if (tiles[x - 1][y - 1] != null) {
-                                adjacentTiles[0] = tiles[x - 1][y - 1];
-                            }
-
-                            if (tiles[x - 1][y] != null) {
-                                adjacentTiles[1] = tiles[x - 1][y];
-                            }
-
-                            if (tiles[x][y + 1] != null) {
-                                adjacentTiles[2] = tiles[x][y + 1];
-                            }
-
-                            if (tiles[x + 1][y + 1] != null) {
-                                adjacentTiles[3] = tiles[x + 1][y + 1];
-                            }
-
-                            if (tiles[x + 1][y] != null) {
-                                adjacentTiles[4] = tiles[x + 1][y];
-                            }
-
-                            if (tiles[x][y - 1] != null) {
-                                adjacentTiles[5] = tiles[x][y - 1];
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            continue;
+                    case 0: {
+                        adjacentTiles[0]=null;
+                        adjacentTiles[1]=null;
+                        adjacentTiles[3] = tiles[x+1][y+1];
+                        adjacentTiles[4] = tiles[x+1][y];
+                        if (y==0) {
+                            adjacentTiles[5]=null;
                         }
-
+                        else {
+                            adjacentTiles[5] = tiles[x][y-1];
+                        }
+                        if (y==2) {
+                            adjacentTiles[2] = null;
+                        }
+                        else {
+                            adjacentTiles[2] = tiles[x][y+1];
+                        }
                         break;
                     }
-
+                    case 1: {
+                        adjacentTiles[3]=tiles[x+1][y+1];
+                        adjacentTiles[4]=tiles[x+1][y];
+                        if (y==0) {
+                            adjacentTiles[0] = null;
+                            adjacentTiles[5]=null;
+                        }
+                        else {
+                            adjacentTiles[0]=tiles[x-1][y-1];
+                            adjacentTiles[5]=tiles[x][y-1];
+                        }
+                        if (y==3) {
+                            adjacentTiles[1] = null;
+                            adjacentTiles[2]=null;
+                        }
+                        else {
+                            adjacentTiles[1]=tiles[x-1][y];
+                            adjacentTiles[2]=tiles[x][y+1];
+                        }
+                        break;
+                    }
                     case 2: {
-                        try {
-                            if (tiles[x - 1][y - 1] != null) {
-                                adjacentTiles[0] = tiles[x - 1][y - 1];
-                            }
-
-                            if (tiles[x - 1][y] != null) {
-                                adjacentTiles[1] = tiles[x - 1][y];
-                            }
-
-                            if (tiles[x][y + 1] != null) {
-                                adjacentTiles[2] = tiles[x][y + 1];
-                            }
-
-                            if (tiles[x + 1][y] != null) {
-                                adjacentTiles[3] = tiles[x + 1][y];
-                            }
-
-                            if (tiles[x + 1][y - 1] != null) {
-                                adjacentTiles[4] = tiles[x + 1][y - 1];
-                            }
-
-                            if (tiles[x][y - 1] != null) {
-                                adjacentTiles[5] = tiles[x][y - 1];
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            continue;
+                        if (y==0) {
+                            adjacentTiles[0]=null;
+                            adjacentTiles[4]=null;
+                            adjacentTiles[5]=null;
                         }
-
+                        else {
+                            adjacentTiles[0]=tiles[x-1][y-1];
+                            adjacentTiles[4]=tiles[x+1][y-1];
+                            adjacentTiles[5]=tiles[x][y-1];
+                        }
+                        if (y==4) {
+                            adjacentTiles[1]=null;
+                            adjacentTiles[2]=null;
+                            adjacentTiles[3]=null;
+                        }
+                        else {
+                            adjacentTiles[1] = tiles[x - 1][y];
+                            adjacentTiles[2] = tiles[x][y + 1];
+                            adjacentTiles[3] = tiles[x + 1][y];
+                        }
                         break;
                     }
 
-                    case 3: case 4: {
-                        try {
-                            if (tiles[x - 1][y] != null) {
-                                adjacentTiles[0] = tiles[x - 1][y];
-                            }
-
-                            if (tiles[x - 1][x + 1] != null) {
-                                adjacentTiles[1] = tiles[x - 1][y + 3];
-                            }
-
-                            if (tiles[x][y + 1] != null) {
-                                adjacentTiles[2] = tiles[x][y + 1];
-                            }
-
-                            if (tiles[x + 1][y] != null) {
-                                adjacentTiles[3] = tiles[x + 1][y];
-                            }
-
-                            if (tiles[x + 1][y - 1] != null) {
-                                adjacentTiles[4] = tiles[x + 1][y - 1];
-                            }
-
-                            if (tiles[x][y - 1] != null) {
-                                adjacentTiles[5] = tiles[x][y - 1];
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            continue;
+                    case 3: {
+                        adjacentTiles[0]=tiles[x-1][y];
+                        adjacentTiles[1] = tiles[x - 1][y+1];
+                        if (y==0) {
+                            adjacentTiles[4]=null;
+                            adjacentTiles[5]=null;
                         }
+                        else {
+                            adjacentTiles[4]=tiles[x+1][y-1];
+                            adjacentTiles[5]=tiles[x][y-1];
+                        }
+                        if (y==3) {
+                            adjacentTiles[2]=null;
+                            adjacentTiles[3]=null;
+                        }
+                        else {
+                            adjacentTiles[2] = tiles[x][y + 1];
+                            adjacentTiles[3] = tiles[x + 1][y];
+                        }
+                        break;
                     }
-                    break;
+                    case 4: {
+                        adjacentTiles[0]=tiles[x-1][y];
+                        adjacentTiles[1] = tiles[x - 1][y+1];
+                        adjacentTiles[3]=null;
+                        adjacentTiles[4]=null;
+                        if (y==0) {
+                            adjacentTiles[5]=null;
+                        }
+                        else {
+                            adjacentTiles[5]=tiles[x][y-1];
+                        }
+                        if (y==2) {
+                            adjacentTiles[2]=null;
+                        }
+                        else {
+                            adjacentTiles[2] = tiles[x][y + 1];
+                        }
+                        break;
+                    }
                 }
 
                 tiles[x][y].setAdjacentTiles(adjacentTiles);
@@ -187,22 +197,26 @@ public class Board {
                         adjacentEdges[0] = tileNW.getEdges()[3];
                     } else {
                         numOfEdges++;
-                        adjacentEdges[0] = new Edge(numOfEdges);
+                        Edge e = new Edge(numOfEdges);
+                        tileNW.getEdges()[3]=e;
+                        adjacentEdges[0]=e;
                     }
                 }
 
-                // N Edge
+                // NE Edge
                 Tile tileN = tiles[x][y].getAdjacentTile(1);
                 if (tileN != null) {
                     if (tileN.getEdges()[4] != null) {
                         adjacentEdges[1] = tileN.getEdges()[4];
                     } else {
                         numOfEdges++;
-                        adjacentEdges[1] = new Edge(numOfEdges);
+                        Edge e = new Edge(numOfEdges);
+                        tileN.getEdges()[4]=e;
+                        adjacentEdges[1]=e;
                     }
                 }
 
-                // NE Edge
+                // E Edge
                 Tile tileNE = tiles[x][y].getAdjacentTile(2);
                 if (tileNE != null) {
 
@@ -210,7 +224,9 @@ public class Board {
                         adjacentEdges[2] = tileNE.getEdges()[5];
                     } else {
                         numOfEdges++;
-                        adjacentEdges[2] = new Edge(numOfEdges);
+                        Edge e = new Edge(numOfEdges);
+                        tileNE.getEdges()[5]=e;
+                        adjacentEdges[2]=e;
                     }
                 }
 
@@ -221,29 +237,35 @@ public class Board {
                         adjacentEdges[3] = tileSE.getEdges()[0];
                     } else {
                         numOfEdges++;
-                        adjacentEdges[3] = new Edge(numOfEdges);
+                        Edge e = new Edge(numOfEdges);
+                        tileSE.getEdges()[0]=e;
+                        adjacentEdges[3]=e;
                     }
                 }
 
-                // S Edge
+                // SW Edge
                 Tile tileS = tiles[x][y].getAdjacentTile(4);
                 if (tileS != null) {
                     if (tileS.getEdges()[1] != null) {
                         adjacentEdges[4] = tileS.getEdges()[1];
                     } else {
                         numOfEdges++;
-                        adjacentEdges[4] = new Edge(numOfEdges);
+                        Edge e = new Edge(numOfEdges);
+                        tileS.getEdges()[1]=e;
+                        adjacentEdges[4]=e;
                     }
                 }
 
-                // SW Edge
+                // W Edge
                 Tile tileSW = tiles[x][y].getAdjacentTile(5);
                 if (tileSW != null) {
                     if (tileSW.getEdges()[2] != null) {
                         adjacentEdges[5] = tileSW.getEdges()[1];
                     } else {
                         numOfEdges++;
-                        adjacentEdges[5] = new Edge(numOfEdges);
+                        Edge e = new Edge(numOfEdges);
+                        tileSW.getEdges()[2]=e;
+                        adjacentEdges[5]=e;
                     }
                 }
 
@@ -252,6 +274,7 @@ public class Board {
     }
 
     public void fillIntersections() {
+        int count=0;
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles[x].length; y++) {
                 Tile tile = tiles[x][y];
@@ -259,7 +282,7 @@ public class Board {
                 Tile adjacentTileOne = null;
                 Tile adjacentTileTwo = null;
 
-                for (int vertexOrientation = 0; vertexOrientation < 6; vertexOrientation++) {
+                for (int vertexOrientation = 0; vertexOrientation < 6; vertexOrientation++) {   //0 is the intersection at the top
                     switch (vertexOrientation) {
                         case 0: {
                             adjacentTileOne = tile.getAdjacentTile(0);
@@ -293,77 +316,100 @@ public class Board {
                         }
                     }
 
-                    boolean tileOneExists = adjacentTileOne != null;
-                    boolean tileTwoExists = adjacentTileTwo != null;
-
-                    boolean vertexExists = false;
+//                    boolean tileOneExists = adjacentTileOne != null;
+//                    boolean tileTwoExists = adjacentTileTwo != null;
+//
+//                    boolean vertexExists = false;
 
                     int tileOneVertexOrientation = -1;
                     int tileTwoVertexOrientation = -1;
 
-                    switch (vertexOrientation) {
+                    switch (vertexOrientation) {    //comments are what the values were previously
                         case 0: {
                             tileOneVertexOrientation = 2;
-                            tileTwoVertexOrientation = 3;
+                            tileTwoVertexOrientation = 4;//3
                             break;
                         }
                         case 1: {
-                            tileOneVertexOrientation = 4;
+                            tileOneVertexOrientation = 3;//4
                             tileTwoVertexOrientation = 5;
                             break;
                         }
                         case 2: {
-                            tileOneVertexOrientation = 0;
-                            tileTwoVertexOrientation = 1;
+                            tileOneVertexOrientation = 4;//0
+                            tileTwoVertexOrientation = 0;//1
                             break;
                         }
-                        case 3: { // fix
-                            tileOneVertexOrientation = 2;
-                            tileTwoVertexOrientation = 3;
+                        case 3: {
+                            tileOneVertexOrientation = 5;//2
+                            tileTwoVertexOrientation = 2;//3
                             break;
                         }
                         case 4: {
                             tileOneVertexOrientation = 0;
-                            tileTwoVertexOrientation = 5;
+                            tileTwoVertexOrientation = 1;//5
                             break;
                         }
                         case 5: {
-                            tileOneVertexOrientation = 1;
-                            tileTwoVertexOrientation = 3;
+                            tileOneVertexOrientation = 3;//1
+                            tileTwoVertexOrientation = 1;//3
                         }
                     }
 
-                    if (tileOneExists) {
-                        Intersection temp = adjacentTileOne.getIntersections()[tileTwoVertexOrientation];
-
-                        if (temp != null) {
-                            intersections[vertexOrientation] = temp;
-
-                            if (tileTwoExists) {
-                                adjacentTileTwo.setIntersection(temp, vertexOrientation);
-                            }
-
-                            vertexExists = true;
-                        }
+//                    if (tileOneExists) {
+//                        Intersection temp = adjacentTileOne.getIntersections()[tileTwoVertexOrientation];   //used to be tileTwoVertexOrientation
+//
+//                        if (temp != null) {
+//                            if (tileTwoExists) {
+//                                adjacentTileTwo.setIntersection(temp, tileTwoVertexOrientation);
+//                            }
+//                            vertexExists = true;
+//                        }
+//                    }
+//                    if (!vertexExists) {
+//                        Intersection intersection = new Intersection();
+////                        intersections[count] = intersection;
+////                        count++;
+//
+//                        if (tileOneExists) {
+//                            adjacentTileOne.setIntersection(intersection, tileOneVertexOrientation);
+//                        }
+//
+//                        if (tileTwoExists) {
+//                            adjacentTileTwo.setIntersection(intersection, tileTwoVertexOrientation);
+//                        }
+//                    }
+                    //changes
+                    Intersection temp = tile.getIntersections()[vertexOrientation];
+                    if (temp==null) {
+                        temp=new Intersection();
+                        tile.setIntersection(temp, vertexOrientation);
+                        intersections[count++] = temp;
                     }
-
-                    if (!vertexExists) {
-                        Intersection intersection = new Intersection();
-                        intersections[vertexOrientation] = intersection;
-
-                        if (tileOneExists) {
-                            adjacentTileOne.setIntersection(intersection, tileOneVertexOrientation);
-                        }
-
-                        if (tileTwoExists) {
-                            adjacentTileTwo.setIntersection(intersection, tileTwoVertexOrientation);
-                        }
+                    if (adjacentTileOne!=null) {
+                        adjacentTileOne.setIntersection(tile.getIntersections()[vertexOrientation], tileOneVertexOrientation);
+                    }
+                    if (adjacentTileTwo!=null) {
+                        adjacentTileTwo.setIntersection(tile.getIntersections()[vertexOrientation], tileTwoVertexOrientation);
                     }
                 }
             }
         }
     }
-
+    public void setTilesIntersectionsLocations() {
+        for (Tile[] tileRow: tiles) {
+            for (Tile tile: tileRow) {
+                int tilex=tile.getxPixel();
+                int tiley=tile.getyPixel();
+                tile.getIntersections()[5].setLocation(tilex, tiley+36);
+                tile.getIntersections()[0].setLocation(tilex+55, tiley);
+                tile.getIntersections()[1].setLocation(tilex+110, tiley+36);
+                tile.getIntersections()[2].setLocation(tilex+110, tiley+109);
+                tile.getIntersections()[3].setLocation(tilex+55, tiley+145);
+                tile.getIntersections()[4].setLocation(tilex, tiley+109);
+            }
+        }
+    }
     public void giveResources(int numRolled){
         for(int r=0; r<tiles.length; r++){
             for (int c=0; c<tiles[r].length; c++)
@@ -372,6 +418,7 @@ public class Board {
             }
         }
     }
+
 
     public static Edge[] getEdges() { return edges; }
 
@@ -451,4 +498,8 @@ public class Board {
         return i.setIsCity();
         //also needs to increase player's vp
     } //check Intersection class
+
+    public Tile[][] getTiles() {
+        return tiles;
+    }
 }
