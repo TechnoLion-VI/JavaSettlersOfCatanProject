@@ -250,30 +250,45 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawRect(915, 10, 75, 75);
         g.drawRect(1000, 10, 75, 75);
         for (int i=0; i<3; i++) {
-            g.drawImage(GameState.board.getTiles()[0][i].getImg(), 560+i*110, 142, 110, 146, null);
+            g.drawImage(GameState.board.getTiles()[0][i].getImg(), 560+i*110, 142, 110, 145, null);
             GameState.board.getTiles()[0][i].setPixel(560+i*110, 142);
-            g.drawImage(GameState.board.getTiles()[4][i].getImg(), 560+i*110, 578, 110, 146, null);
+            g.drawImage(GameState.board.getTiles()[4][i].getImg(), 560+i*110, 578, 110, 145, null);
             GameState.board.getTiles()[4][i].setPixel(560+i*110, 578);
         }
         for (int i=0; i<4; i++) {
-            g.drawImage(GameState.board.getTiles()[1][i].getImg(), 505+i*110, 251, 110, 146, null);
+            g.drawImage(GameState.board.getTiles()[1][i].getImg(), 505+i*110, 251, 110, 145, null);
             GameState.board.getTiles()[1][i].setPixel(505+i*110, 251);
-            g.drawImage(GameState.board.getTiles()[3][i].getImg(), 505+i*110, 469, 110, 146, null);
+            g.drawImage(GameState.board.getTiles()[3][i].getImg(), 505+i*110, 469, 110, 145, null);
             GameState.board.getTiles()[3][i].setPixel(505+i*110, 469);
         }
         for (int i=0; i<5; i++) {
-            g.drawImage(GameState.board.getTiles()[2][i].getImg(), 450+i*110, 360, 110, 146, null);
+            g.drawImage(GameState.board.getTiles()[2][i].getImg(), 450+i*110, 360, 110, 145, null);
             GameState.board.getTiles()[2][i].setPixel(450+i*110, 360);
         }
         GameState.board.setTilesIntersectionsLocations();
+
         //temporary section for checking intersection locations
         for (Tile[] tiles: GameState.board.getTiles()) {
             for (Tile tile:tiles) {
-                for (Intersection i:tile.getIntersections()) {
-                    g.fillRect(i.getLocation()[0], i.getLocation()[1], 10, 10);
-                }
+//                for (Intersection i:tile.getIntersections()) {
+//                    g.fillRect(i.getLocation()[0], i.getLocation()[1], 10, 10);
+//                }
+                g.setColor(Color.BLACK);
+                g.fillRect(tile.getIntersections()[0].getX(), tile.getIntersections()[0].getY(), 10, 10);
+             //   g.setColor(Color.RED);
+                g.fillRect(tile.getIntersections()[1].getX(), tile.getIntersections()[1].getY(), 10, 10);
+             //   g.setColor(Color.ORANGE);
+                g.fillRect(tile.getIntersections()[2].getX(), tile.getIntersections()[2].getY(), 10, 10);
+            //    g.setColor(Color.YELLOW);
+                g.fillRect(tile.getIntersections()[3].getX(), tile.getIntersections()[3].getY(), 10, 10);
+             //   g.setColor(Color.GREEN);
+                g.fillRect(tile.getIntersections()[4].getX(), tile.getIntersections()[4].getY(), 10, 10);
+             //   g.setColor(Color.BLUE);
+                g.fillRect(tile.getIntersections()[5].getX(), tile.getIntersections()[5].getY(), 10, 10);
             }
         }
+        g.setColor(Color.BLACK);
+
         g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
         g.setFont(victoryTitleFont);
         g.drawImage(trophy, 0, 675, 40, 40, null);
