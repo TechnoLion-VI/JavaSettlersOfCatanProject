@@ -25,10 +25,10 @@ public class Tile {
         assignedNum = 0;
         edges = new Edge[6];
         intersections = new Intersection[6];
-        for (int i=0; i<6; i++) {
-            Intersection temp=new Intersection();
-            intersections[i]=temp;
-        }
+//        for (int i=0; i<6; i++) {
+//            Intersection temp=new Intersection();
+//            intersections[i]=temp;
+//        }
         adjacentTiles = new Tile[6];
     }
     public void setAdjacentVertex(int vertexOrientation) {
