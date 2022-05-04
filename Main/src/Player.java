@@ -119,6 +119,9 @@ public class Player {
     public ResourceCard remove(int index) {return resourceCards.remove(index);}
     public ResourceCard get(int index) {return resourceCards.get(index);}
     public int size() {return resourceCards.size();}
+    public void addDev(DevelopmentCard dc) {devCards.add(dc);}
+    public DevelopmentCard removeDev(int index) {return devCards.remove(index);}
+    public DevelopmentCard getDev (int index) {return devCards.get(index);}
 
     //solved Longest Road issues
     public void checkRoadLength() {

@@ -5,16 +5,13 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class DevelopmentCardDeck {
-    private ArrayList<DevelopmentCard> deck;
+    private static ArrayList<DevelopmentCard> deck;
 
-    public DevelopmentCardDeck() {
+    static {
         deck = new ArrayList<>();
         for (int i = 0; i < 14; i++) deck.add(new Knight());    //adding 14 knight cards
-//        for (int i = 0; i < 5; i++) {
-//            deck.add(new VictoryPoint());
-//        }
 
-        for (int i = 0; i < 2; i++) {   //adding 2 of each devcard
+        for (int i = 0; i < 2; i++) {   //adding 2 of each dev card
             deck.add(new Monopoly());
             deck.add(new YearOfPlenty());
             deck.add(new RoadBuilding());
@@ -29,19 +26,17 @@ public class DevelopmentCardDeck {
             images.add(ImageIO.read(DevelopmentCardDeck.class.getResource("/Images/UniversityVP.png")));
         }
         catch (Exception e) {
-            System.out.println("Victory Point Image Error");
-            return;
+            e.printStackTrace();
         }
         for (BufferedImage b:images) {
-            DevelopmentCard dc=new DevelopmentCard("Victory Point");
+            DevelopmentCard dc=new VictoryPoint();
             dc.setImg(b);
             deck.add(dc);
         }
 
         Collections.shuffle(deck);
     }
-    public DevelopmentCard draw() {
-        ActionLogPanel.buy();
+    public static DevelopmentCard draw() {
         return deck.remove(0);
     }
 }

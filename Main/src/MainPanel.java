@@ -14,6 +14,8 @@ public class MainPanel extends JPanel implements MouseListener {
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator, brick, ore, grain, lumber, wool;
     private JButton endTurn, build;
+    private JPanel devCardPanel;
+    private JScrollPane devCards;
     //private Font playerTitleFont;
     private int x, y;
 
@@ -53,7 +55,13 @@ public class MainPanel extends JPanel implements MouseListener {
         System.setOut(printStream);
         JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         logPanel.setBounds(1100, 10, 400, 200);
-        this.add(logPanel);
+        add(logPanel);
+        /* DEVELOPMENT CARDS PANEL */
+        devCardPanel = new JPanel();
+        devCardPanel.setBackground(new Color(255, 220, 100));
+        devCards = new JScrollPane(devCardPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        devCards.setBounds(12, 385, 350, 100);
+        add(devCards);
         /* END TURN, CLAIM WIN, BUILD BUTTONS */
         build = new JButton("Build/Buy");
         build.setBounds(800, 730, 100, 50);
@@ -64,15 +72,15 @@ public class MainPanel extends JPanel implements MouseListener {
                 int response = JOptionPane.showOptionDialog(null, "Choose what you want to build/buy.", "Build/Buy",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                             null, options, options[0]);
-                if(response == 0){
-                    if(GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber")){
+                if (response == 0){
+                    if (GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber")){
                         GameState.currentPlayer.getResourceCards().remove("Brick");
                         GameState.currentPlayer.getResourceCards().remove("Lumber");
                         //let them select where they want to place road, check if they can
                         System.out.println(GameState.currentPlayer.toString() + " has built a road.");
                     }
-                if(response == 1){
-                    if(GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber") && GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Grain")){
+                if (response == 1){
+                    if (GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber") && GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Grain")){
                         GameState.currentPlayer.getResourceCards().remove("Brick");
                         GameState.currentPlayer.getResourceCards().remove("Lumber");
                         GameState.currentPlayer.getResourceCards().remove("Wool");
@@ -80,27 +88,27 @@ public class MainPanel extends JPanel implements MouseListener {
                         //let them select where they want to place settlement, check if they can
                         System.out.println(GameState.currentPlayer.toString() + " has built a settlement.");
                 }
-                if(response == 2){
+                if (response == 2){
                     int ore = 0;
-                    for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                    for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
                         ArrayList<ResourceCard> rc = GameState.currentPlayer.getResourceCards();
                         if(rc.get(i).getType().equals("Ore")){
                             ore++;
                         }
                     }
-                    if(ore >= 3) {
+                    if (ore >= 3) {
                         for (int i = 0; i < 3; i++) {
                             GameState.currentPlayer.getResourceCards().remove("Ore");
                         }
                     }
                     int grain = 0;
-                    for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                    for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
                         ArrayList<ResourceCard> rc = GameState.currentPlayer.getResourceCards();
-                        if(rc.get(i).getType().equals("Grain")){
+                        if (rc.get(i).getType().equals("Grain")){
                             grain++;
                         }
                     }
-                    if(grain >= 2) {
+                    if (grain >= 2) {
                         for (int i = 0; i < 2; i++) {
                             GameState.currentPlayer.getResourceCards().remove("Grain");
                         }
@@ -108,12 +116,19 @@ public class MainPanel extends JPanel implements MouseListener {
                     //let them select a settlement of theirs
                     System.out.println(GameState.currentPlayer.toString() + " has built a city.");
                     }
-                if(response == 3){
-                    if(GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Ore") && GameState.currentPlayer.getResourceCards().contains("Grain")){
+                if (response == 3){
+                    if (GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Ore") && GameState.currentPlayer.getResourceCards().contains("Grain")){
                         GameState.currentPlayer.getResourceCards().remove("Wool");
                         GameState.currentPlayer.getResourceCards().remove("Grain");
                         GameState.currentPlayer.getResourceCards().remove("Ore");
                         //take it from development card deck and display it visually
+                        GameState.currentPlayer.addDev(DevelopmentCardDeck.draw());
+                        devCardPanel.removeAll();
+                        for (DevelopmentCard dc:GameState.currentPlayer.getDevCards()) {
+                            devCardPanel.add(new JButton(new ImageIcon(resize(dc.getImage(), 25, 75))));
+                            devCards.revalidate();
+                            revalidate();
+                        }
                         System.out.println(GameState.currentPlayer.toString() + " has bought a development card.");
                     }
                 }
@@ -155,6 +170,7 @@ public class MainPanel extends JPanel implements MouseListener {
             }
         });*/
 
+        /* ADD COMPONENTS TO MainPanel */
         add(endTurn);
         //add(claimWin);
         add(build);
@@ -187,22 +203,6 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString("DEVELOPMENT CARDS",5,373);
         g2.drawLine(7,380,319,380);
         g2.drawLine(7,380,7,425);
-         /* int cnt = 0;
-        for (DevelopmentCard dev:GameState.currentPlayer.getDevCards()) if (dev instanceof Knight) cnt++;
-        g.drawString("Knight: " + cnt, 11, 380 + 24);
-        cnt = 0;
-        for (DevelopmentCard dev:GameState.currentPlayer.getDevCards()) if (dev instanceof VictoryPoint) cnt++;
-        g.drawString("Victory Point: " + cnt, 11, 380 + 48);
-        cnt = 0;
-        for (DevelopmentCard dev:GameState.currentPlayer.getDevCards()) if (dev instanceof Monopoly) cnt++;
-        g.drawString("Monopoly: " + cnt, 11, 380 + 72);
-        cnt = 0;
-        for (DevelopmentCard dev:GameState.currentPlayer.getDevCards()) if (dev instanceof RoadBuilding) cnt++;
-        g.drawString("Road Building: " + cnt, 11, 380 + 96);
-        cnt = 0;
-        for (DevelopmentCard dev:GameState.currentPlayer.getDevCards()) if (dev instanceof YearOfPlenty) cnt++;
-        g.drawString("Year of Plenty: " + cnt, 11, 380 + 120);
-        cnt = 0; */
         g.drawRect(500,10,400,75);
         Font diceRollFont = new Font("Serif", Font.BOLD, 35);
         g.setFont(diceRollFont);
@@ -248,6 +248,15 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.currentPlayer.getNumResources("Lumber") + "", 160, 750);
         g.drawImage(wool, 180, 725, 40, 40, null);
         g.drawString(GameState.currentPlayer.getNumResources("Wool") + "", 220, 750);
+    }
+
+    public BufferedImage resize(BufferedImage img, int w, int h) {
+        BufferedImage resizedImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(img, 0, 0, w, h, null);
+        g.dispose();
+
+        return resizedImage;
     }
 
     @Override
