@@ -226,14 +226,29 @@ public class MainPanel extends JPanel implements MouseListener {
             GameState.board.getTiles()[2][i].setPixel(450+i*110, 360);
         }
         GameState.board.setTilesIntersectionsLocations();
+
         //temporary section for checking intersection locations
         for (Tile[] tiles: GameState.board.getTiles()) {
             for (Tile tile:tiles) {
-                for (Intersection i:tile.getIntersections()) {
-                    g.fillRect(i.getLocation()[0], i.getLocation()[1], 10, 10);
-                }
+//                for (Intersection i:tile.getIntersections()) {
+//                    g.fillRect(i.getLocation()[0], i.getLocation()[1], 10, 10);
+//                }
+                g.fillRect(tile.getIntersections()[0].getX(), tile.getIntersections()[0].getY(), 10, 10);
+                g.setColor(Color.RED);
+                g.fillRect(tile.getIntersections()[1].getX(), tile.getIntersections()[1].getY(), 10, 10);
+                g.setColor(Color.ORANGE);
+                g.fillRect(tile.getIntersections()[2].getX(), tile.getIntersections()[2].getY(), 10, 10);
+                g.setColor(Color.YELLOW);
+                g.fillRect(tile.getIntersections()[2].getX(), tile.getIntersections()[3].getY(), 10, 10);
+                g.setColor(Color.GREEN);
+                g.fillRect(tile.getIntersections()[4].getX(), tile.getIntersections()[4].getY(), 10, 10);
+                g.setColor(Color.BLUE);
+                g.fillRect(tile.getIntersections()[5].getX(), tile.getIntersections()[5].getY(), 10, 10);
+                g.setColor(Color.BLACK);
             }
         }
+        g.setColor(Color.BLACK);
+
         g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
         g.setFont(victoryTitleFont);
         g.drawString(GameState.currentPlayer.getSecretScore() + "", 40, 700);

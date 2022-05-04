@@ -389,12 +389,12 @@ public class Board {
             for (Tile tile: tileRow) {
                 int tilex=tile.getxPixel();
                 int tiley=tile.getyPixel();
-                tile.getIntersections()[0].setLocation(tilex, tiley+36);
-                tile.getIntersections()[1].setLocation(tilex+55, tiley);
-                tile.getIntersections()[2].setLocation(tilex+110, tiley+36);
-                tile.getIntersections()[3].setLocation(tilex+110, tiley+109);
-                tile.getIntersections()[4].setLocation(tilex+55, tiley+146);
-                tile.getIntersections()[5].setLocation(tilex, tiley+109);
+                tile.getIntersections()[5].setLocation(tilex, tiley+36);
+                tile.getIntersections()[0].setLocation(tilex+55, tiley);
+                tile.getIntersections()[1].setLocation(tilex+110, tiley+36);
+                tile.getIntersections()[2].setLocation(tilex+110, tiley+109);
+                tile.getIntersections()[3].setLocation(tilex+55, tiley+146);
+                tile.getIntersections()[4].setLocation(tilex, tiley+109);
             }
         }
     }
