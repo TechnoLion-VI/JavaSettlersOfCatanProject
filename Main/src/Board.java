@@ -407,6 +407,7 @@ public class Board {
         }
     }
 
+
     public static Edge[] getEdges() { return edges; }
 
     public static Intersection[] getIntersections() { return intersections; }

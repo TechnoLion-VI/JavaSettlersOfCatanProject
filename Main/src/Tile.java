@@ -168,8 +168,9 @@ public class Tile {
                     if (ResourceDeck.getDeck(resource.getType()).size() >= 1) {
                         ResourceDeck.getDeck(resource.getType()).remove(0);
                         p.add(resource);
+                        System.out.println(intersections[n].getOwner() + " received a " + ResourceDeck.getDeck(resource.getType()) + ".");
                     } else {
-                        continue;
+                        System.out.println("There are not enough " + resource.getType() + "s to distribute to all players.");
                     }
                 } else if (intersections[n].getOwner() == p && intersections[n].isCity() == true) {
                     if (ResourceDeck.getDeck(resource.getType()).size() >= 2) {
@@ -177,11 +178,17 @@ public class Tile {
                         ResourceDeck.getDeck(resource.getType()).remove(0);
                         p.add(resource);
                         p.add(resource);
+                        System.out.println(intersections[n].getOwner() + " received two " + ResourceDeck.getDeck(resource.getType()) + ".");
+                    }
+                    else{
+                        System.out.println("There are not enough " + resource.getType() + "s to distribute to all players.");
                     }
                 }
             }
         }
     }
+
+
 
     public void addPlayer(Player p) {
         for (int i = 0; i < intersections.length; i++) {
