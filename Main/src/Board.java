@@ -197,7 +197,9 @@ public class Board {
                         adjacentEdges[0] = tileNW.getEdges()[3];
                     } else {
                         numOfEdges++;
-                        adjacentEdges[0] = new Edge(numOfEdges);
+                        Edge e = new Edge(numOfEdges);
+                        tileNW.getEdges()[3]=e;
+                        adjacentEdges[0]=e;
                     }
                 }
 
@@ -208,7 +210,9 @@ public class Board {
                         adjacentEdges[1] = tileN.getEdges()[4];
                     } else {
                         numOfEdges++;
-                        adjacentEdges[1] = new Edge(numOfEdges);
+                        Edge e = new Edge(numOfEdges);
+                        tileN.getEdges()[4]=e;
+                        adjacentEdges[1]=e;
                     }
                 }
 
@@ -220,7 +224,9 @@ public class Board {
                         adjacentEdges[2] = tileNE.getEdges()[5];
                     } else {
                         numOfEdges++;
-                        adjacentEdges[2] = new Edge(numOfEdges);
+                        Edge e = new Edge(numOfEdges);
+                        tileNE.getEdges()[5]=e;
+                        adjacentEdges[2]=e;
                     }
                 }
 
@@ -231,7 +237,9 @@ public class Board {
                         adjacentEdges[3] = tileSE.getEdges()[0];
                     } else {
                         numOfEdges++;
-                        adjacentEdges[3] = new Edge(numOfEdges);
+                        Edge e = new Edge(numOfEdges);
+                        tileSE.getEdges()[0]=e;
+                        adjacentEdges[3]=e;
                     }
                 }
 
@@ -242,7 +250,9 @@ public class Board {
                         adjacentEdges[4] = tileS.getEdges()[1];
                     } else {
                         numOfEdges++;
-                        adjacentEdges[4] = new Edge(numOfEdges);
+                        Edge e = new Edge(numOfEdges);
+                        tileS.getEdges()[1]=e;
+                        adjacentEdges[4]=e;
                     }
                 }
 
@@ -253,7 +263,9 @@ public class Board {
                         adjacentEdges[5] = tileSW.getEdges()[1];
                     } else {
                         numOfEdges++;
-                        adjacentEdges[5] = new Edge(numOfEdges);
+                        Edge e = new Edge(numOfEdges);
+                        tileSW.getEdges()[2]=e;
+                        adjacentEdges[5]=e;
                     }
                 }
 
@@ -304,10 +316,10 @@ public class Board {
                         }
                     }
 
-                    boolean tileOneExists = adjacentTileOne != null;
-                    boolean tileTwoExists = adjacentTileTwo != null;
-
-                    boolean vertexExists = false;
+//                    boolean tileOneExists = adjacentTileOne != null;
+//                    boolean tileTwoExists = adjacentTileTwo != null;
+//
+//                    boolean vertexExists = false;
 
                     int tileOneVertexOrientation = -1;
                     int tileTwoVertexOrientation = -1;
@@ -374,10 +386,10 @@ public class Board {
                         tile.setIntersection(temp, vertexOrientation);
                         intersections[count++] = temp;
                     }
-                    if (tileOneExists) {
+                    if (adjacentTileOne!=null) {
                         adjacentTileOne.setIntersection(tile.getIntersections()[vertexOrientation], tileOneVertexOrientation);
                     }
-                    if (tileTwoExists) {
+                    if (adjacentTileTwo!=null) {
                         adjacentTileTwo.setIntersection(tile.getIntersections()[vertexOrientation], tileTwoVertexOrientation);
                     }
                 }
