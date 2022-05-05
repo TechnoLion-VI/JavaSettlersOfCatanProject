@@ -447,18 +447,31 @@ public class Board {
 //                            adjacentTileTwo.setIntersection(i, tileTwoVertexOrientation);
 //                        }
 //                    }
-                    Intersection i=tile.getIntersections()[vertexOrientation];
-                    if (i!=null) {
-                        System.out.println(""+count);
-                        count++;
-                    }
-                    if (tileOneExists) {
-                        adjacentTileOne.setIntersection(i, tileOneVertexOrientation);
-                    }
-                    if (tileTwoExists) {
-                        adjacentTileTwo.setIntersection(i, tileTwoVertexOrientation);
-                    }
 
+//                    Intersection i=tile.getIntersections()[vertexOrientation];
+//                    if (i!=null) {
+//                        System.out.println(""+count);
+//                        count++;
+//                    }
+//                    if (tileOneExists) {
+//                        adjacentTileOne.setIntersection(i, tileOneVertexOrientation);
+//                    }
+//                    if (tileTwoExists) {
+//                        adjacentTileTwo.setIntersection(i, tileTwoVertexOrientation);
+//                    }
+                    if (tile.getIntersections()[vertexOrientation]!=null) {
+                        vertexExists=true;
+                    }
+                    else {
+                        tile.setIntersection(new Intersection(), vertexOrientation);
+                        vertexExists=true;
+                    }
+                    if (vertexExists && adjacentTileOne!=null) {
+                        adjacentTileOne.setIntersection(tile.getIntersections()[vertexOrientation], tileOneVertexOrientation);
+                    }
+                    if (vertexExists && adjacentTileTwo!=null) {
+                        adjacentTileTwo.setIntersection(tile.getIntersections()[vertexOrientation], tileTwoVertexOrientation);
+                    }
                 }
             }
         }
@@ -469,6 +482,7 @@ public class Board {
             for (Tile tile: tileRow) {
                 int tilex=tile.getxPixel();
                 int tiley=tile.getyPixel();
+                //System.out.println(tilex+", "+tiley);
                 tile.getIntersections()[5].setLocation(tilex, tiley+36);
                 tile.getIntersections()[0].setLocation(tilex+55, tiley);
                 tile.getIntersections()[1].setLocation(tilex+110, tiley+36);

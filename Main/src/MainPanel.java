@@ -377,13 +377,14 @@ public class MainPanel extends JPanel implements MouseListener {
                 g.setColor(Color.BLACK);
                 g.fillRect(tile.getIntersections()[0].getX(), tile.getIntersections()[0].getY(), 10, 10);
                 g.drawLine(e[0].getPoint1()[0], e[0].getPoint1()[1], e[0].getPoint2()[0], e[0].getPoint2()[1]);
-
                 g.setColor(Color.RED);
                 g.fillRect(tile.getIntersections()[1].getX(), tile.getIntersections()[1].getY(), 10, 10);
 //                if (tile.getIntersections()[1]!=null) {
 //                    //System.out.println("intersections 1 are not null "+count);
 //                    count++;
 //                }
+                System.out.println(e[1].getPoint1()[0]+", "+e[1].getPoint1()[1]+"; "+e[1].getPoint2()[0]+", "+e[1].getPoint2()[1]+"; "+count);
+                count++;
                 g.drawLine(e[1].getPoint1()[0], e[1].getPoint1()[1], e[1].getPoint2()[0], e[1].getPoint2()[1]);
 
                 g.setColor(Color.ORANGE);

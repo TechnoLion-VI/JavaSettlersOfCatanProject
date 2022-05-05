@@ -25,8 +25,8 @@ public class Tile {
         assignedNum = 0;
         edges = new Edge[6];
         for (int i=0; i<6; i++) {
-            Intersection temp=new Intersection();
-            intersections[i]=temp;
+//            Intersection temp=new Intersection();
+//            intersections[i]=temp;
             Edge e=new Edge();
             edges[i]=e;
         }
