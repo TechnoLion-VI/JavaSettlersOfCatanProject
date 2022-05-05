@@ -286,21 +286,40 @@ public class MainPanel extends JPanel implements MouseListener {
         g.setColor(Color.WHITE);
         g.fillRect(915, 10, 75, 75);
         g.fillRect(1000, 10, 75, 75);
+
+        g.setFont(new Font("Serif", Font.BOLD, 25));
         for (int i=0; i<3; i++) {
             g.drawImage(GameState.board.getTiles()[0][i].getImg(), 560+i*110, 142, 110, 145, null);
+            if (!GameState.board.getTiles()[0][i].getIsDesert()) {
+                g.drawString(""+GameState.board.getTiles()[0][i].getAssignedNum(), 607+i*112, 270);
+            }
             GameState.board.getTiles()[0][i].setPixel(560+i*110, 142);
+
             g.drawImage(GameState.board.getTiles()[4][i].getImg(), 560+i*110, 578, 110, 145, null);
+            if (!GameState.board.getTiles()[4][i].getIsDesert()) {
+                g.drawString("" + GameState.board.getTiles()[4][i].getAssignedNum(), 607 + i * 112, 700);
+            }
             GameState.board.getTiles()[4][i].setPixel(560+i*110, 578);
         }
         for (int i=0; i<4; i++) {
             g.drawImage(GameState.board.getTiles()[1][i].getImg(), 505+i*110, 251, 110, 145, null);
+            if (!GameState.board.getTiles()[1][i].getIsDesert()) {
+                g.drawString(""+GameState.board.getTiles()[1][i].getAssignedNum(), 550+i*112, 380);
+            }
             GameState.board.getTiles()[1][i].setPixel(505+i*110, 251);
+
             g.drawImage(GameState.board.getTiles()[3][i].getImg(), 505+i*110, 469, 110, 145, null);
+            if (!GameState.board.getTiles()[3][i].getIsDesert()) {
+                g.drawString(""+GameState.board.getTiles()[3][i].getAssignedNum(), 550+i*112, 598);
+            }
             GameState.board.getTiles()[3][i].setPixel(505+i*110, 469);
         }
         for (int i=0; i<5; i++) {
             g.drawImage(GameState.board.getTiles()[2][i].getImg(), 450+i*110, 360, 110, 145, null);
-            GameState.board.getTiles()[2][i].setPixel(450+i*110, 360);
+            if (!GameState.board.getTiles()[2][i].getIsDesert()) {
+                g.drawString(""+GameState.board.getTiles()[2][i].getAssignedNum(), 490+i*112, 485);
+            }
+            GameState.board.getTiles()[2][i].setPixel(452+i*110, 360);
         }
         GameState.board.setTilesIntersectionsLocations();
 
