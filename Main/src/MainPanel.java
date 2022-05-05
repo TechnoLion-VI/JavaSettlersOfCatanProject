@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.font.GlyphMetrics;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
+import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -22,6 +23,7 @@ public class MainPanel extends JPanel implements MouseListener {
 
     public MainPanel() {
         try {
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts\\custom_font.ttf")).deriveFont(12f);
             playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Player Indicator.png")));
             brick = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Brick Resource Card.png")));
             ore = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Ore Resource Card.png")));
@@ -31,9 +33,8 @@ public class MainPanel extends JPanel implements MouseListener {
             sword = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/sword.png")));
             trophy = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/trophy.png")));
             resource = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/parchment.png")));
-            //playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            //ge.registerFont(playerTitleFont);
+            ge.registerFont(customFont);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -253,7 +254,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.setStroke(new BasicStroke(4));
         g2.drawLine(7,152,319,152);
         g2.drawLine(7,152,7,255);
-        Font victoryPointFont = new Font("Serif", Font.BOLD, 15);
+        g.setFont(playerTitleFont);
         g.drawString("Blue Player: ",11,180);
         g.drawString("Orange Player: ",11,220);
         g.drawString("Red Player: ",11,260);
