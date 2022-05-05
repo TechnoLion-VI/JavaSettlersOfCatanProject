@@ -6,13 +6,14 @@ import java.awt.image.BufferedImage;
 import java.awt.event.*;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> xCoords;  //for intersections
     private ArrayList<Integer> yCoords;
     private String playerIndStr = "PLAYER ONE";
-    private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource;
+    private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource, harbor3, bricks2, ore2, sheep2, wood2, wheat2;
     private JButton endTurn, build, trade;
     private JPanel devCardPanel;
     private JScrollPane devCards;
@@ -31,8 +32,14 @@ public class MainPanel extends JPanel implements MouseListener {
             sword = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/sword.png")));
             trophy = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/trophy.png")));
             resource = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/parchment.png")));
+            harbor3 = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/3to1.png")));
+            bricks2 = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/bricks2to1.png")));
+            ore2 = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/ore2to1.png")));
+            sheep2 = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/sheep2to1.png")));
+            wood2 = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/wood2to1.png")));
+            wheat2 = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/wheat2to1.png")));
             //playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
             //ge.registerFont(playerTitleFont);
         } catch (Exception e) {
             e.printStackTrace();
@@ -238,6 +245,23 @@ public class MainPanel extends JPanel implements MouseListener {
     }
 
     public void paintComponent(Graphics g) {
+        ArrayList<BufferedImage> harbor = new ArrayList<BufferedImage>();
+        harbor.add(harbor3);
+        harbor.add(harbor3);
+        harbor.add(harbor3);
+        harbor.add(ore2);
+        harbor.add(wheat2);
+        harbor.add(wood2);
+        harbor.add(sheep2);
+        harbor.add(bricks2);
+        Collections.shuffle(harbor);
+        int x = 1100;
+        int y = 10;
+        for(int i = 0; i < harbor.size(); i++){
+            g.drawImage(harbor.get(i), 1100, 300, 100, 50, null);
+//            x += 10;
+//            y += 10;
+        }
         g.setColor(new Color(255, 230, 150));
         g.fillRect(0, 0, 1600, 900);
         g.drawImage(playerIndicator, -10, -15, 500, 139, null);
