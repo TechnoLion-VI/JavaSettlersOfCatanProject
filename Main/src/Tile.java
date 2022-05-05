@@ -203,6 +203,8 @@ public class Tile {
     public int[] getLocation(){
         return location;
     }
+    public int getX() { return location[0]; }
+    public int getY() { return location[1]; }
     public void setImg(BufferedImage b) {
         img=b;
     }

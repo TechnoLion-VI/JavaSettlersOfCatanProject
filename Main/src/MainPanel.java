@@ -16,6 +16,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private JButton endTurn, build, trade;
     private JPanel devCardPanel;
     private JScrollPane devCards;
+    private boolean devCardPlayed;
     //private Font playerTitleFont;
     private int x, y;
 
@@ -38,6 +39,7 @@ public class MainPanel extends JPanel implements MouseListener {
             e.printStackTrace();
         }
         setLayout(null);
+        devCardPlayed = false;
         initComponents();
         addMouseListener(this);
         gameState.rollDice();
@@ -153,7 +155,18 @@ public class MainPanel extends JPanel implements MouseListener {
                         GameState.currentPlayer.addDev(DevelopmentCardDeck.draw());
                         devCardPanel.removeAll();
                         for (DevelopmentCard dc:GameState.currentPlayer.getDevCards()) {
-                            devCardPanel.add(new JButton(new ImageIcon(resize(dc.getImage(), 25, 75))));
+                            JButton b = new JButton(new ImageIcon(resize(dc.getImage(), 25, 75)));
+                            b.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent e) {
+                                    if (!devCardPlayed) {
+                                        // use to be implemented
+                                        devCardPlayed = true;
+                                        devCardPanel.remove(b);
+                                        GameState.currentPlayer.removeDev(dc);
+                                    }
+                                }
+                            });
+                            devCardPanel.add(b);
                             devCards.revalidate();
                             revalidate();
                         }
