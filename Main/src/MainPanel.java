@@ -48,6 +48,29 @@ public class MainPanel extends JPanel implements MouseListener {
 
     public void initComponents() {
         /* ACTION LOG STUFF */
+        JPanel p = new JPanel();
+        p.setBackground(new Color(255, 220, 100));
+        p.setBounds(1150, 300, 300, 400);
+        for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+            System.out.println("Please select which resources you wish to trade with.");
+            JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
+            p.add(c1);
+        }
+        System.out.println("Please select what resources you wish to trade for.");
+        JCheckBox brick = new JCheckBox("Brick");
+        JCheckBox grain = new JCheckBox("Grain");
+        JCheckBox lumber = new JCheckBox("Lumber");
+        JCheckBox ore = new JCheckBox("Ore");
+        JCheckBox wool = new JCheckBox("Wool");
+        p.add(brick);
+        p.add(grain);
+        p.add(lumber);
+        p.add(ore);
+        p.add(wool);
+
+        JScrollPane scroll = new JScrollPane(p, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        add(p);
+
         JTextArea log = new JTextArea(50, 50);
         //exact color from mockup
         log.setBackground(new Color(255, 220, 100));
@@ -72,7 +95,7 @@ public class MainPanel extends JPanel implements MouseListener {
         trade.setBackground(new Color(255, 200, 100));
         trade.addActionListener(new ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                String[] options = new String[] {"Domestic", "Trade"};
+                String[] options = new String[] {"Domestic", "Maritime"};
                 int response = JOptionPane.showOptionDialog(null, "Choose what type of trade you wish to perform.", "Trade",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, options, options[0]);
@@ -204,22 +227,8 @@ public class MainPanel extends JPanel implements MouseListener {
                 repaint();
             }
         });
-        /*claimWin = new JButton("Claim Win");
-        claimWin.setBounds(800, 730, 100, 50);
-        claimWin.setBackground(new Color(255, 200, 100));
-        claimWin.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (GameState.currentPlayer.getSecretScore() >= 10) {
-                    System.out.println(GameState.currentPlayer.toString() + " wins!");
-                } else {
-                    System.out.println(GameState.currentPlayer.toString() + " cannot claim their win yet.");
-                }
-            }
-        });*/
 
-        /* ADD COMPONENTS TO MainPanel */
         add(endTurn);
-        //add(claimWin);
         add(build);
         add(trade);
     }
@@ -230,6 +239,9 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(playerIndicator, -10, -15, 500, 139, null);
         g.setColor(Color.black);
         Font playerTitleFont = new Font("Serif", Font.BOLD, 50);
+        Font tradeFont = new Font("Serif", Font.BOLD, 40);
+        g.setFont(tradeFont);
+        g.drawString("Trade Panel", 1190, 285);
         g.setFont (playerTitleFont);
         g.drawString(GameState.currentPlayer.toString(), 20, 75);
 
@@ -304,7 +316,7 @@ public class MainPanel extends JPanel implements MouseListener {
                 g.setColor(Color.RED);
                 g.fillRect(tile.getIntersections()[1].getX(), tile.getIntersections()[1].getY(), 10, 10);
                 if (tile.getIntersections()[1]!=null) {
-                    System.out.println("intersections 1 are not null "+count);
+                    //System.out.println("intersections 1 are not null "+count);
                     count++;
                 }
                 g.setColor(Color.ORANGE);
