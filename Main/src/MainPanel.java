@@ -86,18 +86,19 @@ public class MainPanel extends JPanel implements MouseListener {
                         null, options, options[0]);
                 if(response == 0){
                     //
-                    //JPanel p = new JPanel();
-                    JFrame p= new JFrame("CheckBox test");
-
-
-
-                    for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
-                        System.out.println("Please select which resources you wish to trade with.");
-                        JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
-                        c1.setBounds(100,100, 150,150);
-                        p.add(c1);
-                    }
+                    JPanel p = new JPanel();
+                    p.setBounds(1100, 300, 300, 400);
+//                    for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+////                        JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
+//                        JCheckBox c1 = new JCheckBox("wooo");
+//                        c1.setBounds(100,100, 150,150);
+//                        p.add(c1);
+//                    }
+                    JCheckBox c1 = new JCheckBox("woooo");
+                    c1.setBounds(100, 100, 60, 60);
+                    p.add(c1);
                     System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + TradeManager.p1offer + ".");
+                    add(p);
 
 //                    JCheckBox brick = new JCheckBox("Brick");
 //                    brick.setBounds(100,100, 150,150);
