@@ -4,16 +4,16 @@ import java.awt.*;
 import java.awt.font.GlyphMetrics;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
+import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Objects;
 
 public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> xCoords;  //for intersections
     private ArrayList<Integer> yCoords;
     private String playerIndStr = "PLAYER ONE";
-    private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource, harbor3, bricks2, ore2, sheep2, wood2, wheat2;
+    private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource;
     private JButton endTurn, build, trade;
     private JPanel devCardPanel;
     private JScrollPane devCards;
@@ -23,6 +23,7 @@ public class MainPanel extends JPanel implements MouseListener {
 
     public MainPanel() {
         try {
+            //Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts\\custom_font.ttf")).deriveFont(12f);
             playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Player Indicator.png")));
             brick = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Brick Resource Card.png")));
             ore = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Ore Resource Card.png")));
@@ -32,15 +33,8 @@ public class MainPanel extends JPanel implements MouseListener {
             sword = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/sword.png")));
             trophy = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/trophy.png")));
             resource = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/parchment.png")));
-            harbor3 = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/3to1.png")));
-            bricks2 = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/bricks2to1.png")));
-            ore2 = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/ore2to1.png")));
-            sheep2 = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/sheep2to1.png")));
-            wood2 = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/wood2to1.png")));
-            wheat2 = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/wheat2to1.png")));
-            //playerTitleFont = Font.createFont(0, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Algerian Regular.ttf"))).deriveFont(24.0F);
-            GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            //ge.registerFont(playerTitleFont);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            //ge.registerFont(customFont);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,26 +86,42 @@ public class MainPanel extends JPanel implements MouseListener {
                         null, options, options[0]);
                 if(response == 0){
                     //
-                    JPanel p = new JPanel();
-                    p.setBackground(new Color(255, 220, 100));
-                    p.setBounds(1150, 300, 300, 400);
+                    //JPanel p = new JPanel();
+                    JFrame p= new JFrame("CheckBox test");
+
+
+
                     for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
                         System.out.println("Please select which resources you wish to trade with.");
                         JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
+                        c1.setBounds(100,100, 150,150);
                         p.add(c1);
                     }
                     System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + TradeManager.p1offer + ".");
-                    JCheckBox brick = new JCheckBox("Brick");
-                    JCheckBox grain = new JCheckBox("Grain");
-                    JCheckBox lumber = new JCheckBox("Lumber");
-                    JCheckBox ore = new JCheckBox("Ore");
-                    JCheckBox wool = new JCheckBox("Wool");
-                    p.add(brick);
-                    p.add(grain);
-                    p.add(lumber);
-                    p.add(ore);
-                    p.add(wool);
-                    add(p);
+
+//                    JCheckBox brick = new JCheckBox("Brick");
+//                    brick.setBounds(100,100, 150,150);
+//                    JCheckBox grain = new JCheckBox("Grain");
+//                    grain.setBounds(100,150, 150,150);
+//                    JCheckBox lumber = new JCheckBox("Lumber");
+//                    lumber.setBounds(100,150, 150,150);
+//                    JCheckBox ore = new JCheckBox("Ore");
+//                    ore.setBounds(100,150, 150,150);
+//                    JCheckBox wool = new JCheckBox("Wool");
+//                    wool.setBounds(100,150, 150,150);
+//                    p.add(brick);
+//                    p.add(grain);
+//                    p.add(lumber);
+//                    p.add(ore);
+//                    p.add(wool);
+                    //add(p);
+
+                    p.setLocation(1150,300);
+                    p.setSize(600,600);
+                    p.setBackground(new Color(255, 220, 100));
+                    p.setLayout(null);
+                    p.setVisible(true);
+
                 }
                 if(response == 1){
                     //maritime
@@ -245,23 +255,6 @@ public class MainPanel extends JPanel implements MouseListener {
     }
 
     public void paintComponent(Graphics g) {
-        ArrayList<BufferedImage> harbor = new ArrayList<BufferedImage>();
-        harbor.add(harbor3);
-        harbor.add(harbor3);
-        harbor.add(harbor3);
-        harbor.add(ore2);
-        harbor.add(wheat2);
-        harbor.add(wood2);
-        harbor.add(sheep2);
-        harbor.add(bricks2);
-        Collections.shuffle(harbor);
-        int x = 1100;
-        int y = 10;
-        for(int i = 0; i < harbor.size(); i++){
-            g.drawImage(harbor.get(i), 1100, 300, 100, 50, null);
-//            x += 10;
-//            y += 10;
-        }
         g.setColor(new Color(255, 230, 150));
         g.fillRect(0, 0, 1600, 900);
         g.drawImage(playerIndicator, -10, -15, 500, 139, null);
@@ -281,7 +274,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.setStroke(new BasicStroke(4));
         g2.drawLine(7,152,319,152);
         g2.drawLine(7,152,7,255);
-        Font victoryPointFont = new Font("Serif", Font.BOLD, 15);
+        g.setFont(playerTitleFont);
         g.drawString("Blue Player: ",11,180);
         g.drawString("Orange Player: ",11,220);
         g.drawString("Red Player: ",11,260);
