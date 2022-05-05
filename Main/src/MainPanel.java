@@ -313,7 +313,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.setColor(Color.WHITE);
         g.fillRect(915, 10, 75, 75);
         g.fillRect(1000, 10, 75, 75);
-
+        //drawing tiles and tokens
         g.setFont(new Font("Serif", Font.BOLD, 25));
         for (int i=0; i<3; i++) {
             g.drawImage(GameState.board.getTiles()[0][i].getImg(), 560+i*110, 142, 110, 145, null);

@@ -128,6 +128,12 @@ public class Tile {
     public void setPixel(int x, int y) {
         xPixel=x;
         yPixel=y;
+//        intersections[5].setLocation(xPixel, yPixel+36);
+//        intersections[0].setLocation(xPixel+55, yPixel);
+//        intersections[1].setLocation(xPixel+110, yPixel+36);
+//        intersections[2].setLocation(xPixel+110, yPixel+109);
+//        intersections[3].setLocation(xPixel+55, yPixel+145);
+//        intersections[4].setLocation(xPixel, yPixel+109);
     }
     public int getxPixel() {
         return xPixel;
