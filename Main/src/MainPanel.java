@@ -291,33 +291,48 @@ public class MainPanel extends JPanel implements MouseListener {
         for (int i=0; i<3; i++) {
             g.drawImage(GameState.board.getTiles()[0][i].getImg(), 560+i*110, 142, 110, 145, null);
             if (!GameState.board.getTiles()[0][i].getIsDesert()) {
+                if (GameState.board.getTiles()[0][i].getAssignedNum()==6 || GameState.board.getTiles()[0][i].getAssignedNum()==8)
+                    g.setColor(Color.RED);
                 g.drawString(""+GameState.board.getTiles()[0][i].getAssignedNum(), 607+i*112, 270);
+                g.setColor(Color.WHITE);
             }
             GameState.board.getTiles()[0][i].setPixel(560+i*110, 142);
 
             g.drawImage(GameState.board.getTiles()[4][i].getImg(), 560+i*110, 578, 110, 145, null);
             if (!GameState.board.getTiles()[4][i].getIsDesert()) {
+                if (GameState.board.getTiles()[4][i].getAssignedNum()==6 || GameState.board.getTiles()[4][i].getAssignedNum()==8)
+                    g.setColor(Color.RED);
                 g.drawString("" + GameState.board.getTiles()[4][i].getAssignedNum(), 607 + i * 112, 700);
+                g.setColor(Color.WHITE);
             }
             GameState.board.getTiles()[4][i].setPixel(560+i*110, 578);
         }
         for (int i=0; i<4; i++) {
             g.drawImage(GameState.board.getTiles()[1][i].getImg(), 505+i*110, 251, 110, 145, null);
             if (!GameState.board.getTiles()[1][i].getIsDesert()) {
+                if (GameState.board.getTiles()[1][i].getAssignedNum()==6 || GameState.board.getTiles()[1][i].getAssignedNum()==8)
+                    g.setColor(Color.RED);
                 g.drawString(""+GameState.board.getTiles()[1][i].getAssignedNum(), 550+i*112, 380);
+                g.setColor(Color.WHITE);
             }
             GameState.board.getTiles()[1][i].setPixel(505+i*110, 251);
 
             g.drawImage(GameState.board.getTiles()[3][i].getImg(), 505+i*110, 469, 110, 145, null);
             if (!GameState.board.getTiles()[3][i].getIsDesert()) {
+                if (GameState.board.getTiles()[3][i].getAssignedNum()==6 || GameState.board.getTiles()[3][i].getAssignedNum()==8)
+                    g.setColor(Color.RED);
                 g.drawString(""+GameState.board.getTiles()[3][i].getAssignedNum(), 550+i*112, 598);
+                g.setColor(Color.WHITE);
             }
             GameState.board.getTiles()[3][i].setPixel(505+i*110, 469);
         }
         for (int i=0; i<5; i++) {
             g.drawImage(GameState.board.getTiles()[2][i].getImg(), 450+i*110, 360, 110, 145, null);
             if (!GameState.board.getTiles()[2][i].getIsDesert()) {
+                if (GameState.board.getTiles()[2][i].getAssignedNum()==6 || GameState.board.getTiles()[2][i].getAssignedNum()==8)
+                    g.setColor(Color.RED);
                 g.drawString(""+GameState.board.getTiles()[2][i].getAssignedNum(), 490+i*112, 485);
+                g.setColor(Color.WHITE);
             }
             GameState.board.getTiles()[2][i].setPixel(452+i*110, 360);
         }
