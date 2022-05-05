@@ -32,9 +32,9 @@ public class Board {
         }
         fillTiles();
         setAdjacentTiles();
-        fillEdges();
         fillIntersections();
         assignTileNums();
+        fillEdges();
     }
 
     public void fillTiles() {
@@ -192,86 +192,99 @@ public class Board {
 
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles[x].length; y++) {
-                Edge[] adjacentEdges = new Edge[6];
+                Edge[] tileEdges = tiles[x][y].getEdges();
 
-                // NW Edge
-                Tile tileNW = tiles[x][y].getAdjacentTile(0);
-                if (tileNW != null) {
-                    if (tileNW.getEdges()[3] != null) {
-                        adjacentEdges[0] = tileNW.getEdges()[3];
-                    } else {
-                        numOfEdges++;
-                        Edge e = new Edge(numOfEdges);
-                        tileNW.getEdges()[3]=e;
-                        adjacentEdges[0]=e;
-                    }
-                }
-
-                // NE Edge
-                Tile tileN = tiles[x][y].getAdjacentTile(1);
-                if (tileN != null) {
-                    if (tileN.getEdges()[4] != null) {
-                        adjacentEdges[1] = tileN.getEdges()[4];
-                    } else {
-                        numOfEdges++;
-                        Edge e = new Edge(numOfEdges);
-                        tileN.getEdges()[4]=e;
-                        adjacentEdges[1]=e;
-                    }
-                }
-
-                // E Edge
-                Tile tileNE = tiles[x][y].getAdjacentTile(2);
-                if (tileNE != null) {
-
-                    if (tileNE.getEdges()[5] != null) {
-                        adjacentEdges[2] = tileNE.getEdges()[5];
-                    } else {
-                        numOfEdges++;
-                        Edge e = new Edge(numOfEdges);
-                        tileNE.getEdges()[5]=e;
-                        adjacentEdges[2]=e;
-                    }
-                }
-
-                // SE Edge
-                Tile tileSE = tiles[x][y].getAdjacentTile(3);
-                if (tileSE != null) {
-                    if (tileSE.getEdges()[0] != null) {
-                        adjacentEdges[3] = tileSE.getEdges()[0];
-                    } else {
-                        numOfEdges++;
-                        Edge e = new Edge(numOfEdges);
-                        tileSE.getEdges()[0]=e;
-                        adjacentEdges[3]=e;
-                    }
-                }
-
-                // SW Edge
-                Tile tileS = tiles[x][y].getAdjacentTile(4);
-                if (tileS != null) {
-                    if (tileS.getEdges()[1] != null) {
-                        adjacentEdges[4] = tileS.getEdges()[1];
-                    } else {
-                        numOfEdges++;
-                        Edge e = new Edge(numOfEdges);
-                        tileS.getEdges()[1]=e;
-                        adjacentEdges[4]=e;
-                    }
-                }
-
-                // W Edge
-                Tile tileSW = tiles[x][y].getAdjacentTile(5);
-                if (tileSW != null) {
-                    if (tileSW.getEdges()[2] != null) {
-                        adjacentEdges[5] = tileSW.getEdges()[1];
-                    } else {
-                        numOfEdges++;
-                        Edge e = new Edge(numOfEdges);
-                        tileSW.getEdges()[2]=e;
-                        adjacentEdges[5]=e;
-                    }
-                }
+//                // NW Edge
+//                Tile tileNW = tiles[x][y].getAdjacentTile(0);
+//                if (tileNW != null) {
+//                    if (tileNW.getEdges()[3] != null) {
+//                        adjacentEdges[0] = tileNW.getEdges()[3];
+//                    } else {
+//                        Edge e = new Edge(numOfEdges);
+//                        tileNW.getEdges()[3]=e;
+//                        adjacentEdges[0]=e;
+//                        edges[numOfEdges]=e;
+//                        numOfEdges++;
+//                    }
+//                }
+//
+//                // NE Edge
+//                Tile tileN = tiles[x][y].getAdjacentTile(1);
+//                if (tileN != null) {
+//                    if (tileN.getEdges()[4] != null) {
+//                        adjacentEdges[1] = tileN.getEdges()[4];
+//                    } else {
+//                        Edge e = new Edge(numOfEdges);
+//                        tileN.getEdges()[4]=e;
+//                        adjacentEdges[1]=e;
+//                        edges[numOfEdges]=e;
+//                        numOfEdges++;
+//                    }
+//                }
+//
+//                // E Edge
+//                Tile tileNE = tiles[x][y].getAdjacentTile(2);
+//                if (tileNE != null) {
+//
+//                    if (tileNE.getEdges()[5] != null) {
+//                        adjacentEdges[2] = tileNE.getEdges()[5];
+//                    } else {
+//                        Edge e = new Edge(numOfEdges);
+//                        tileNE.getEdges()[5]=e;
+//                        adjacentEdges[2]=e;
+//                        edges[numOfEdges]=e;
+//                        numOfEdges++;
+//                    }
+//                }
+//
+//                // SE Edge
+//                Tile tileSE = tiles[x][y].getAdjacentTile(3);
+//                if (tileSE != null) {
+//                    if (tileSE.getEdges()[0] != null) {
+//                        adjacentEdges[3] = tileSE.getEdges()[0];
+//                    } else {
+//                        Edge e = new Edge(numOfEdges);
+//                        tileSE.getEdges()[0]=e;
+//                        adjacentEdges[3]=e;
+//                        edges[numOfEdges]=e;
+//                        numOfEdges++;
+//                    }
+//                }
+//
+//                // SW Edge
+//                Tile tileS = tiles[x][y].getAdjacentTile(4);
+//                if (tileS != null) {
+//                    if (tileS.getEdges()[1] != null) {
+//                        adjacentEdges[4] = tileS.getEdges()[1];
+//                    } else {
+//                        Edge e = new Edge(numOfEdges);
+//                        tileS.getEdges()[1]=e;
+//                        adjacentEdges[4]=e;
+//                        edges[numOfEdges]=e;
+//                        numOfEdges++;
+//                    }
+//                }
+//
+//                // W Edge
+//                Tile tileSW = tiles[x][y].getAdjacentTile(5);
+//                if (tileSW != null) {
+//                    if (tileSW.getEdges()[2] != null) {
+//                        adjacentEdges[5] = tileSW.getEdges()[1];
+//                    } else {
+//                        Edge e = new Edge(numOfEdges);
+//                        tileSW.getEdges()[2]=e;
+//                        adjacentEdges[5]=e;
+//                        edges[numOfEdges]=e;
+//                        numOfEdges++;
+//                    }
+//                }
+                if ()
+                adjacentEdges[0].setIntersections(tiles[x][y].getIntersections()[5], tiles[x][y].getIntersections()[0]);
+                adjacentEdges[1].setIntersections(tiles[x][y].getIntersections()[0], tiles[x][y].getIntersections()[1]);
+                adjacentEdges[2].setIntersections(tiles[x][y].getIntersections()[1], tiles[x][y].getIntersections()[2]);
+                adjacentEdges[3].setIntersections(tiles[x][y].getIntersections()[2], tiles[x][y].getIntersections()[3]);
+                adjacentEdges[4].setIntersections(tiles[x][y].getIntersections()[3], tiles[x][y].getIntersections()[4]);
+                adjacentEdges[5].setIntersections(tiles[x][y].getIntersections()[4], tiles[x][y].getIntersections()[5]);
                 tiles[x][y].setEdges(adjacentEdges);    //is this what u (alisha) meant to do
             }
         }
