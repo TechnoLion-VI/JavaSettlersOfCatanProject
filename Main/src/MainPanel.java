@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.font.GlyphMetrics;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
 import java.io.PrintStream;
@@ -10,17 +11,16 @@ import java.util.Objects;
 public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> xCoords;  //for intersections
     private ArrayList<Integer> yCoords;
-    private GameState gameState;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource;
     private JButton endTurn, build, trade;
     private JPanel devCardPanel;
     private JScrollPane devCards;
+    private boolean devCardPlayed;
     //private Font playerTitleFont;
     private int x, y;
 
     public MainPanel() {
-        gameState = new GameState();
         try {
             playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Player Indicator.png")));
             brick = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Brick Resource Card.png")));
@@ -38,15 +38,39 @@ public class MainPanel extends JPanel implements MouseListener {
             e.printStackTrace();
         }
         setLayout(null);
+        devCardPlayed = false;
         initComponents();
         addMouseListener(this);
-        gameState.rollDice();
+        GameState.rollDice();
     }
 
 
 
     public void initComponents() {
         /* ACTION LOG STUFF */
+        JPanel p = new JPanel();
+        p.setBackground(new Color(255, 220, 100));
+        p.setBounds(1150, 300, 300, 400);
+        for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+            System.out.println("Please select which resources you wish to trade with.");
+            JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
+            p.add(c1);
+        }
+        System.out.println("Please select what resources you wish to trade for.");
+        JCheckBox brick = new JCheckBox("Brick");
+        JCheckBox grain = new JCheckBox("Grain");
+        JCheckBox lumber = new JCheckBox("Lumber");
+        JCheckBox ore = new JCheckBox("Ore");
+        JCheckBox wool = new JCheckBox("Wool");
+        p.add(brick);
+        p.add(grain);
+        p.add(lumber);
+        p.add(ore);
+        p.add(wool);
+
+        JScrollPane scroll = new JScrollPane(p, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        add(p);
+
         JTextArea log = new JTextArea(50, 50);
         //exact color from mockup
         log.setBackground(new Color(255, 220, 100));
@@ -71,7 +95,7 @@ public class MainPanel extends JPanel implements MouseListener {
         trade.setBackground(new Color(255, 200, 100));
         trade.addActionListener(new ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                String[] options = new String[] {"Domestic", "Trade"};
+                String[] options = new String[] {"Domestic", "Maritime"};
                 int response = JOptionPane.showOptionDialog(null, "Choose what type of trade you wish to perform.", "Trade",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, options, options[0]);
@@ -100,9 +124,11 @@ public class MainPanel extends JPanel implements MouseListener {
                         GameState.currentPlayer.getResourceCards().remove("Brick");
                         GameState.currentPlayer.getResourceCards().remove("Lumber");
                         //let them select where they want to place road, check if they can
+                        Edge road = GameState.getEdge(x, y);
+                        if (road != null && road.canPlace(GameState.currentPlayer)) road.setOwner(GameState.currentPlayer);
                         System.out.println(GameState.currentPlayer.toString() + " has built a road.");
                     } else {
-                        System.out.println(GameState.currentPlayer.toString() + " is unable to build a road.");
+                        System.out.println(GameState.currentPlayer.toString() + " was unable to build a road.");
                     }
                 }
                 if (response == 1) {
@@ -112,9 +138,11 @@ public class MainPanel extends JPanel implements MouseListener {
                         GameState.currentPlayer.getResourceCards().remove("Wool");
                         GameState.currentPlayer.getResourceCards().remove("Grain");
                         //let them select where they want to place settlement, check if they can
+                        Intersection stlmt = GameState.getIntersection(x, y);
+                        if (stlmt != null && stlmt.canPlace(GameState.currentPlayer)) stlmt.setOwner(GameState.currentPlayer);
                         System.out.println(GameState.currentPlayer.toString() + " has built a settlement.");
                     } else {
-                        System.out.println(GameState.currentPlayer.toString() + " is unable to build a settlement.");
+                        System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
                     }
                 }
                 if (response == 2){
@@ -138,9 +166,12 @@ public class MainPanel extends JPanel implements MouseListener {
                         GameState.currentPlayer.getResourceCards().remove("Ore");
                         GameState.currentPlayer.getResourceCards().remove("Grain");
                         GameState.currentPlayer.getResourceCards().remove("Grain");
+
+                        Intersection city = GameState.getIntersection(x, y);
+                        if (city != null && city.getOwner() == GameState.currentPlayer && city.isStlmt()) city.setIsCity();
                         System.out.println(GameState.currentPlayer.toString() + " has built a city.");
                     } else {
-                        System.out.println(GameState.currentPlayer.toString() + " is unable to build a city.");
+                        System.out.println(GameState.currentPlayer.toString() + " was unable to build a city.");
                     }
                     //let them select a settlement of theirs
                 }
@@ -153,13 +184,25 @@ public class MainPanel extends JPanel implements MouseListener {
                         GameState.currentPlayer.addDev(DevelopmentCardDeck.draw());
                         devCardPanel.removeAll();
                         for (DevelopmentCard dc:GameState.currentPlayer.getDevCards()) {
-                            devCardPanel.add(new JButton(new ImageIcon(resize(dc.getImage(), 25, 75))));
+                            JButton b = new JButton(new ImageIcon(resize(dc.getImage(), 25, 75)));
+                            b.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent e) {
+                                    if (!devCardPlayed) {
+                                        // use to be implemented
+                                        devCardPlayed = true;
+                                        GameState.currentPlayer.removeDev(dc);
+                                        devCardPanel.remove(b);
+                                        devCardPanel.revalidate();
+                                    }
+                                }
+                            });
+                            devCardPanel.add(b);
                             devCards.revalidate();
                             revalidate();
                         }
                         System.out.println(GameState.currentPlayer.toString() + " has bought a development card.");
                     } else {
-                        System.out.println(GameState.currentPlayer.toString() + " is unable to buy a development card.");
+                        System.out.println(GameState.currentPlayer.toString() + " was unable to buy a development card.");
                     }
                 }
             }
@@ -180,26 +223,12 @@ public class MainPanel extends JPanel implements MouseListener {
                         break;
                     }
                 }
-                gameState.rollDice();
+                GameState.rollDice();
                 repaint();
             }
         });
-        /*claimWin = new JButton("Claim Win");
-        claimWin.setBounds(800, 730, 100, 50);
-        claimWin.setBackground(new Color(255, 200, 100));
-        claimWin.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (GameState.currentPlayer.getSecretScore() >= 10) {
-                    System.out.println(GameState.currentPlayer.toString() + " wins!");
-                } else {
-                    System.out.println(GameState.currentPlayer.toString() + " cannot claim their win yet.");
-                }
-            }
-        });*/
 
-        /* ADD COMPONENTS TO MainPanel */
         add(endTurn);
-        //add(claimWin);
         add(build);
         add(trade);
     }
@@ -210,6 +239,9 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(playerIndicator, -10, -15, 500, 139, null);
         g.setColor(Color.black);
         Font playerTitleFont = new Font("Serif", Font.BOLD, 50);
+        Font tradeFont = new Font("Serif", Font.BOLD, 40);
+        g.setFont(tradeFont);
+        g.drawString("Trade Panel", 1190, 285);
         g.setFont (playerTitleFont);
         g.drawString(GameState.currentPlayer.toString(), 20, 75);
 
@@ -251,23 +283,43 @@ public class MainPanel extends JPanel implements MouseListener {
         Font diceRollFont = new Font("Serif", Font.BOLD, 35);
         g.setFont(diceRollFont);
         g.drawString("DICE ROLL TOTAL: " + GameState.getDiceNum(), 510, 60);
-        g.drawRect(915, 10, 75, 75);
-        g.drawRect(1000, 10, 75, 75);
+        g.setColor(Color.WHITE);
+        g.fillRect(915, 10, 75, 75);
+        g.fillRect(1000, 10, 75, 75);
+
+        g.setFont(new Font("Serif", Font.BOLD, 25));
         for (int i=0; i<3; i++) {
             g.drawImage(GameState.board.getTiles()[0][i].getImg(), 560+i*110, 142, 110, 145, null);
+            if (!GameState.board.getTiles()[0][i].getIsDesert()) {
+                g.drawString(""+GameState.board.getTiles()[0][i].getAssignedNum(), 607+i*112, 270);
+            }
             GameState.board.getTiles()[0][i].setPixel(560+i*110, 142);
+
             g.drawImage(GameState.board.getTiles()[4][i].getImg(), 560+i*110, 578, 110, 145, null);
+            if (!GameState.board.getTiles()[4][i].getIsDesert()) {
+                g.drawString("" + GameState.board.getTiles()[4][i].getAssignedNum(), 607 + i * 112, 700);
+            }
             GameState.board.getTiles()[4][i].setPixel(560+i*110, 578);
         }
         for (int i=0; i<4; i++) {
             g.drawImage(GameState.board.getTiles()[1][i].getImg(), 505+i*110, 251, 110, 145, null);
+            if (!GameState.board.getTiles()[1][i].getIsDesert()) {
+                g.drawString(""+GameState.board.getTiles()[1][i].getAssignedNum(), 550+i*112, 380);
+            }
             GameState.board.getTiles()[1][i].setPixel(505+i*110, 251);
+
             g.drawImage(GameState.board.getTiles()[3][i].getImg(), 505+i*110, 469, 110, 145, null);
+            if (!GameState.board.getTiles()[3][i].getIsDesert()) {
+                g.drawString(""+GameState.board.getTiles()[3][i].getAssignedNum(), 550+i*112, 598);
+            }
             GameState.board.getTiles()[3][i].setPixel(505+i*110, 469);
         }
         for (int i=0; i<5; i++) {
             g.drawImage(GameState.board.getTiles()[2][i].getImg(), 450+i*110, 360, 110, 145, null);
-            GameState.board.getTiles()[2][i].setPixel(450+i*110, 360);
+            if (!GameState.board.getTiles()[2][i].getIsDesert()) {
+                g.drawString(""+GameState.board.getTiles()[2][i].getAssignedNum(), 490+i*112, 485);
+            }
+            GameState.board.getTiles()[2][i].setPixel(452+i*110, 360);
         }
         GameState.board.setTilesIntersectionsLocations();
 
@@ -283,7 +335,7 @@ public class MainPanel extends JPanel implements MouseListener {
                 g.setColor(Color.RED);
                 g.fillRect(tile.getIntersections()[1].getX(), tile.getIntersections()[1].getY(), 10, 10);
                 if (tile.getIntersections()[1]!=null) {
-                    System.out.println("intersections 1 are not null "+count);
+                    //System.out.println("intersections 1 are not null "+count);
                     count++;
                 }
                 g.setColor(Color.ORANGE);

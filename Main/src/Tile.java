@@ -12,9 +12,9 @@ public class Tile {
     private ArrayList<Player> players;
     private int xPixel, yPixel;
 
-    // NW = 0, N = 1, NE = 2, SE = 3, S = 4, SW = 5
+    // NW = 0, NE = 1, E = 2, SE = 3, SW = 4, W = 5
     private Edge[] edges;
-    private Intersection[] intersections;
+    private Intersection[] intersections=new Intersection[6];
     private Tile[] adjacentTiles;
     private Tile adjacentTileOne, adjacentTileTwo;
 
@@ -24,11 +24,10 @@ public class Tile {
 //        adjacentTileTwo = adjacentTiles[1];
         assignedNum = 0;
         edges = new Edge[6];
-        intersections = new Intersection[6];
-//        for (int i=0; i<6; i++) {
-//            Intersection temp=new Intersection();
-//            intersections[i]=temp;
-//        }
+        for (int i=0; i<6; i++) {
+            Intersection temp=new Intersection();
+            intersections[i]=temp;
+        }
         adjacentTiles = new Tile[6];
     }
     public void setAdjacentVertex(int vertexOrientation) {
@@ -152,7 +151,9 @@ public class Tile {
     public void setEdge(Edge edge, int direction) {
         edges[direction] = edge;
     }
-
+    public void setEdges(Edge[] e) {
+        edges=e;
+    }
     public void setIntersection(Intersection intersection, int orientation) {
         intersections[orientation] = intersection;
     }
@@ -188,8 +189,6 @@ public class Tile {
         }
     }
 
-
-
     public void addPlayer(Player p) {
         for (int i = 0; i < intersections.length; i++) {
             if (intersections[i].getOwner() == p) {
@@ -197,12 +196,17 @@ public class Tile {
             }
         }
     }
+    public void setAssignedNum(int num) {
+        assignedNum=num;
+    }
     public int getAssignedNum(){
         return assignedNum;
     }
     public int[] getLocation(){
         return location;
     }
+    public int getX() { return location[0]; }
+    public int getY() { return location[1]; }
     public void setImg(BufferedImage b) {
         img=b;
     }
@@ -211,6 +215,9 @@ public class Tile {
     }
     public ResourceCard getResource() {
         return resource;
+    }
+    public void setIsDesert(boolean b) {
+        isDesert=b;
     }
     public boolean getIsDesert() {return isDesert;}
     public boolean getHasRobber() {return hasRobber;}

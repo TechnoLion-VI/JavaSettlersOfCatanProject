@@ -1,21 +1,19 @@
 import java.awt.image.BufferedImage;
 
 public class Intersection {
-    private boolean isStlmt, isCity, isHarbor;
+    private boolean isStlmt, isCity;
     private Player owner;
     private Edge[] edges=new Edge[3];
     private BufferedImage stlmt, city;
-    private int[] location=new int[2];
+    private int[] location=new int[2];  //pixels
 
     public Intersection(int x, int y) {
         setLocation(x, y);
         //add the initializing of edges
     }
-
     public Intersection() {
         this(-1, -1);
     }
-
 
     public int[] getLocation() {
         return location;
@@ -29,9 +27,6 @@ public class Intersection {
     }
     public boolean isCity() {
         return isCity;
-    }
-    public boolean isHarbor() {
-        return isHarbor;
     }
     public Player getOwner() {
         return owner;
@@ -53,9 +48,9 @@ public class Intersection {
         for (Edge e:edges) if (e.hasBuildings()) return false;
         return true;
     }
-    public boolean canPlace() {
-        if (!canPlaceInitial()) return false;
-        for (Edge e:edges) if (e.getOwner() == owner) return true;
+    public boolean canPlace(Player p) {
+        if (!canPlaceInitial() || p.getStlmtsLeft() <= 0) return false;
+        for (Edge e:edges) if (e.getOwner() == p) return true;
         return false;
     }
     public void setOwner(Player p) {
