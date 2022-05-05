@@ -45,6 +45,12 @@ public class Edge {
     public int[] getLocation() {
         return new int[]{(point1[0] + point2[0]) / 2, (point1[1] + point2[1]) / 2};
     }
+    public int[] getPoint1() {
+        return point1;
+    }
+    public int[] getPoint2() {
+        return point2;
+    }
     public void setPoint1(int[] p) {
         point1 = p;
     }
@@ -79,6 +85,8 @@ public class Edge {
     }
     public void setIntersections(Intersection i1, Intersection i2) {
         intersections = new Intersection[]{i1, i2};
+        point1=i1.getLocation();
+        point2=i2.getLocation();
     }
     //accessor for isHarbor
     public boolean isHarbor() {

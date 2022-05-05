@@ -30,6 +30,7 @@ public class Tile {
             Edge e=new Edge();
             edges[i]=e;
         }
+
         adjacentTiles = new Tile[6];
     }
     public void setAdjacentVertex(int vertexOrientation) {
