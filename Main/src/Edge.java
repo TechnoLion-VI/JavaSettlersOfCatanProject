@@ -18,6 +18,7 @@ public class Edge {
     public Edge(int id) {
         this.id = id;
     }
+    public Edge(){}
 
     //determines if the player can place a road on this edge
     public boolean canPlace(Player p) {
