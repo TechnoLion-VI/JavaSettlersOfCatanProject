@@ -10,11 +10,11 @@ public class GameState {
     private HashMap<Integer, ArrayList<Tile>> resourceDist;
     private int currentLargestArmySize;
 
-    public GameState(){
+    static {
         currentPlayer=players[0];   //temporary
     }
 
-    public Intersection getIntersection(int x, int y){
+    public static Intersection getIntersection(int x, int y){
         double minDist = Double.MAX_VALUE;
         double dist;
         Intersection min = null;
@@ -32,14 +32,14 @@ public class GameState {
         return min;
     }
 
-    public Edge getEdge(int x, int y){
+    public static Edge getEdge(int x, int y){
         double minDist = Double.MAX_VALUE;
         Edge min = null;
         double dist;
         return min;
     }
 
-    public Tile getTile(int x, int y){
+    public static Tile getTile(int x, int y){
         double minDist = Double.MAX_VALUE;
         Tile min = null;
         double dist;
@@ -63,7 +63,7 @@ public class GameState {
         return false;
     }
 
-    public void rollDice(){
+    public static void rollDice(){
         int diceOne = (int)(Math.random() * 6) + 1;
         int diceTwo = (int)(Math.random() * 6) + 1;
         diceNum = diceOne + diceTwo;

@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.font.GlyphMetrics;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
 import java.io.PrintStream;
@@ -10,7 +11,6 @@ import java.util.Objects;
 public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> xCoords;  //for intersections
     private ArrayList<Integer> yCoords;
-    private GameState gameState;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource;
     private JButton endTurn, build, trade;
@@ -21,7 +21,6 @@ public class MainPanel extends JPanel implements MouseListener {
     private int x, y;
 
     public MainPanel() {
-        gameState = new GameState();
         try {
             playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Player Indicator.png")));
             brick = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Brick Resource Card.png")));
@@ -42,7 +41,7 @@ public class MainPanel extends JPanel implements MouseListener {
         devCardPlayed = false;
         initComponents();
         addMouseListener(this);
-        gameState.rollDice();
+        GameState.rollDice();
     }
 
 
@@ -102,9 +101,11 @@ public class MainPanel extends JPanel implements MouseListener {
                         GameState.currentPlayer.getResourceCards().remove("Brick");
                         GameState.currentPlayer.getResourceCards().remove("Lumber");
                         //let them select where they want to place road, check if they can
+                        Edge road = GameState.getEdge(x, y);
+                        if (road != null && road.canPlace(GameState.currentPlayer)) road.setOwner(GameState.currentPlayer);
                         System.out.println(GameState.currentPlayer.toString() + " has built a road.");
                     } else {
-                        System.out.println(GameState.currentPlayer.toString() + " is unable to build a road.");
+                        System.out.println(GameState.currentPlayer.toString() + " was unable to build a road.");
                     }
                 }
                 if (response == 1) {
@@ -114,9 +115,11 @@ public class MainPanel extends JPanel implements MouseListener {
                         GameState.currentPlayer.getResourceCards().remove("Wool");
                         GameState.currentPlayer.getResourceCards().remove("Grain");
                         //let them select where they want to place settlement, check if they can
+                        Intersection stlmt = GameState.getIntersection(x, y);
+                        if (stlmt != null && stlmt.canPlace(GameState.currentPlayer)) stlmt.setOwner(GameState.currentPlayer);
                         System.out.println(GameState.currentPlayer.toString() + " has built a settlement.");
                     } else {
-                        System.out.println(GameState.currentPlayer.toString() + " is unable to build a settlement.");
+                        System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
                     }
                 }
                 if (response == 2){
@@ -140,9 +143,12 @@ public class MainPanel extends JPanel implements MouseListener {
                         GameState.currentPlayer.getResourceCards().remove("Ore");
                         GameState.currentPlayer.getResourceCards().remove("Grain");
                         GameState.currentPlayer.getResourceCards().remove("Grain");
+
+                        Intersection city = GameState.getIntersection(x, y);
+                        if (city != null && city.getOwner() == GameState.currentPlayer && city.isStlmt()) city.setIsCity();
                         System.out.println(GameState.currentPlayer.toString() + " has built a city.");
                     } else {
-                        System.out.println(GameState.currentPlayer.toString() + " is unable to build a city.");
+                        System.out.println(GameState.currentPlayer.toString() + " was unable to build a city.");
                     }
                     //let them select a settlement of theirs
                 }
@@ -161,8 +167,9 @@ public class MainPanel extends JPanel implements MouseListener {
                                     if (!devCardPlayed) {
                                         // use to be implemented
                                         devCardPlayed = true;
-                                        devCardPanel.remove(b);
                                         GameState.currentPlayer.removeDev(dc);
+                                        devCardPanel.remove(b);
+                                        devCardPanel.revalidate();
                                     }
                                 }
                             });
@@ -172,7 +179,7 @@ public class MainPanel extends JPanel implements MouseListener {
                         }
                         System.out.println(GameState.currentPlayer.toString() + " has bought a development card.");
                     } else {
-                        System.out.println(GameState.currentPlayer.toString() + " is unable to buy a development card.");
+                        System.out.println(GameState.currentPlayer.toString() + " was unable to buy a development card.");
                     }
                 }
             }
@@ -193,7 +200,7 @@ public class MainPanel extends JPanel implements MouseListener {
                         break;
                     }
                 }
-                gameState.rollDice();
+                GameState.rollDice();
                 repaint();
             }
         });

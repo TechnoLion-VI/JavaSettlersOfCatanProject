@@ -53,9 +53,9 @@ public class Intersection {
         for (Edge e:edges) if (e.hasBuildings()) return false;
         return true;
     }
-    public boolean canPlace() {
-        if (!canPlaceInitial()) return false;
-        for (Edge e:edges) if (e.getOwner() == owner) return true;
+    public boolean canPlace(Player p) {
+        if (!canPlaceInitial() || p.getStlmtsLeft() <= 0) return false;
+        for (Edge e:edges) if (e.getOwner() == p) return true;
         return false;
     }
     public void setOwner(Player p) {
