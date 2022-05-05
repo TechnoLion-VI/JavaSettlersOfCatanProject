@@ -483,7 +483,7 @@ public class Board {
     }
 
     public static boolean buildSettlement(Player p, Intersection i){
-        if (i.canPlace()) {
+        if (i.canPlace(p)) {
             i.setOwner(p);
             i.setIsStlmt(true); //check Intersection class
             setLongestRoad();
