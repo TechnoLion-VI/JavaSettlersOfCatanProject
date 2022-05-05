@@ -48,28 +48,12 @@ public class MainPanel extends JPanel implements MouseListener {
 
     public void initComponents() {
         /* ACTION LOG STUFF */
-        JPanel p = new JPanel();
-        p.setBackground(new Color(255, 220, 100));
-        p.setBounds(1150, 300, 300, 400);
-        for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
-            System.out.println("Please select which resources you wish to trade with.");
-            JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
-            p.add(c1);
-        }
-        System.out.println("Please select what resources you wish to trade for.");
-        JCheckBox brick = new JCheckBox("Brick");
-        JCheckBox grain = new JCheckBox("Grain");
-        JCheckBox lumber = new JCheckBox("Lumber");
-        JCheckBox ore = new JCheckBox("Ore");
-        JCheckBox wool = new JCheckBox("Wool");
-        p.add(brick);
-        p.add(grain);
-        p.add(lumber);
-        p.add(ore);
-        p.add(wool);
 
-        JScrollPane scroll = new JScrollPane(p, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        add(p);
+        System.out.println("Please select what resources you wish to trade for.");
+
+
+        //JScrollPane scroll = new JScrollPane(p, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
 
         JTextArea log = new JTextArea(50, 50);
         //exact color from mockup
@@ -100,8 +84,27 @@ public class MainPanel extends JPanel implements MouseListener {
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, options, options[0]);
                 if(response == 0){
-                    //domestic
+                    //
+                    JPanel p = new JPanel();
+                    p.setBackground(new Color(255, 220, 100));
+                    p.setBounds(1150, 300, 300, 400);
+                    for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                        System.out.println("Please select which resources you wish to trade with.");
+                        JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
+                        p.add(c1);
+                    }
                     System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + TradeManager.p1offer + ".");
+                    JCheckBox brick = new JCheckBox("Brick");
+                    JCheckBox grain = new JCheckBox("Grain");
+                    JCheckBox lumber = new JCheckBox("Lumber");
+                    JCheckBox ore = new JCheckBox("Ore");
+                    JCheckBox wool = new JCheckBox("Wool");
+                    p.add(brick);
+                    p.add(grain);
+                    p.add(lumber);
+                    p.add(ore);
+                    p.add(wool);
+                    add(p);
                 }
                 if(response == 1){
                     //maritime
@@ -110,6 +113,7 @@ public class MainPanel extends JPanel implements MouseListener {
                 repaint();
             }
     });
+
         build = new JButton("Build/Buy");
         build.setBounds(800, 730, 100, 50);
         build.setBackground(new Color(255, 200, 100));
@@ -364,7 +368,7 @@ public class MainPanel extends JPanel implements MouseListener {
             }
         }
         g.setColor(Color.BLACK);
-
+        g.setFont(tradeFont);
         g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
         g.setFont(victoryTitleFont);
         g.drawImage(trophy, 0, 675, 40, 40, null);
