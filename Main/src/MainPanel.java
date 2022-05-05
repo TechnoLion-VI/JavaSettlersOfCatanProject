@@ -23,7 +23,7 @@ public class MainPanel extends JPanel implements MouseListener {
 
     public MainPanel() {
         try {
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts\\custom_font.ttf")).deriveFont(12f);
+            //Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts\\custom_font.ttf")).deriveFont(12f);
             playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Player Indicator.png")));
             brick = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Brick Resource Card.png")));
             ore = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Ore Resource Card.png")));
@@ -34,7 +34,7 @@ public class MainPanel extends JPanel implements MouseListener {
             trophy = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/trophy.png")));
             resource = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/parchment.png")));
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(customFont);
+            //ge.registerFont(customFont);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,26 +86,42 @@ public class MainPanel extends JPanel implements MouseListener {
                         null, options, options[0]);
                 if(response == 0){
                     //
-                    JPanel p = new JPanel();
-                    p.setBackground(new Color(255, 220, 100));
-                    p.setBounds(1150, 300, 300, 400);
+                    //JPanel p = new JPanel();
+                    JFrame p= new JFrame("CheckBox test");
+
+
+
                     for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
                         System.out.println("Please select which resources you wish to trade with.");
                         JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
+                        c1.setBounds(100,100, 150,150);
                         p.add(c1);
                     }
                     System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + TradeManager.p1offer + ".");
-                    JCheckBox brick = new JCheckBox("Brick");
-                    JCheckBox grain = new JCheckBox("Grain");
-                    JCheckBox lumber = new JCheckBox("Lumber");
-                    JCheckBox ore = new JCheckBox("Ore");
-                    JCheckBox wool = new JCheckBox("Wool");
-                    p.add(brick);
-                    p.add(grain);
-                    p.add(lumber);
-                    p.add(ore);
-                    p.add(wool);
-                    add(p);
+
+//                    JCheckBox brick = new JCheckBox("Brick");
+//                    brick.setBounds(100,100, 150,150);
+//                    JCheckBox grain = new JCheckBox("Grain");
+//                    grain.setBounds(100,150, 150,150);
+//                    JCheckBox lumber = new JCheckBox("Lumber");
+//                    lumber.setBounds(100,150, 150,150);
+//                    JCheckBox ore = new JCheckBox("Ore");
+//                    ore.setBounds(100,150, 150,150);
+//                    JCheckBox wool = new JCheckBox("Wool");
+//                    wool.setBounds(100,150, 150,150);
+//                    p.add(brick);
+//                    p.add(grain);
+//                    p.add(lumber);
+//                    p.add(ore);
+//                    p.add(wool);
+                    //add(p);
+
+                    p.setLocation(1150,300);
+                    p.setSize(600,600);
+                    p.setBackground(new Color(255, 220, 100));
+                    p.setLayout(null);
+                    p.setVisible(true);
+
                 }
                 if(response == 1){
                     //maritime
