@@ -32,7 +32,7 @@ public class Board {
         }
         fillTiles();
         setAdjacentTiles();
-        fillIntersections();
+        //fillIntersections();
         assignTileNums();
         fillEdges();
     }
