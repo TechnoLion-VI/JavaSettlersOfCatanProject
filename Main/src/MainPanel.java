@@ -283,7 +283,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.setStroke(new BasicStroke(4));
         g2.drawLine(7,152,319,152);
         g2.drawLine(7,152,7,255);
-        g.setFont(victoryTitleFont);
+
         g.drawString("Blue Player: ",11,180);
         g.drawString("Orange Player: ",11,220);
         g.drawString("Red Player: ",11,260);
@@ -425,6 +425,9 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.currentPlayer.getNumResources("Lumber") + "", 160, 750);
         g.drawImage(wool, 180, 725, 40, 40, null);
         g.drawString(GameState.currentPlayer.getNumResources("Wool") + "", 220, 750);
+
+
+
 
     }
 
