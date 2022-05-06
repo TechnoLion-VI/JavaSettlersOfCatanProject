@@ -614,6 +614,7 @@ public class Board {
             i.setIsStlmt(true); //check Intersection class
             setLongestRoad();
             ActionLogPanel.builtSettlement();
+            p.buildStlmt();
             return true;    //also needs to increase player's vp
         }
         return false;
@@ -621,8 +622,12 @@ public class Board {
 
     public static boolean buildCity(Intersection i){
         ActionLogPanel.builtCity();
-        return i.setIsCity();
+        i.setIsCity();
         //also needs to increase player's vp
+        i.getOwner().buildCity();
+        if (i.isCity())
+            return true;
+        return false;
     } //check Intersection class
 
     public Tile[][] getTiles() {

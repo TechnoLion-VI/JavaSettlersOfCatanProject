@@ -22,7 +22,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private JScrollPane devCards;
     private boolean devCardPlayed;
     //private Font playerTitleFont;
-    private int x, y;
+    public static int x, y;
 
     public MainPanel() {
         try {
@@ -45,7 +45,7 @@ public class MainPanel extends JPanel implements MouseListener {
         devCardPlayed = false;
         initComponents();
         addMouseListener(this);
-        GameState.rollDice();
+        //GameState.rollDice();
     }
 
 
@@ -58,7 +58,7 @@ public class MainPanel extends JPanel implements MouseListener {
 
         //JScrollPane scroll = new JScrollPane(p, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-
+        /* ACTION LOG? */
         JTextArea log = new JTextArea(50, 50);
         //exact color from mockup
         log.setBackground(new Color(255, 220, 100));
@@ -261,6 +261,7 @@ public class MainPanel extends JPanel implements MouseListener {
         add(endTurn);
         add(build);
         add(trade);
+
     }
 
     public void paintComponent(Graphics g) {
@@ -367,7 +368,19 @@ public class MainPanel extends JPanel implements MouseListener {
             GameState.board.getTiles()[2][i].setPixel(452+i*110, 360);
         }
         GameState.board.setTilesIntersectionsLocations();
-
+        //drawing edges
+        for (Edge e:GameState.board.getEdges()) {
+            if (e.getOwner()!=null) {
+                if (e.getOwner().getColor().equals("Blue"))
+                    g.setColor(Color.BLUE);
+                else if (e.getOwner().getColor().equals("Orange"))
+                    g.setColor(Color.ORANGE);
+                else if (e.getOwner().getColor().equals("White"))
+                    g.setColor(Color.WHITE);
+                else g.setColor(Color.RED);
+                g.drawLine(e.getPoint1()[0], e.getPoint1()[1], e.getPoint2()[0], e.getPoint2()[1]);
+            }
+        }
         //temporary section for checking intersection locations
 //        int count=1;
 //        for (Tile[] tiles: GameState.board.getTiles()) {
@@ -446,7 +459,6 @@ public class MainPanel extends JPanel implements MouseListener {
         y=e.getY();
         System.out.println("("+x+", "+y+")");
     }
-
     @Override
     public void mousePressed(MouseEvent e) {
 
