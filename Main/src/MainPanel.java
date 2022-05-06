@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.awt.MouseInfo;
+import java.awt.Point;
+
 
 public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> xCoords;  //for intersections
@@ -422,9 +425,6 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.currentPlayer.getNumResources("Lumber") + "", 160, 750);
         g.drawImage(wool, 180, 725, 40, 40, null);
         g.drawString(GameState.currentPlayer.getNumResources("Wool") + "", 220, 750);
-
-
-
 
     }
 

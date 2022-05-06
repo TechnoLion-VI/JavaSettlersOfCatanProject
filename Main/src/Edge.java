@@ -4,6 +4,7 @@ public class Edge {
     private Intersection[] intersections;
     int[] point1;
     int[] point2;
+    int[] midpoint;
     private boolean isHarbor;
     private ResourceCard type;
     private int id;
@@ -42,8 +43,8 @@ public class Edge {
     public int[][] getEndpoints() {
         return new int[][]{point1, point2};
     }
-    public int[] getLocation() {
-        return new int[]{(point1[0] + point2[0]) / 2, (point1[1] + point2[1]) / 2};
+    public int[] getMidpoint() {
+        return midpoint;
     }
     public int[] getPoint1() {
         return point1;
@@ -65,6 +66,8 @@ public class Edge {
     }
     public void setLocation(int[] p1, int[] p2) {
         setPoint1(p1); setPoint2(p2);
+        midpoint[0]=(p1[0]+p2[0])/2;
+        midpoint[1]=(p1[1]+p2[1])/2;
     }
     public void setLocation(int x1, int y1, int x2, int y2) {
         setPoint1(x1, y1); setPoint2(x2, y2);

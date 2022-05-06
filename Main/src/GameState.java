@@ -17,16 +17,24 @@ public class GameState {
     public static Intersection getIntersection(int x, int y){
         double minDist = Double.MAX_VALUE;
         double dist;
+        int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
         Intersection min = null;
-        for (Tile[] tiles:GameState.board.getTiles()) {
-            for (Tile tile:tiles) {
-                for (Intersection i:tile.getIntersections()) {
-                    dist = Math.sqrt(Math.pow(x - i.getX(), 2) + Math.pow(y - i.getY(), 2));
-                    if (dist < minDist) {
-                        minDist = dist;
-                        min = i;
-                    }
-                }
+//        for (Tile[] tiles:GameState.board.getTiles()) {
+//            for (Tile tile:tiles) {
+//                for (Intersection i:tile.getIntersections()) {
+//                    dist = Math.sqrt(Math.pow(x - i.getX(), 2) + Math.pow(y - i.getY(), 2));
+//                    if (dist < minDist) {
+//                        minDist = dist;
+//                        min = i;
+//                    }
+//                }
+//            }
+//        }
+        for (Intersection i:board.getIntersections()) {
+            if (Math.abs(i.getX()-x)<minX && Math.abs(i.getY()-y)<minY) {
+                minX=Math.abs(i.getX()-x);
+                minY=Math.abs(i.getY()-y);
+                min=i;
             }
         }
         return min;
@@ -34,8 +42,16 @@ public class GameState {
 
     public static Edge getEdge(int x, int y){
         double minDist = Double.MAX_VALUE;
-        Edge min = null;
         double dist;
+        int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
+        Edge min = null;
+        for (Edge e:board.getEdges()) {
+            if (Math.abs(e.getMidpoint()[0]-x)<minX && Math.abs(e.getMidpoint()[1]-y)<minY) {
+                minX=Math.abs(e.getMidpoint()[0]-x);
+                minY=Math.abs(e.getMidpoint()[1]-y);
+                min=e;
+            }
+        }
         return min;
     }
 

@@ -7,7 +7,7 @@ import java.util.Collections;
 public class Board {
     private ArrayList<Integer> tokens = new ArrayList<>();
     private static Intersection[] intersections;
-    private static Edge[] edges;
+    private static ArrayList<Edge> edges;
     private ArrayList<Tile> tilesList;
     private Tile[][] tiles;
     private BufferedImage brick, grain, lumber, ore, wool, desert;
@@ -17,7 +17,10 @@ public class Board {
         tilesList=new ArrayList<>();
         tiles=new Tile[5][];
         intersections = new Intersection[54];
-        edges = new Edge[72];
+        for (int i=0; i< intersections.length; i++) {
+            intersections[i]=new Intersection();
+        }
+        edges = new ArrayList<>();
         try {
             brick=ImageIO.read(Board.class.getResource("/Images/brick tile.png"));
             grain=ImageIO.read(Board.class.getResource("/Images/grain tile.png"));
@@ -193,7 +196,11 @@ public class Board {
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles[x].length; y++) {
                 Edge[] adjacentEdges = tiles[x][y].getEdges();
-
+                for (Edge e:adjacentEdges) {
+                    if (!edges.contains(e)) {
+                        edges.add(e);
+                    }
+                }
                 // NW Edge
                 Tile tileNW = tiles[x][y].getAdjacentTile(0);
                 if (tileNW != null) {
@@ -455,9 +462,6 @@ public class Board {
 //            }
 //        }
         //hard coding the board (hopefully it works)
-        for (int i=0; i< intersections.length; i++) {
-            intersections[i]=new Intersection();
-        }
         tiles[0][0].setIntersections(intersections[0], intersections[4], intersections[8], intersections[12], intersections[7], intersections[3]);
         tiles[0][1].setIntersections(intersections[1], intersections[5], intersections[9], intersections[13], intersections[8], intersections[4]);
         tiles[0][2].setIntersections(intersections[2], intersections[6], intersections[10], intersections[14], intersections[9], intersections[5]);
@@ -542,7 +546,7 @@ public class Board {
         }
     }
 
-    public static Edge[] getEdges() { return edges; }
+    public static ArrayList<Edge> getEdges() { return edges; }
 
     public static Intersection[] getIntersections() { return intersections; }
 
