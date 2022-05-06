@@ -166,7 +166,14 @@ public class Tile {
     public void setIntersection(Intersection intersection, int orientation) {
         intersections[orientation] = intersection;
     }
-
+    public void setIntersections(Intersection i0, Intersection i1, Intersection i2, Intersection i3, Intersection i4, Intersection i5) {
+        intersections[0]=i0;
+        intersections[1]=i1;
+        intersections[2]=i2;
+        intersections[3]=i3;
+        intersections[4]=i4;
+        intersections[5]=i5;
+    }
     public Intersection[] getIntersections() {
         return intersections;
     }

@@ -366,44 +366,44 @@ public class MainPanel extends JPanel implements MouseListener {
         GameState.board.setTilesIntersectionsLocations();
 
         //temporary section for checking intersection locations
-        int count=1;
-        for (Tile[] tiles: GameState.board.getTiles()) {
-            for (Tile tile:tiles) {
-//                for (Intersection i:tile.getIntersections()) {
-//                    g.fillRect(i.getLocation()[0], i.getLocation()[1], 10, 10);
-//                }
-                Edge[] e=tile.getEdges();
-
-                g.setColor(Color.BLACK);
-                g.fillRect(tile.getIntersections()[0].getX(), tile.getIntersections()[0].getY(), 10, 10);
-                g.drawLine(e[0].getPoint1()[0], e[0].getPoint1()[1], e[0].getPoint2()[0], e[0].getPoint2()[1]);
-                g.setColor(Color.RED);
-                g.fillRect(tile.getIntersections()[1].getX(), tile.getIntersections()[1].getY(), 10, 10);
-//                if (tile.getIntersections()[1]!=null) {
-//                    //System.out.println("intersections 1 are not null "+count);
-//                    count++;
-//                }
-                System.out.println(e[1].getPoint1()[0]+", "+e[1].getPoint1()[1]+"; "+e[1].getPoint2()[0]+", "+e[1].getPoint2()[1]+"; "+count);
-                count++;
-                g.drawLine(e[1].getPoint1()[0], e[1].getPoint1()[1], e[1].getPoint2()[0], e[1].getPoint2()[1]);
-
-                g.setColor(Color.ORANGE);
-                g.fillRect(tile.getIntersections()[2].getX(), tile.getIntersections()[2].getY(), 10, 10);
-                g.drawLine(e[2].getPoint1()[0], e[2].getPoint1()[1], e[2].getPoint2()[0], e[2].getPoint2()[1]);
-
-                g.setColor(Color.YELLOW);
-                g.fillRect(tile.getIntersections()[3].getX(), tile.getIntersections()[3].getY(), 10, 10);
-                g.drawLine(e[3].getPoint1()[0], e[3].getPoint1()[1], e[3].getPoint2()[0], e[3].getPoint2()[1]);
-
-                g.setColor(Color.GREEN);
-                g.fillRect(tile.getIntersections()[4].getX(), tile.getIntersections()[4].getY(), 10, 10);
-                g.drawLine(e[4].getPoint1()[0], e[4].getPoint1()[1], e[4].getPoint2()[0], e[4].getPoint2()[1]);
-
-                g.setColor(Color.BLUE);
-                g.fillRect(tile.getIntersections()[5].getX(), tile.getIntersections()[5].getY(), 10, 10);
-                g.drawLine(e[5].getPoint1()[0], e[5].getPoint1()[1], e[5].getPoint2()[0], e[5].getPoint2()[1]);
-            }
-        }
+//        int count=1;
+//        for (Tile[] tiles: GameState.board.getTiles()) {
+//            for (Tile tile:tiles) {
+////                for (Intersection i:tile.getIntersections()) {
+////                    g.fillRect(i.getLocation()[0], i.getLocation()[1], 10, 10);
+////                }
+//                Edge[] e=tile.getEdges();
+//
+//                g.setColor(Color.BLACK);
+//                g.fillRect(tile.getIntersections()[0].getX(), tile.getIntersections()[0].getY(), 10, 10);
+//                g.drawLine(e[0].getPoint1()[0], e[0].getPoint1()[1], e[0].getPoint2()[0], e[0].getPoint2()[1]);
+//                g.setColor(Color.RED);
+//                g.fillRect(tile.getIntersections()[1].getX(), tile.getIntersections()[1].getY(), 10, 10);
+////                if (tile.getIntersections()[1]!=null) {
+////                    //System.out.println("intersections 1 are not null "+count);
+////                    count++;
+////                }
+////                System.out.println(e[1].getPoint1()[0]+", "+e[1].getPoint1()[1]+"; "+e[1].getPoint2()[0]+", "+e[1].getPoint2()[1]+"; "+count);
+//                count++;
+//                g.drawLine(e[1].getPoint1()[0], e[1].getPoint1()[1], e[1].getPoint2()[0], e[1].getPoint2()[1]);
+//
+//                g.setColor(Color.ORANGE);
+//                g.fillRect(tile.getIntersections()[2].getX(), tile.getIntersections()[2].getY(), 10, 10);
+//                g.drawLine(e[2].getPoint1()[0], e[2].getPoint1()[1], e[2].getPoint2()[0], e[2].getPoint2()[1]);
+//
+//                g.setColor(Color.YELLOW);
+//                g.fillRect(tile.getIntersections()[3].getX(), tile.getIntersections()[3].getY(), 10, 10);
+//                g.drawLine(e[3].getPoint1()[0], e[3].getPoint1()[1], e[3].getPoint2()[0], e[3].getPoint2()[1]);
+//
+//                g.setColor(Color.GREEN);
+//                g.fillRect(tile.getIntersections()[4].getX(), tile.getIntersections()[4].getY(), 10, 10);
+//                g.drawLine(e[4].getPoint1()[0], e[4].getPoint1()[1], e[4].getPoint2()[0], e[4].getPoint2()[1]);
+//
+//                g.setColor(Color.BLUE);
+//                g.fillRect(tile.getIntersections()[5].getX(), tile.getIntersections()[5].getY(), 10, 10);
+//                g.drawLine(e[5].getPoint1()[0], e[5].getPoint1()[1], e[5].getPoint2()[0], e[5].getPoint2()[1]);
+//            }
+//        }
         g.setColor(Color.BLACK);
         g.setFont(tradeFont);
         g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
