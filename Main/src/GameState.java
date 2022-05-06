@@ -6,7 +6,7 @@ public class GameState {
     public static ResourceDeck resourceDeck = new ResourceDeck();
     public static Player currentPlayer, largestArmyPlayer;
     public static Board board = new Board();
-    public static int diceNum;
+    public static int diceNum, diceOne, diceTwo;
     public static Player[] players = new Player[]{new Player("Blue"), new Player("Orange"), new Player("Red"), new Player("White")};
     private HashMap<Integer, ArrayList<Tile>> resourceDist;
     private int currentLargestArmySize;
@@ -89,8 +89,8 @@ public class GameState {
     }
 
     public static void rollDice(){
-        int diceOne = (int)(Math.random() * 6) + 1;
-        int diceTwo = (int)(Math.random() * 6) + 1;
+        diceOne = (int)(Math.random() * 6) + 1;
+        diceTwo = (int)(Math.random() * 6) + 1;
         diceNum = diceOne + diceTwo;
         ActionLogPanel.rollDice();
     }
@@ -136,10 +136,11 @@ public class GameState {
         }
         ActionLogPanel.largestArmy();
     }
+
     public static void setUpPhase() {
         for (int i=0; i<4; i++) {
             currentPlayer=players[i];
-            JOptionPane.showMessageDialog(null, currentPlayer+", please build your first settlement and road (done in that order)");
+            JOptionPane.showMessageDialog(null, currentPlayer + ", please build your first settlement and road (done in that order).");
             Intersection stlmt=getIntersection(MainPanel.x, MainPanel.y);
             stlmt.setOwner(currentPlayer);
             stlmt.setIsStlmt(true);

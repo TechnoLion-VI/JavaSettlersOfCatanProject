@@ -16,7 +16,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> xCoords;  //for intersections
     private ArrayList<Integer> yCoords;
     private String playerIndStr = "PLAYER ONE";
-    private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource;
+    private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource, blueStlmt, blueCity, orangeStlmt, orangeCity, redStlmt, redCity, whiteStlmt, whiteCity ;
     private JButton endTurn, build, trade;
     private JPanel devCardPanel;
     private JScrollPane devCards;
@@ -26,7 +26,6 @@ public class MainPanel extends JPanel implements MouseListener {
 
     public MainPanel() {
         try {
-            //Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts\\custom_font.ttf")).deriveFont(12f);
             playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Player Indicator.png")));
             brick = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Brick Resource Card.png")));
             ore = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Ore Resource Card.png")));
@@ -36,8 +35,15 @@ public class MainPanel extends JPanel implements MouseListener {
             sword = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/sword.png")));
             trophy = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/trophy.png")));
             resource = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/parchment.png")));
+            blueStlmt = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Blue Settlement.png")));
+            orangeStlmt = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Orange Settlement.png")));
+            redStlmt = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Red Settlement.png")));
+            whiteStlmt = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/White Settlement.png")));
+            blueCity = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Blue City.png")));
+            orangeCity = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Orange City.png")));
+            redCity = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Red City.png")));
+            whiteCity = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/White City.png")));
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            //ge.registerFont(customFont);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,15 +58,7 @@ public class MainPanel extends JPanel implements MouseListener {
 
     public void initComponents() {
         /* ACTION LOG STUFF */
-
-        System.out.println("Please select what resources you wish to trade for.");
-
-
-        //JScrollPane scroll = new JScrollPane(p, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-        /* ACTION LOG? */
         JTextArea log = new JTextArea(50, 50);
-        //exact color from mockup
         log.setBackground(new Color(255, 220, 100));
         //change font later
         log.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
@@ -88,9 +86,9 @@ public class MainPanel extends JPanel implements MouseListener {
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, options, options[0]);
                 if(response == 0){
-                    //
                     JPanel p = new JPanel();
-                    p.setBounds(1100, 300, 300, 400);
+                    p.setBounds(0, 0, 100, 100);
+                    p.setLocation(0, 0);
                     int x = 1150;
                     int y = 350;
                     for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
@@ -310,7 +308,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString("DEVELOPMENT CARDS",5,373);
         g2.drawLine(7,380,319,380);
         g2.drawLine(7,380,7,425);
-        g.drawRect(500,10,400,75);
+        g.drawRect(500,10, 400,75);
         Font diceRollFont = new Font("Serif", Font.BOLD, 35);
         g.setFont(diceRollFont);
         g.drawString("DICE ROLL TOTAL: " + GameState.getDiceNum(), 510, 60);
