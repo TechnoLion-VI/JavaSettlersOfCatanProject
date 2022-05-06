@@ -117,10 +117,18 @@ public class Player {
     public void add(ResourceCard rc) {resourceCards.add(rc);}
     public void addToHand(ArrayList<ResourceCard> rc) {resourceCards.addAll(rc);}
     public ResourceCard remove(int index) {return resourceCards.remove(index);}
+    public ResourceCard remove(ResourceCard rc) {
+        if (resourceCards.remove(rc)) return rc;
+        return null;
+    }
     public ResourceCard get(int index) {return resourceCards.get(index);}
     public int size() {return resourceCards.size();}
     public void addDev(DevelopmentCard dc) {devCards.add(dc);}
     public DevelopmentCard removeDev(int index) {return devCards.remove(index);}
+    public DevelopmentCard removeDev(DevelopmentCard dc) {
+        if (devCards.remove(dc)) return dc;
+        return null;
+    }
     public DevelopmentCard getDev (int index) {return devCards.get(index);}
 
     //solved Longest Road issues

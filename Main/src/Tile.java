@@ -12,9 +12,9 @@ public class Tile {
     private ArrayList<Player> players;
     private int xPixel, yPixel;
 
-    // NW = 0, N = 1, NE = 2, SE = 3, S = 4, SW = 5
+    // NW = 0, NE = 1, E = 2, SE = 3, SW = 4, W = 5
     private Edge[] edges;
-    private Intersection[] intersections;
+    private Intersection[] intersections=new Intersection[6];
     private Tile[] adjacentTiles;
     private Tile adjacentTileOne, adjacentTileTwo;
 
@@ -24,11 +24,13 @@ public class Tile {
 //        adjacentTileTwo = adjacentTiles[1];
         assignedNum = 0;
         edges = new Edge[6];
-        intersections = new Intersection[6];
-//        for (int i=0; i<6; i++) {
+        for (int i=0; i<6; i++) {
 //            Intersection temp=new Intersection();
 //            intersections[i]=temp;
-//        }
+            Edge e=new Edge();
+            edges[i]=e;
+        }
+
         adjacentTiles = new Tile[6];
     }
     public void setAdjacentVertex(int vertexOrientation) {
@@ -126,6 +128,12 @@ public class Tile {
     public void setPixel(int x, int y) {
         xPixel=x;
         yPixel=y;
+//        intersections[5].setLocation(xPixel, yPixel+36);
+//        intersections[0].setLocation(xPixel+55, yPixel);
+//        intersections[1].setLocation(xPixel+110, yPixel+36);
+//        intersections[2].setLocation(xPixel+110, yPixel+109);
+//        intersections[3].setLocation(xPixel+55, yPixel+145);
+//        intersections[4].setLocation(xPixel, yPixel+109);
     }
     public int getxPixel() {
         return xPixel;
@@ -152,11 +160,20 @@ public class Tile {
     public void setEdge(Edge edge, int direction) {
         edges[direction] = edge;
     }
-
+    public void setEdges(Edge[] e) {
+        edges=e;
+    }
     public void setIntersection(Intersection intersection, int orientation) {
         intersections[orientation] = intersection;
     }
-
+    public void setIntersections(Intersection i0, Intersection i1, Intersection i2, Intersection i3, Intersection i4, Intersection i5) {
+        intersections[0]=i0;
+        intersections[1]=i1;
+        intersections[2]=i2;
+        intersections[3]=i3;
+        intersections[4]=i4;
+        intersections[5]=i5;
+    }
     public Intersection[] getIntersections() {
         return intersections;
     }
@@ -168,8 +185,9 @@ public class Tile {
                     if (ResourceDeck.getDeck(resource.getType()).size() >= 1) {
                         ResourceDeck.getDeck(resource.getType()).remove(0);
                         p.add(resource);
+                        System.out.println(intersections[n].getOwner() + " received a " + ResourceDeck.getDeck(resource.getType()) + ".");
                     } else {
-                        continue;
+                        System.out.println("There are not enough " + resource.getType() + "s to distribute to all players.");
                     }
                 } else if (intersections[n].getOwner() == p && intersections[n].isCity() == true) {
                     if (ResourceDeck.getDeck(resource.getType()).size() >= 2) {
@@ -177,6 +195,10 @@ public class Tile {
                         ResourceDeck.getDeck(resource.getType()).remove(0);
                         p.add(resource);
                         p.add(resource);
+                        System.out.println(intersections[n].getOwner() + " received two " + ResourceDeck.getDeck(resource.getType()) + ".");
+                    }
+                    else{
+                        System.out.println("There are not enough " + resource.getType() + "s to distribute to all players.");
                     }
                 }
             }
@@ -190,12 +212,17 @@ public class Tile {
             }
         }
     }
+    public void setAssignedNum(int num) {
+        assignedNum=num;
+    }
     public int getAssignedNum(){
         return assignedNum;
     }
     public int[] getLocation(){
         return location;
     }
+    public int getX() { return location[0]; }
+    public int getY() { return location[1]; }
     public void setImg(BufferedImage b) {
         img=b;
     }
@@ -204,6 +231,9 @@ public class Tile {
     }
     public ResourceCard getResource() {
         return resource;
+    }
+    public void setIsDesert(boolean b) {
+        isDesert=b;
     }
     public boolean getIsDesert() {return isDesert;}
     public boolean getHasRobber() {return hasRobber;}

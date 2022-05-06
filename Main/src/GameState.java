@@ -7,24 +7,52 @@ public class GameState {
     public static Board board = new Board();
     public static int diceNum;
     public static Player[] players = new Player[]{new Player("Blue"), new Player("Orange"), new Player("Red"), new Player("White")};
-    public static DevelopmentCardDeck devCardDeck = new DevelopmentCardDeck();
     private HashMap<Integer, ArrayList<Tile>> resourceDist;
     private int currentLargestArmySize;
 
-    public GameState(){
+    static {
         currentPlayer=players[0];   //temporary
     }
 
-    public Intersection getIntersection(int x, int y){
-        return null;
+    public static Intersection getIntersection(int x, int y){
+        double minDist = Double.MAX_VALUE;
+        double dist;
+        Intersection min = null;
+        for (Tile[] tiles:GameState.board.getTiles()) {
+            for (Tile tile:tiles) {
+                for (Intersection i:tile.getIntersections()) {
+                    dist = Math.sqrt(Math.pow(x - i.getX(), 2) + Math.pow(y - i.getY(), 2));
+                    if (dist < minDist) {
+                        minDist = dist;
+                        min = i;
+                    }
+                }
+            }
+        }
+        return min;
     }
 
-    public Edge getEdge(int x, int y){
-        return null;
+    public static Edge getEdge(int x, int y){
+        double minDist = Double.MAX_VALUE;
+        Edge min = null;
+        double dist;
+        return min;
     }
 
-    public Tile getTile(int x, int y){
-        return null;
+    public static Tile getTile(int x, int y){
+        double minDist = Double.MAX_VALUE;
+        Tile min = null;
+        double dist;
+        for (Tile[] tiles:GameState.board.getTiles()) {
+            for (Tile tile:tiles) {
+                dist = Math.sqrt(Math.pow(x - tile.getX(), 2) + Math.pow(y - tile.getY(), 2));
+                if (dist < minDist) {
+                    minDist = dist;
+                    min = tile;
+                }
+            }
+        }
+        return min;
     }
 
     public boolean claimWin(){
@@ -35,7 +63,7 @@ public class GameState {
         return false;
     }
 
-    public void rollDice(){
+    public static void rollDice(){
         int diceOne = (int)(Math.random() * 6) + 1;
         int diceTwo = (int)(Math.random() * 6) + 1;
         diceNum = diceOne + diceTwo;
