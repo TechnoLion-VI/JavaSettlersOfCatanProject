@@ -135,4 +135,9 @@ public class GameState {
         }
         ActionLogPanel.largestArmy();
     }
+    public void setUpPhase() {
+        for (int i=0; i<4; i++) {
+            Player p=players[i];
+        }
+    }
 }
