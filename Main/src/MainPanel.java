@@ -283,7 +283,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.setStroke(new BasicStroke(4));
         g2.drawLine(7,152,319,152);
         g2.drawLine(7,152,7,255);
-        g.setFont(playerTitleFont);
+        g.setFont(victoryTitleFont);
         g.drawString("Blue Player: ",11,180);
         g.drawString("Orange Player: ",11,220);
         g.drawString("Red Player: ",11,260);
