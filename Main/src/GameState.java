@@ -138,6 +138,7 @@ public class GameState {
     }
 
     public static void setUpPhase() {
+        JOptionPane.showMessageDialog(null,"Players, please build your first settlement and road (done in that order)");
         for (int i=0; i<4; i++) {
             currentPlayer=players[i];
             JOptionPane.showMessageDialog(null, currentPlayer + ", please build your first settlement and road (done in that order).");
@@ -145,5 +146,6 @@ public class GameState {
             stlmt.setOwner(currentPlayer);
             stlmt.setIsStlmt(true);
         }
+
     }
 }

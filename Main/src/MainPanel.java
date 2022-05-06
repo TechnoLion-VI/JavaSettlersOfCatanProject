@@ -259,7 +259,7 @@ public class MainPanel extends JPanel implements MouseListener {
         add(endTurn);
         add(build);
         add(trade);
-
+        //GameState.setUpPhase();
     }
 
     public void paintComponent(Graphics g) {
@@ -377,6 +377,12 @@ public class MainPanel extends JPanel implements MouseListener {
                     g.setColor(Color.WHITE);
                 else g.setColor(Color.RED);
                 g.drawLine(e.getPoint1()[0], e.getPoint1()[1], e.getPoint2()[0], e.getPoint2()[1]);
+            }
+        }
+        //drawing stlmts and cities
+        for (Intersection i:GameState.board.getIntersections()) {
+            if (i.getOwner()!=null) {
+                g.drawImage(i.getImage(), i.getX()-10, i.getY()-10, 20, 20, null);
             }
         }
         //temporary section for checking intersection locations
