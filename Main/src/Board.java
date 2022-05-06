@@ -7,7 +7,7 @@ import java.util.Collections;
 public class Board {
     private ArrayList<Integer> tokens = new ArrayList<>();
     private static Intersection[] intersections;
-    private static Edge[] edges;
+    private static ArrayList<Edge> edges;
     private ArrayList<Tile> tilesList;
     private Tile[][] tiles;
     private BufferedImage brick, grain, lumber, ore, wool, desert;
@@ -17,7 +17,10 @@ public class Board {
         tilesList=new ArrayList<>();
         tiles=new Tile[5][];
         intersections = new Intersection[54];
-        edges = new Edge[72];
+        for (int i=0; i< intersections.length; i++) {
+            intersections[i]=new Intersection();
+        }
+        edges = new ArrayList<>();
         try {
             brick=ImageIO.read(Board.class.getResource("/Images/brick tile.png"));
             grain=ImageIO.read(Board.class.getResource("/Images/grain tile.png"));
@@ -32,9 +35,9 @@ public class Board {
         }
         fillTiles();
         setAdjacentTiles();
-        fillEdges();
         fillIntersections();
         assignTileNums();
+        fillEdges();
     }
 
     public void fillTiles() {
@@ -192,257 +195,292 @@ public class Board {
 
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles[x].length; y++) {
-                Edge[] adjacentEdges = new Edge[6];
-
+                Edge[] adjacentEdges = tiles[x][y].getEdges();
+                for (Edge e:adjacentEdges) {
+                    if (!edges.contains(e)) {
+                        edges.add(e);
+                    }
+                }
                 // NW Edge
                 Tile tileNW = tiles[x][y].getAdjacentTile(0);
                 if (tileNW != null) {
-                    if (tileNW.getEdges()[3] != null) {
-                        adjacentEdges[0] = tileNW.getEdges()[3];
-                    } else {
-                        numOfEdges++;
-                        Edge e = new Edge(numOfEdges);
-                        tileNW.getEdges()[3]=e;
-                        adjacentEdges[0]=e;
-                    }
+//                    if (tileNW.getEdges()[3] != null) {
+//                        adjacentEdges[0] = tileNW.getEdges()[3];
+//                    } else {
+//                        Edge e = new Edge(numOfEdges);
+//                        tileNW.getEdges()[3]=e;
+//                        adjacentEdges[0]=e;
+//                        edges[numOfEdges]=e;
+//                        numOfEdges++;
+//                    }
+                    tileNW.getEdges()[3]=adjacentEdges[0];
                 }
 
                 // NE Edge
                 Tile tileN = tiles[x][y].getAdjacentTile(1);
                 if (tileN != null) {
-                    if (tileN.getEdges()[4] != null) {
-                        adjacentEdges[1] = tileN.getEdges()[4];
-                    } else {
-                        numOfEdges++;
-                        Edge e = new Edge(numOfEdges);
-                        tileN.getEdges()[4]=e;
-                        adjacentEdges[1]=e;
-                    }
+//                    if (tileN.getEdges()[4] != null) {
+//                        adjacentEdges[1] = tileN.getEdges()[4];
+//                    } else {
+//                        Edge e = new Edge(numOfEdges);
+//                        tileN.getEdges()[4]=e;
+//                        adjacentEdges[1]=e;
+//                        edges[numOfEdges]=e;
+//                        numOfEdges++;
+//                    }
+                    tileN.getEdges()[4]=adjacentEdges[1];
                 }
 
                 // E Edge
                 Tile tileNE = tiles[x][y].getAdjacentTile(2);
                 if (tileNE != null) {
-
-                    if (tileNE.getEdges()[5] != null) {
-                        adjacentEdges[2] = tileNE.getEdges()[5];
-                    } else {
-                        numOfEdges++;
-                        Edge e = new Edge(numOfEdges);
-                        tileNE.getEdges()[5]=e;
-                        adjacentEdges[2]=e;
-                    }
+//
+//                    if (tileNE.getEdges()[5] != null) {
+//                        adjacentEdges[2] = tileNE.getEdges()[5];
+//                    } else {
+//                        Edge e = new Edge(numOfEdges);
+//                        tileNE.getEdges()[5]=e;
+//                        adjacentEdges[2]=e;
+//                        edges[numOfEdges]=e;
+//                        numOfEdges++;
+//                    }
+                    tileNE.getEdges()[5]=adjacentEdges[2];
                 }
 
                 // SE Edge
                 Tile tileSE = tiles[x][y].getAdjacentTile(3);
                 if (tileSE != null) {
-                    if (tileSE.getEdges()[0] != null) {
-                        adjacentEdges[3] = tileSE.getEdges()[0];
-                    } else {
-                        numOfEdges++;
-                        Edge e = new Edge(numOfEdges);
-                        tileSE.getEdges()[0]=e;
-                        adjacentEdges[3]=e;
-                    }
+//                    if (tileSE.getEdges()[0] != null) {
+//                        adjacentEdges[3] = tileSE.getEdges()[0];
+//                    } else {
+//                        Edge e = new Edge(numOfEdges);
+//                        tileSE.getEdges()[0]=e;
+//                        adjacentEdges[3]=e;
+//                        edges[numOfEdges]=e;
+//                        numOfEdges++;
+//                    }
+                    tileSE.getEdges()[0]=adjacentEdges[3];
                 }
 
                 // SW Edge
                 Tile tileS = tiles[x][y].getAdjacentTile(4);
                 if (tileS != null) {
-                    if (tileS.getEdges()[1] != null) {
-                        adjacentEdges[4] = tileS.getEdges()[1];
-                    } else {
-                        numOfEdges++;
-                        Edge e = new Edge(numOfEdges);
-                        tileS.getEdges()[1]=e;
-                        adjacentEdges[4]=e;
-                    }
+//                    if (tileS.getEdges()[1] != null) {
+//                        adjacentEdges[4] = tileS.getEdges()[1];
+//                    } else {
+//                        Edge e = new Edge(numOfEdges);
+//                        tileS.getEdges()[1]=e;
+//                        adjacentEdges[4]=e;
+//                        edges[numOfEdges]=e;
+//                        numOfEdges++;
+//                    }
+                    tileS.getEdges()[1]=adjacentEdges[4];
                 }
 
                 // W Edge
                 Tile tileSW = tiles[x][y].getAdjacentTile(5);
                 if (tileSW != null) {
-                    if (tileSW.getEdges()[2] != null) {
-                        adjacentEdges[5] = tileSW.getEdges()[1];
-                    } else {
-                        numOfEdges++;
-                        Edge e = new Edge(numOfEdges);
-                        tileSW.getEdges()[2]=e;
-                        adjacentEdges[5]=e;
-                    }
+//                    if (tileSW.getEdges()[2] != null) {
+//                        adjacentEdges[5] = tileSW.getEdges()[1];
+//                    } else {
+//                        Edge e = new Edge(numOfEdges);
+//                        tileSW.getEdges()[2]=e;
+//                        adjacentEdges[5]=e;
+//                        edges[numOfEdges]=e;
+//                        numOfEdges++;
+//                    }
+                    tileSW.getEdges()[2]=adjacentEdges[5];
                 }
-                tiles[x][y].setEdges(adjacentEdges);    //is this what u (alisha) meant to do
+
+                adjacentEdges[0].setIntersections(tiles[x][y].getIntersections()[5], tiles[x][y].getIntersections()[0]);
+                adjacentEdges[1].setIntersections(tiles[x][y].getIntersections()[0], tiles[x][y].getIntersections()[1]);
+                adjacentEdges[2].setIntersections(tiles[x][y].getIntersections()[1], tiles[x][y].getIntersections()[2]);
+                adjacentEdges[3].setIntersections(tiles[x][y].getIntersections()[2], tiles[x][y].getIntersections()[3]);
+                adjacentEdges[4].setIntersections(tiles[x][y].getIntersections()[3], tiles[x][y].getIntersections()[4]);
+                adjacentEdges[5].setIntersections(tiles[x][y].getIntersections()[4], tiles[x][y].getIntersections()[5]);
+                tiles[x][y].setEdges(adjacentEdges);
             }
         }
     }
 
     public void fillIntersections() {
-        int count=0;
-        for (int x = 0; x < tiles.length; x++) {
-            for (int y = 0; y < tiles[x].length; y++) {
-                Tile tile = tiles[x][y];
-                Tile adjacentTileOne = null;
-                Tile adjacentTileTwo = null;
-
-                for (int vertexOrientation = 0; vertexOrientation < 6; vertexOrientation++) {   //0 is the intersection at the top
-                    switch (vertexOrientation) {
-                        case 0: {
-                            adjacentTileOne = tile.getAdjacentTile(0);
-                            adjacentTileTwo = tile.getAdjacentTile(1);
-                            break;
-                        }
-                        case 1: {
-                            adjacentTileOne = tile.getAdjacentTile(1);
-                            adjacentTileTwo = tile.getAdjacentTile(2);
-                            break;
-                        }
-                        case 2: {
-                            adjacentTileOne = tile.getAdjacentTile(2);
-                            adjacentTileTwo = tile.getAdjacentTile(3);
-                            break;
-                        }
-                        case 3: {
-                            adjacentTileOne = tile.getAdjacentTile(3);
-                            adjacentTileTwo = tile.getAdjacentTile(4);
-                            break;
-                        }
-                        case 4: {
-                            adjacentTileOne = tile.getAdjacentTile(4);
-                            adjacentTileTwo = tile.getAdjacentTile(5);
-                            break;
-                        }
-                        case 5: {
-                            adjacentTileOne = tile.getAdjacentTile(5);
-                            adjacentTileTwo = tile.getAdjacentTile(0);
-                            break;
-                        }
-                    }
-
-                    boolean tileOneExists = adjacentTileOne != null;
-                    boolean tileTwoExists = adjacentTileTwo != null;
-
-                    boolean vertexExists = false;
-
-                    int tileOneVertexOrientation = -1;
-                    int tileTwoVertexOrientation = -1;
-
-                    switch (vertexOrientation) {    //comments are what the values were previously
-                        case 0: {
-                            tileOneVertexOrientation = 2;
-                            tileTwoVertexOrientation = 4;//3
-                            break;
-                        }
-                        case 1: {
-                            tileOneVertexOrientation = 3;//4
-                            tileTwoVertexOrientation = 5;
-                            break;
-                        }
-                        case 2: {
-                            tileOneVertexOrientation = 4;//0
-                            tileTwoVertexOrientation = 0;//1
-                            break;
-                        }
-                        case 3: {
-                            tileOneVertexOrientation = 5;//2
-                            tileTwoVertexOrientation = 1;//3
-                            break;
-                        }
-                        case 4: {
-                            tileOneVertexOrientation = 0;
-                            tileTwoVertexOrientation = 2;//5
-                            break;
-                        }
-                        case 5: {
-                            tileOneVertexOrientation = 3;//1
-                            tileTwoVertexOrientation = 1;//3
-                        }
-                    }
-
-//                    if (tileOneExists) {
-//                        Intersection temp = adjacentTileOne.getIntersections()[tileTwoVertexOrientation];   //used to be tileTwoVertexOrientation
+//        for (int x = 0; x < tiles.length; x++) {
+//            for (int y = 0; y < tiles[x].length; y++) {
+//                Tile tile = tiles[x][y];
+//                Tile adjacentTileOne = null;
+//                Tile adjacentTileTwo = null;
 //
-//                        if (temp != null) {
-//                            if (tileTwoExists) {
-//                                adjacentTileTwo.setIntersection(temp, tileTwoVertexOrientation);
-//                            }
-//                            vertexExists = true;
+//                boolean tileOneExists = adjacentTileOne != null;
+//                boolean tileTwoExists = adjacentTileTwo != null;
+//
+//                boolean vertexExists = false;
+//
+//                int tileOneVertexOrientation = -1;
+//                int tileTwoVertexOrientation = -1;
+//
+//                for (int vertexOrientation = 0; vertexOrientation < 6; vertexOrientation++) {   //0 is the intersection at the top
+//                    switch (vertexOrientation) {
+//                        case 0: {
+//                            adjacentTileOne = tile.getAdjacentTile(0);
+//                            adjacentTileTwo = tile.getAdjacentTile(1);
+//                            tileOneVertexOrientation = 2;
+//                            tileTwoVertexOrientation = 4;//3
+//                            break;
+//                        }
+//                        case 1: {
+//                            adjacentTileOne = tile.getAdjacentTile(1);
+//                            adjacentTileTwo = tile.getAdjacentTile(2);
+//                            tileOneVertexOrientation = 3;//4
+//                            tileTwoVertexOrientation = 5;
+//                            break;
+//                        }
+//                        case 2: {
+//                            adjacentTileOne = tile.getAdjacentTile(2);
+//                            adjacentTileTwo = tile.getAdjacentTile(3);
+//                            tileOneVertexOrientation = 4;//0
+//                            tileTwoVertexOrientation = 0;//1
+//                            break;
+//                        }
+//                        case 3: {
+//                            adjacentTileOne = tile.getAdjacentTile(3);
+//                            adjacentTileTwo = tile.getAdjacentTile(4);
+//                            tileOneVertexOrientation = 5;//2
+//                            tileTwoVertexOrientation = 1;//3
+//                            break;
+//                        }
+//                        case 4: {
+//                            adjacentTileOne = tile.getAdjacentTile(4);
+//                            adjacentTileTwo = tile.getAdjacentTile(5);
+//                            tileOneVertexOrientation = 0;
+//                            tileTwoVertexOrientation = 2;//5
+//                            break;
+//                        }
+//                        case 5: {
+//                            adjacentTileOne = tile.getAdjacentTile(5);
+//                            adjacentTileTwo = tile.getAdjacentTile(0);
+//                            tileOneVertexOrientation = 3;//1
+//                            tileTwoVertexOrientation = 1;//3
+//                            break;
 //                        }
 //                    }
-//                    if (!vertexExists) {
-//                        Intersection intersection = new Intersection();
-////                        intersections[count] = intersection;
+//
+////                    if (tileOneExists) {
+////                        Intersection temp = adjacentTileOne.getIntersections()[tileTwoVertexOrientation];   //used to be tileTwoVertexOrientation
+////
+////                        if (temp != null) {
+////                            if (tileTwoExists) {
+////                                adjacentTileTwo.setIntersection(temp, tileTwoVertexOrientation);
+////                            }
+////                            vertexExists = true;
+////                        }
+////                    }
+////                    if (!vertexExists) {
+////                        Intersection intersection = new Intersection();
+//////                        intersections[count] = intersection;
+//////                        count++;
+////
+////                        if (tileOneExists) {
+////                            adjacentTileOne.setIntersection(intersection, tileOneVertexOrientation);
+////                        }
+////
+////                        if (tileTwoExists) {
+////                            adjacentTileTwo.setIntersection(intersection, tileTwoVertexOrientation);
+////                        }
+////                    }
+//                    //changes
+////                    Intersection temp = tile.getIntersections()[vertexOrientation];
+////                    if (temp==null) {
+////                        temp=new Intersection();
+////                        tile.setIntersection(temp, vertexOrientation);
+////                        intersections[count++] = temp;
+////                    }
+////                    if (adjacentTileOne!=null) {
+////                        adjacentTileOne.setIntersection(tile.getIntersections()[vertexOrientation], tileOneVertexOrientation);
+////                    }
+////                    if (adjacentTileTwo!=null) {
+////                        adjacentTileTwo.setIntersection(tile.getIntersections()[vertexOrientation], tileTwoVertexOrientation);
+////                    }
+//                    //ethans code
+////                    if (tileOneExists) {
+////                        Intersection temp=adjacentTileOne.getIntersections()[tileOneVertexOrientation];
+////                        if (temp!=null) {
+////                            tile.getIntersections()[vertexOrientation]=temp;
+////                            if (tileTwoExists) {
+////                                adjacentTileTwo.setIntersection(temp, tileTwoVertexOrientation);
+////                            }
+////                            vertexExists=true;
+////                        }
+////                    }
+////                    if (tileTwoExists&&!vertexExists) {
+////                        Intersection temp=adjacentTileTwo.getIntersections()[tileTwoVertexOrientation];
+////                        if (temp!=null) {
+////                            tile.getIntersections()[vertexOrientation]=temp;
+////                            if (tileOneExists) {
+////                                adjacentTileOne.setIntersection(temp, tileOneVertexOrientation);
+////                            }
+////                            vertexExists=true;
+////                        }
+////
+////                    }
+////                    if (!vertexExists) {
+////                        Intersection i=new Intersection();
+////                        intersections[count++]=i;
+////                        tile.getIntersections()[vertexOrientation]=i;
+////                        if (tileOneExists) {
+////                            adjacentTileOne.setIntersection(i, tileOneVertexOrientation);
+////                        }
+////                        if (tileTwoExists) {
+////                            adjacentTileTwo.setIntersection(i, tileTwoVertexOrientation);
+////                        }
+////                    }
+//
+////                    Intersection i=tile.getIntersections()[vertexOrientation];
+////                    if (i!=null) {
+////                        System.out.println(""+count);
 ////                        count++;
-//
-//                        if (tileOneExists) {
-//                            adjacentTileOne.setIntersection(intersection, tileOneVertexOrientation);
-//                        }
-//
-//                        if (tileTwoExists) {
-//                            adjacentTileTwo.setIntersection(intersection, tileTwoVertexOrientation);
-//                        }
+////                    }
+////                    if (tileOneExists) {
+////                        adjacentTileOne.setIntersection(i, tileOneVertexOrientation);
+////                    }
+////                    if (tileTwoExists) {
+////                        adjacentTileTwo.setIntersection(i, tileTwoVertexOrientation);
+////                    }
+//                    if (tile.getIntersections()[vertexOrientation]!=null) {
+//                        vertexExists=true;
 //                    }
-                    //changes
-//                    Intersection temp = tile.getIntersections()[vertexOrientation];
-//                    if (temp==null) {
-//                        temp=new Intersection();
-//                        tile.setIntersection(temp, vertexOrientation);
-//                        intersections[count++] = temp;
+//                    else {
+//                        tile.setIntersection(new Intersection(), vertexOrientation);
+//                        vertexExists=true;
 //                    }
-//                    if (adjacentTileOne!=null) {
+//                    if (vertexExists && adjacentTileOne!=null) {
 //                        adjacentTileOne.setIntersection(tile.getIntersections()[vertexOrientation], tileOneVertexOrientation);
 //                    }
-//                    if (adjacentTileTwo!=null) {
+//                    if (vertexExists && adjacentTileTwo!=null) {
 //                        adjacentTileTwo.setIntersection(tile.getIntersections()[vertexOrientation], tileTwoVertexOrientation);
 //                    }
-                    //ethans code
-//                    if (tileOneExists) {
-//                        Intersection temp=adjacentTileOne.getIntersections()[tileOneVertexOrientation];
-//                        if (temp!=null) {
-//                            tile.getIntersections()[vertexOrientation]=temp;
-//                            if (tileTwoExists) {
-//                                adjacentTileTwo.setIntersection(temp, tileTwoVertexOrientation);
-//                            }
-//                            vertexExists=true;
-//                        }
-//                    }
-//                    if (tileTwoExists&&!vertexExists) {
-//                        Intersection temp=adjacentTileTwo.getIntersections()[tileTwoVertexOrientation];
-//                        if (temp!=null) {
-//                            tile.getIntersections()[vertexOrientation]=temp;
-//                            if (tileOneExists) {
-//                                adjacentTileOne.setIntersection(temp, tileOneVertexOrientation);
-//                            }
-//                            vertexExists=true;
-//                        }
-//
-//                    }
-//                    if (!vertexExists) {
-//                        Intersection i=new Intersection();
-//                        intersections[count++]=i;
-//                        tile.getIntersections()[vertexOrientation]=i;
-//                        if (tileOneExists) {
-//                            adjacentTileOne.setIntersection(i, tileOneVertexOrientation);
-//                        }
-//                        if (tileTwoExists) {
-//                            adjacentTileTwo.setIntersection(i, tileTwoVertexOrientation);
-//                        }
-//                    }
-                    Intersection i=tile.getIntersections()[vertexOrientation];
-                    if (i!=null) {
-                        System.out.println(""+count);
-                        count++;
-                    }
-                    if (tileOneExists) {
-                        adjacentTileOne.setIntersection(i, tileOneVertexOrientation);
-                    }
-                    if (tileTwoExists) {
-                        adjacentTileTwo.setIntersection(i, tileTwoVertexOrientation);
-                    }
-
-                }
-            }
-        }
+//                }
+//            }
+//        }
+        //hard coding the board (hopefully it works)
+        tiles[0][0].setIntersections(intersections[0], intersections[4], intersections[8], intersections[12], intersections[7], intersections[3]);
+        tiles[0][1].setIntersections(intersections[1], intersections[5], intersections[9], intersections[13], intersections[8], intersections[4]);
+        tiles[0][2].setIntersections(intersections[2], intersections[6], intersections[10], intersections[14], intersections[9], intersections[5]);
+        tiles[1][0].setIntersections(intersections[7], intersections[12], intersections[17], intersections[22], intersections[16], intersections[11]);
+        tiles[1][1].setIntersections(intersections[8], intersections[13], intersections[18], intersections[23], intersections[17], intersections[12]);
+        tiles[1][2].setIntersections(intersections[9], intersections[14], intersections[19], intersections[24], intersections[18], intersections[13]);
+        tiles[1][3].setIntersections(intersections[10], intersections[15], intersections[20], intersections[25], intersections[19], intersections[14]);
+        tiles[2][0].setIntersections(intersections[16], intersections[22], intersections[28], intersections[33], intersections[27], intersections[21]);
+        tiles[2][1].setIntersections(intersections[17], intersections[23], intersections[29], intersections[34], intersections[28], intersections[22]);
+        tiles[2][2].setIntersections(intersections[18], intersections[24], intersections[30], intersections[35], intersections[29], intersections[23]);
+        tiles[2][3].setIntersections(intersections[19], intersections[25], intersections[31], intersections[36], intersections[30], intersections[24]);
+        tiles[2][4].setIntersections(intersections[20], intersections[26], intersections[32], intersections[37], intersections[31], intersections[25]);
+        tiles[3][0].setIntersections(intersections[28], intersections[34], intersections[39], intersections[43], intersections[38], intersections[33]);
+        tiles[3][1].setIntersections(intersections[29], intersections[35], intersections[40], intersections[44], intersections[39], intersections[34]);
+        tiles[3][2].setIntersections(intersections[30], intersections[36], intersections[41], intersections[45], intersections[40], intersections[35]);
+        tiles[3][3].setIntersections(intersections[31], intersections[37], intersections[42], intersections[46], intersections[41], intersections[36]);
+        tiles[4][0].setIntersections(intersections[39], intersections[44], intersections[48], intersections[51], intersections[47], intersections[43]);
+        tiles[4][1].setIntersections(intersections[40], intersections[45], intersections[49], intersections[52], intersections[48], intersections[44]);
+        tiles[4][2].setIntersections(intersections[41], intersections[46], intersections[50], intersections[53], intersections[49], intersections[45]);
     }
 
     public void setTilesIntersectionsLocations() {
@@ -450,6 +488,7 @@ public class Board {
             for (Tile tile: tileRow) {
                 int tilex=tile.getxPixel();
                 int tiley=tile.getyPixel();
+                //System.out.println(tilex+", "+tiley);
                 tile.getIntersections()[5].setLocation(tilex, tiley+36);
                 tile.getIntersections()[0].setLocation(tilex+55, tiley);
                 tile.getIntersections()[1].setLocation(tilex+110, tiley+36);
@@ -507,7 +546,7 @@ public class Board {
         }
     }
 
-    public static Edge[] getEdges() { return edges; }
+    public static ArrayList<Edge> getEdges() { return edges; }
 
     public static Intersection[] getIntersections() { return intersections; }
 
@@ -575,6 +614,7 @@ public class Board {
             i.setIsStlmt(true); //check Intersection class
             setLongestRoad();
             ActionLogPanel.builtSettlement();
+            p.buildStlmt();
             return true;    //also needs to increase player's vp
         }
         return false;
@@ -582,8 +622,12 @@ public class Board {
 
     public static boolean buildCity(Intersection i){
         ActionLogPanel.builtCity();
-        return i.setIsCity();
+        i.setIsCity();
         //also needs to increase player's vp
+        i.getOwner().buildCity();
+        if (i.isCity())
+            return true;
+        return false;
     } //check Intersection class
 
     public Tile[][] getTiles() {

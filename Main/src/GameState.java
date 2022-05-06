@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,16 +18,24 @@ public class GameState {
     public static Intersection getIntersection(int x, int y){
         double minDist = Double.MAX_VALUE;
         double dist;
+        int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
         Intersection min = null;
-        for (Tile[] tiles:GameState.board.getTiles()) {
-            for (Tile tile:tiles) {
-                for (Intersection i:tile.getIntersections()) {
-                    dist = Math.sqrt(Math.pow(x - i.getX(), 2) + Math.pow(y - i.getY(), 2));
-                    if (dist < minDist) {
-                        minDist = dist;
-                        min = i;
-                    }
-                }
+//        for (Tile[] tiles:GameState.board.getTiles()) {
+//            for (Tile tile:tiles) {
+//                for (Intersection i:tile.getIntersections()) {
+//                    dist = Math.sqrt(Math.pow(x - i.getX(), 2) + Math.pow(y - i.getY(), 2));
+//                    if (dist < minDist) {
+//                        minDist = dist;
+//                        min = i;
+//                    }
+//                }
+//            }
+//        }
+        for (Intersection i:board.getIntersections()) {
+            if (Math.abs(i.getX()-x)<minX && Math.abs(i.getY()-y)<minY) {
+                minX=Math.abs(i.getX()-x);
+                minY=Math.abs(i.getY()-y);
+                min=i;
             }
         }
         return min;
@@ -34,21 +43,37 @@ public class GameState {
 
     public static Edge getEdge(int x, int y){
         double minDist = Double.MAX_VALUE;
-        Edge min = null;
         double dist;
+        int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
+        Edge min = null;
+        for (Edge e:board.getEdges()) {
+            if (Math.abs(e.getMidpoint()[0]-x)<minX && Math.abs(e.getMidpoint()[1]-y)<minY) {
+                minX=Math.abs(e.getMidpoint()[0]-x);
+                minY=Math.abs(e.getMidpoint()[1]-y);
+                min=e;
+            }
+        }
         return min;
     }
 
     public static Tile getTile(int x, int y){
         double minDist = Double.MAX_VALUE;
-        Tile min = null;
         double dist;
+        int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
+        Tile min = null;
         for (Tile[] tiles:GameState.board.getTiles()) {
             for (Tile tile:tiles) {
-                dist = Math.sqrt(Math.pow(x - tile.getX(), 2) + Math.pow(y - tile.getY(), 2));
-                if (dist < minDist) {
-                    minDist = dist;
-                    min = tile;
+//                dist = Math.sqrt(Math.pow(x - tile.getX(), 2) + Math.pow(y - tile.getY(), 2));
+//                if (dist < minDist) {
+//                    minDist = dist;
+//                    min = tile;
+//                }
+                int centerX=tile.getX()+55;
+                int centerY=tile.getY()+73;
+                if (Math.abs(centerX-x)<minX && Math.abs(centerY-y)<minY) {
+                    minX=Math.abs(centerX-x);
+                    minY=Math.abs(centerY-y);
+                    min=tile;
                 }
             }
         }
@@ -110,5 +135,14 @@ public class GameState {
             currentLargestArmySize=size;
         }
         ActionLogPanel.largestArmy();
+    }
+    public static void setUpPhase() {
+        for (int i=0; i<4; i++) {
+            currentPlayer=players[i];
+            JOptionPane.showMessageDialog(null, currentPlayer+", please build your first settlement and road (done in that order)");
+            Intersection stlmt=getIntersection(MainPanel.x, MainPanel.y);
+            stlmt.setOwner(currentPlayer);
+            stlmt.setIsStlmt(true);
+        }
     }
 }

@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.awt.MouseInfo;
+import java.awt.Point;
+
 
 public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> xCoords;  //for intersections
@@ -19,7 +22,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private JScrollPane devCards;
     private boolean devCardPlayed;
     //private Font playerTitleFont;
-    private int x, y;
+    public static int x, y;
 
     public MainPanel() {
         try {
@@ -42,7 +45,7 @@ public class MainPanel extends JPanel implements MouseListener {
         devCardPlayed = false;
         initComponents();
         addMouseListener(this);
-        GameState.rollDice();
+        //GameState.rollDice();
     }
 
 
@@ -55,7 +58,7 @@ public class MainPanel extends JPanel implements MouseListener {
 
         //JScrollPane scroll = new JScrollPane(p, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-
+        /* ACTION LOG? */
         JTextArea log = new JTextArea(50, 50);
         //exact color from mockup
         log.setBackground(new Color(255, 220, 100));
@@ -86,18 +89,24 @@ public class MainPanel extends JPanel implements MouseListener {
                         null, options, options[0]);
                 if(response == 0){
                     //
-                    //JPanel p = new JPanel();
-                    JFrame p= new JFrame("CheckBox test");
-
-
-
+                    JPanel p = new JPanel();
+                    p.setBounds(1100, 300, 300, 400);
+                    int x = 1150;
+                    int y = 350;
                     for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
-                        System.out.println("Please select which resources you wish to trade with.");
                         JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
-                        c1.setBounds(100,100, 150,150);
+                        c1.setBounds(x,y, 100,150);
                         p.add(c1);
+                        if(y >= 600){
+                            x = 1300;
+                            y = 350;
+                        }
+                        else{
+                            y += 60;
+                        }
                     }
                     System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + TradeManager.p1offer + ".");
+                    add(p);
 
 //                    JCheckBox brick = new JCheckBox("Brick");
 //                    brick.setBounds(100,100, 150,150);
@@ -252,6 +261,7 @@ public class MainPanel extends JPanel implements MouseListener {
         add(endTurn);
         add(build);
         add(trade);
+
     }
 
     public void paintComponent(Graphics g) {
@@ -274,7 +284,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.setStroke(new BasicStroke(4));
         g2.drawLine(7,152,319,152);
         g2.drawLine(7,152,7,255);
-        g.setFont(playerTitleFont);
+
         g.drawString("Blue Player: ",11,180);
         g.drawString("Orange Player: ",11,220);
         g.drawString("Red Player: ",11,260);
@@ -307,7 +317,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.setColor(Color.WHITE);
         g.fillRect(915, 10, 75, 75);
         g.fillRect(1000, 10, 75, 75);
-
+        //drawing tiles and tokens
         g.setFont(new Font("Serif", Font.BOLD, 25));
         for (int i=0; i<3; i++) {
             g.drawImage(GameState.board.getTiles()[0][i].getImg(), 560+i*110, 142, 110, 145, null);
@@ -358,32 +368,58 @@ public class MainPanel extends JPanel implements MouseListener {
             GameState.board.getTiles()[2][i].setPixel(452+i*110, 360);
         }
         GameState.board.setTilesIntersectionsLocations();
-
-        //temporary section for checking intersection locations
-        int count=1;
-        for (Tile[] tiles: GameState.board.getTiles()) {
-            for (Tile tile:tiles) {
-//                for (Intersection i:tile.getIntersections()) {
-//                    g.fillRect(i.getLocation()[0], i.getLocation()[1], 10, 10);
-//                }
-                g.setColor(Color.BLACK);
-                g.fillRect(tile.getIntersections()[0].getX(), tile.getIntersections()[0].getY(), 10, 10);
-                g.setColor(Color.RED);
-                g.fillRect(tile.getIntersections()[1].getX(), tile.getIntersections()[1].getY(), 10, 10);
-                if (tile.getIntersections()[1]!=null) {
-                    //System.out.println("intersections 1 are not null "+count);
-                    count++;
-                }
-                g.setColor(Color.ORANGE);
-                g.fillRect(tile.getIntersections()[2].getX(), tile.getIntersections()[2].getY(), 10, 10);
-                g.setColor(Color.YELLOW);
-                g.fillRect(tile.getIntersections()[3].getX(), tile.getIntersections()[3].getY(), 10, 10);
-                g.setColor(Color.GREEN);
-                g.fillRect(tile.getIntersections()[4].getX(), tile.getIntersections()[4].getY(), 10, 10);
-                g.setColor(Color.BLUE);
-                g.fillRect(tile.getIntersections()[5].getX(), tile.getIntersections()[5].getY(), 10, 10);
+        //drawing edges
+        for (Edge e:GameState.board.getEdges()) {
+            if (e.getOwner()!=null) {
+                if (e.getOwner().getColor().equals("Blue"))
+                    g.setColor(Color.BLUE);
+                else if (e.getOwner().getColor().equals("Orange"))
+                    g.setColor(Color.ORANGE);
+                else if (e.getOwner().getColor().equals("White"))
+                    g.setColor(Color.WHITE);
+                else g.setColor(Color.RED);
+                g.drawLine(e.getPoint1()[0], e.getPoint1()[1], e.getPoint2()[0], e.getPoint2()[1]);
             }
         }
+        //temporary section for checking intersection locations
+//        int count=1;
+//        for (Tile[] tiles: GameState.board.getTiles()) {
+//            for (Tile tile:tiles) {
+////                for (Intersection i:tile.getIntersections()) {
+////                    g.fillRect(i.getLocation()[0], i.getLocation()[1], 10, 10);
+////                }
+//                Edge[] e=tile.getEdges();
+//
+//                g.setColor(Color.BLACK);
+//                g.fillRect(tile.getIntersections()[0].getX(), tile.getIntersections()[0].getY(), 10, 10);
+//                g.drawLine(e[0].getPoint1()[0], e[0].getPoint1()[1], e[0].getPoint2()[0], e[0].getPoint2()[1]);
+//                g.setColor(Color.RED);
+//                g.fillRect(tile.getIntersections()[1].getX(), tile.getIntersections()[1].getY(), 10, 10);
+////                if (tile.getIntersections()[1]!=null) {
+////                    //System.out.println("intersections 1 are not null "+count);
+////                    count++;
+////                }
+////                System.out.println(e[1].getPoint1()[0]+", "+e[1].getPoint1()[1]+"; "+e[1].getPoint2()[0]+", "+e[1].getPoint2()[1]+"; "+count);
+//                count++;
+//                g.drawLine(e[1].getPoint1()[0], e[1].getPoint1()[1], e[1].getPoint2()[0], e[1].getPoint2()[1]);
+//
+//                g.setColor(Color.ORANGE);
+//                g.fillRect(tile.getIntersections()[2].getX(), tile.getIntersections()[2].getY(), 10, 10);
+//                g.drawLine(e[2].getPoint1()[0], e[2].getPoint1()[1], e[2].getPoint2()[0], e[2].getPoint2()[1]);
+//
+//                g.setColor(Color.YELLOW);
+//                g.fillRect(tile.getIntersections()[3].getX(), tile.getIntersections()[3].getY(), 10, 10);
+//                g.drawLine(e[3].getPoint1()[0], e[3].getPoint1()[1], e[3].getPoint2()[0], e[3].getPoint2()[1]);
+//
+//                g.setColor(Color.GREEN);
+//                g.fillRect(tile.getIntersections()[4].getX(), tile.getIntersections()[4].getY(), 10, 10);
+//                g.drawLine(e[4].getPoint1()[0], e[4].getPoint1()[1], e[4].getPoint2()[0], e[4].getPoint2()[1]);
+//
+//                g.setColor(Color.BLUE);
+//                g.fillRect(tile.getIntersections()[5].getX(), tile.getIntersections()[5].getY(), 10, 10);
+//                g.drawLine(e[5].getPoint1()[0], e[5].getPoint1()[1], e[5].getPoint2()[0], e[5].getPoint2()[1]);
+//            }
+//        }
         g.setColor(Color.BLACK);
         g.setFont(tradeFont);
         g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
@@ -423,7 +459,6 @@ public class MainPanel extends JPanel implements MouseListener {
         y=e.getY();
         System.out.println("("+x+", "+y+")");
     }
-
     @Override
     public void mousePressed(MouseEvent e) {
 

@@ -25,9 +25,12 @@ public class Tile {
         assignedNum = 0;
         edges = new Edge[6];
         for (int i=0; i<6; i++) {
-            Intersection temp=new Intersection();
-            intersections[i]=temp;
+//            Intersection temp=new Intersection();
+//            intersections[i]=temp;
+            Edge e=new Edge();
+            edges[i]=e;
         }
+
         adjacentTiles = new Tile[6];
     }
     public void setAdjacentVertex(int vertexOrientation) {
@@ -125,6 +128,12 @@ public class Tile {
     public void setPixel(int x, int y) {
         xPixel=x;
         yPixel=y;
+//        intersections[5].setLocation(xPixel, yPixel+36);
+//        intersections[0].setLocation(xPixel+55, yPixel);
+//        intersections[1].setLocation(xPixel+110, yPixel+36);
+//        intersections[2].setLocation(xPixel+110, yPixel+109);
+//        intersections[3].setLocation(xPixel+55, yPixel+145);
+//        intersections[4].setLocation(xPixel, yPixel+109);
     }
     public int getxPixel() {
         return xPixel;
@@ -157,7 +166,14 @@ public class Tile {
     public void setIntersection(Intersection intersection, int orientation) {
         intersections[orientation] = intersection;
     }
-
+    public void setIntersections(Intersection i0, Intersection i1, Intersection i2, Intersection i3, Intersection i4, Intersection i5) {
+        intersections[0]=i0;
+        intersections[1]=i1;
+        intersections[2]=i2;
+        intersections[3]=i3;
+        intersections[4]=i4;
+        intersections[5]=i5;
+    }
     public Intersection[] getIntersections() {
         return intersections;
     }
