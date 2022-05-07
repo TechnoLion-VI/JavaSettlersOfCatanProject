@@ -142,15 +142,16 @@ public class MainPanel extends JPanel implements MouseListener {
                     done.setFont(new Font("Serif", 1, 15));
                     done.setBackground(new Color(255, 220, 100));
                     done.setBounds(115, 400, 75, 25);
-                    p.add(done);
                     done.addActionListener(new ActionListener(){
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            tradeMessage.setText("");
                             JLabel tradeMessageTwo = new JLabel("Please select what you wish to trade for.");
                             tradeMessageTwo.setFont(new Font("Serif", 1, 15));
                             tradeMessageTwo.setBounds(0, -30, 400, 80);
                             p.add(tradeMessageTwo);
                         }
                         });
+                    p.add(done);
 
                     int x = 5;
                     int y = 20;
