@@ -46,7 +46,10 @@ public class Intersection {
     }
     //for initial building phase before settlements can only be placed if connected to their own road
     public boolean canPlaceInitial() {
-        for (Edge e:edges) if (e.hasBuildings()) return false;
+        for (int i=0; i<edges.length; i++) {
+            Edge e=edges[i];
+            if (e!=null && e.hasBuildings()) return false;
+        }
         return true;
     }
     public boolean canPlace(Player p) {

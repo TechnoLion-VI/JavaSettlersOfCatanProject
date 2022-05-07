@@ -1,12 +1,17 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.font.GlyphMetrics;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
+import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+import java.awt.MouseInfo;
+import java.awt.Point;
+
 
 public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> xCoords;  //for intersections
@@ -72,6 +77,16 @@ public class MainPanel extends JPanel implements MouseListener {
 
 
     public void initComponents() {
+        //init components
+        JPanel p = new JPanel();
+        JTextArea log = new JTextArea(50, 50);
+        JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        devCardPanel = new JPanel();
+        devCards = new JScrollPane(devCardPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        trade = new JButton("Trade");
+        build = new JButton("Build/Buy");
+        rollDice = new JButton("Roll Dice");
+        endTurn = new JButton("End Turn");
         //harbors
         harbors = new ArrayList<BufferedImage>();
         for(int i = 0; i < 4; i++){
@@ -84,7 +99,7 @@ public class MainPanel extends JPanel implements MouseListener {
         harbors.add(brickHarbor);
         Collections.shuffle(harbors);
         //components
-        JPanel p = new JPanel();
+//      JPanel p = new JPanel();
         p.setLocation(1140, 300);
         p.setSize(300, 450);
         p.setBackground(new Color(255, 220, 100));
@@ -92,7 +107,7 @@ public class MainPanel extends JPanel implements MouseListener {
         p.setVisible(true);
         add(p);
         /* ACTION LOG STUFF */
-        JTextArea log = new JTextArea(50, 50);
+//      JTextArea log = new JTextArea(50, 50);
         log.setBackground(new Color(255, 220, 100));
         //change font later
         log.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
@@ -100,17 +115,17 @@ public class MainPanel extends JPanel implements MouseListener {
         log.setLineWrap(true);
         PrintStream printStream = new PrintStream(new ActionLogPanel(log));
         System.setOut(printStream);
-        JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//        JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         logPanel.setBounds(1100, 10, 400, 200);
         add(logPanel);
         /* DEVELOPMENT CARDS PANEL */
-        devCardPanel = new JPanel();
+//      devCardPanel = new JPanel();
         devCardPanel.setBackground(new Color(255, 220, 100));
-        devCards = new JScrollPane(devCardPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//      devCards = new JScrollPane(devCardPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         devCards.setBounds(12, 385, 350, 100);
         add(devCards);
         /* END TURN, CLAIM WIN, BUILD, TRADE BUTTONS */
-        trade = new JButton("Trade");
+//      trade = new JButton("Trade");
         trade.setBounds(15, 520, 100, 50);
         trade.setBackground(new Color(255, 200, 100));
         trade.addActionListener(new ActionListener(){
@@ -168,7 +183,7 @@ public class MainPanel extends JPanel implements MouseListener {
             }
     });
 
-        build = new JButton("Build/Buy");
+//      build = new JButton("Build/Buy");
         build.setBounds(140, 520, 100, 50);
         build.setBackground(new Color(255, 200, 100));
         build.addActionListener(new ActionListener(){
@@ -269,18 +284,19 @@ public class MainPanel extends JPanel implements MouseListener {
                 //dialog.setVisible(true);
         });
 
-        rollDice = new JButton("Roll Dice");
+//      rollDice = new JButton("Roll Dice");
         rollDice.setBounds(920, 30, 100, 50);
         rollDice.setBackground(new Color(255, 200, 100));
         rollDice.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 GameState.rollDice();
+                endTurn.setEnabled(true);
                 rollDice.setEnabled(false);
                 repaint();
             }});
         add(rollDice);
 
-        endTurn = new JButton("End Turn");
+//      endTurn = new JButton("End Turn");
         endTurn.setBounds(265, 520, 100, 50);
         endTurn.setBackground(new Color(255, 200, 100));
         endTurn.addActionListener(new ActionListener() {
@@ -293,6 +309,7 @@ public class MainPanel extends JPanel implements MouseListener {
                     }
                 }
                 rollDice.setEnabled(true);
+                endTurn.setEnabled(false);
                 repaint();
             }
         });
