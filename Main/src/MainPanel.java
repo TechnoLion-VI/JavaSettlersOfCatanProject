@@ -172,6 +172,7 @@ public class MainPanel extends JPanel implements MouseListener {
                             y += 40;
                         }
                     }
+
                     System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + TradeManager.p1offer + ".");
 
 
@@ -302,7 +303,7 @@ public class MainPanel extends JPanel implements MouseListener {
         });
 
         rollDice = new JButton("Roll Dice");
-        rollDice.setBounds(970, 30, 100, 50);
+        rollDice.setBounds(870, 30, 100, 50);
         rollDice.setBackground(new Color(255, 200, 100));
         rollDice.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -347,6 +348,8 @@ public class MainPanel extends JPanel implements MouseListener {
         g.setFont(tradeFont);
         g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
 
+
+
         Font victoryTitleFont = new Font("Serif", Font.BOLD, 20);
         g.setFont(victoryTitleFont);
 
@@ -379,8 +382,6 @@ public class MainPanel extends JPanel implements MouseListener {
 
         g.drawImage(brick, 240, 725, 40, 40, null);
         g.drawString(GameState.currentPlayer.getNumResources("Brick") + "", 280, 750);
-
-        //g.setFont(myFontsmall);
 
         g.drawString("PUBLIC PLAYER STATS",5,145);
         Graphics2D g2 = (Graphics2D) g;
@@ -448,8 +449,6 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.players[3].getCitiesLeft() + "", 375, 300);
         g.drawImage(city, 340, 278, 30, 30, null);
 
-
-
         g.setFont(victoryTitleFont);
         g.drawString("DEVELOPMENT CARDS",5,373);
         g2.drawLine(7,380,360,380);
@@ -458,8 +457,47 @@ public class MainPanel extends JPanel implements MouseListener {
         Font diceRollFont = new Font("Serif", Font.BOLD, 20);
         g.setFont(diceRollFont);
         g.drawString("DICE ROLL TOTAL: " + GameState.diceNum, 490, 55);
+        if(GameState.diceOne == 1){
+            g.drawImage(one, 740, 20, 60, 60,null);
+        }
+        if(GameState.diceOne == 2){
+            g.drawImage(two, 740, 20, 60, 60,null);
+        }
+        if(GameState.diceOne == 3){
+            g.drawImage(three, 740, 20, 60, 60,null);
+        }
+        if(GameState.diceOne == 4){
+            g.drawImage(four, 740, 20, 60, 60,null);
+        }
+        if(GameState.diceOne == 5){
+            g.drawImage(five, 740, 20, 60, 60,null);
+        }
+        if(GameState.diceOne == 6){
+            g.drawImage(six, 740, 20, 60, 60,null);
+        }
+
+        if(GameState.diceTwo == 1){
+            g.drawImage(one, 830, 20, 60, 60, null);
+        }
+        if(GameState.diceTwo == 2){
+            g.drawImage(two, 830, 20, 60, 60, null);
+        }
+        if(GameState.diceTwo == 3){
+            g.drawImage(three, 830, 20, 60, 60, null);
+        }
+        if(GameState.diceTwo == 4){
+            g.drawImage(four, 830, 20, 60, 60, null);
+        }
+        if(GameState.diceTwo == 5){
+            g.drawImage(five, 830, 20, 60, 60, null);
+        }
+        if(GameState.diceTwo == 6){
+            g.drawImage(six, 830, 20, 60, 60, null);
+        }
+
 
         //drawing tiles and tokens
+        g.setColor(Color.WHITE);
         g.setFont(new Font("Serif", Font.BOLD, 25));
         for (int i=0; i<3; i++) {
             g.drawImage(GameState.board.getTiles()[0][i].getImg(), 560+i*110, 142, 110, 145, null);
@@ -529,6 +567,26 @@ public class MainPanel extends JPanel implements MouseListener {
                 g.drawImage(i.getImage(), i.getX()-10, i.getY()-10, 20, 20, null);
             }
         }
+//        ArrayList<BufferedImage> harbors = new ArrayList<BufferedImage>();
+//        for(int i = 0; i < 4; i++){
+//            harbors.add(genericHarbor);
+//        }
+//        harbors.add(oreHarbor);
+//        harbors.add(grainHarbor);
+//        harbors.add(lumberHarbor);
+//        harbors.add(woolHarbor);
+//        harbors.add(brickHarbor);
+//        Collections.shuffle(harbors);
+//        g.drawImage(harbors.get(0), 437, 313, 50, 50, null);
+//        g.drawImage(harbors.get(1), 538, 107, 50, 50, null);
+//        g.drawImage(harbors.get(2), 755, 110, 50, 50, null);
+//        g.drawImage(harbors.get(3), 905, 205, 50, 50, null);
+//        g.drawImage(harbors.get(4), 1010, 400, 50, 50, null);
+//        g.drawImage(harbors.get(5), 895, 610, 50, 50, null);
+//        g.drawImage(harbors.get(6), 540, 706, 50, 50, null);
+//        g.drawImage(harbors.get(7), 750, 700, 50, 50, null);
+//        g.drawImage(harbors.get(8), 450, 510, 50, 50, null);
+
         //temporary section for checking intersection locations
 //        int count=1;
 //        for (Tile[] tiles: GameState.board.getTiles()) {
@@ -536,39 +594,43 @@ public class MainPanel extends JPanel implements MouseListener {
 ////                for (Intersection i:tile.getIntersections()) {
 ////                    g.fillRect(i.getLocation()[0], i.getLocation()[1], 10, 10);
 ////                }
-//                Edge[] e=tile.getEdges();
+////                Edge[] e=tile.getEdges();
 //
 //                g.setColor(Color.BLACK);
 //                g.fillRect(tile.getIntersections()[0].getX(), tile.getIntersections()[0].getY(), 10, 10);
+//                Edge[] e=tile.getIntersections()[0].getEdges();
 //                g.drawLine(e[0].getPoint1()[0], e[0].getPoint1()[1], e[0].getPoint2()[0], e[0].getPoint2()[1]);
-//                g.setColor(Color.RED);
-//                g.fillRect(tile.getIntersections()[1].getX(), tile.getIntersections()[1].getY(), 10, 10);
-////                if (tile.getIntersections()[1]!=null) {
-////                    //System.out.println("intersections 1 are not null "+count);
-////                    count++;
-////                }
-////                System.out.println(e[1].getPoint1()[0]+", "+e[1].getPoint1()[1]+"; "+e[1].getPoint2()[0]+", "+e[1].getPoint2()[1]+"; "+count);
-//                count++;
 //                g.drawLine(e[1].getPoint1()[0], e[1].getPoint1()[1], e[1].getPoint2()[0], e[1].getPoint2()[1]);
-//
-//                g.setColor(Color.ORANGE);
-//                g.fillRect(tile.getIntersections()[2].getX(), tile.getIntersections()[2].getY(), 10, 10);
 //                g.drawLine(e[2].getPoint1()[0], e[2].getPoint1()[1], e[2].getPoint2()[0], e[2].getPoint2()[1]);
-//
-//                g.setColor(Color.YELLOW);
-//                g.fillRect(tile.getIntersections()[3].getX(), tile.getIntersections()[3].getY(), 10, 10);
-//                g.drawLine(e[3].getPoint1()[0], e[3].getPoint1()[1], e[3].getPoint2()[0], e[3].getPoint2()[1]);
-//
-//                g.setColor(Color.GREEN);
-//                g.fillRect(tile.getIntersections()[4].getX(), tile.getIntersections()[4].getY(), 10, 10);
-//                g.drawLine(e[4].getPoint1()[0], e[4].getPoint1()[1], e[4].getPoint2()[0], e[4].getPoint2()[1]);
-//
-//                g.setColor(Color.BLUE);
-//                g.fillRect(tile.getIntersections()[5].getX(), tile.getIntersections()[5].getY(), 10, 10);
-//                g.drawLine(e[5].getPoint1()[0], e[5].getPoint1()[1], e[5].getPoint2()[0], e[5].getPoint2()[1]);
+////                g.setColor(Color.RED);
+////                g.fillRect(tile.getIntersections()[1].getX(), tile.getIntersections()[1].getY(), 10, 10);
+//////                if (tile.getIntersections()[1]!=null) {
+//////                    //System.out.println("intersections 1 are not null "+count);
+//////                    count++;
+//////                }
+//////                System.out.println(e[1].getPoint1()[0]+", "+e[1].getPoint1()[1]+"; "+e[1].getPoint2()[0]+", "+e[1].getPoint2()[1]+"; "+count);
+////                count++;
+////                g.drawLine(e[1].getPoint1()[0], e[1].getPoint1()[1], e[1].getPoint2()[0], e[1].getPoint2()[1]);
+////
+////                g.setColor(Color.ORANGE);
+////                g.fillRect(tile.getIntersections()[2].getX(), tile.getIntersections()[2].getY(), 10, 10);
+////                g.drawLine(e[2].getPoint1()[0], e[2].getPoint1()[1], e[2].getPoint2()[0], e[2].getPoint2()[1]);
+////
+////                g.setColor(Color.YELLOW);
+////                g.fillRect(tile.getIntersections()[3].getX(), tile.getIntersections()[3].getY(), 10, 10);
+////                g.drawLine(e[3].getPoint1()[0], e[3].getPoint1()[1], e[3].getPoint2()[0], e[3].getPoint2()[1]);
+////
+////                g.setColor(Color.GREEN);
+////                g.fillRect(tile.getIntersections()[4].getX(), tile.getIntersections()[4].getY(), 10, 10);
+////                g.drawLine(e[4].getPoint1()[0], e[4].getPoint1()[1], e[4].getPoint2()[0], e[4].getPoint2()[1]);
+////
+////                g.setColor(Color.BLUE);
+////                g.fillRect(tile.getIntersections()[5].getX(), tile.getIntersections()[5].getY(), 10, 10);
+////                g.drawLine(e[5].getPoint1()[0], e[5].getPoint1()[1], e[5].getPoint2()[0], e[5].getPoint2()[1]);
 //            }
 //        }
     }
+
 
     public BufferedImage resize(BufferedImage img, int w, int h) {
         BufferedImage resizedImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);

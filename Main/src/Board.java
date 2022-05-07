@@ -196,11 +196,11 @@ public class Board {
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles[x].length; y++) {
                 Edge[] adjacentEdges = tiles[x][y].getEdges();
-                for (Edge e:adjacentEdges) {
-                    if (!edges.contains(e)) {
-                        edges.add(e);
-                    }
-                }
+//                for (Edge e:adjacentEdges) {
+//                    if (!edges.contains(e)) {
+//                        edges.add(e);
+//                    }
+//                }
                 // NW Edge
                 Tile tileNW = tiles[x][y].getAdjacentTile(0);
                 if (tileNW != null) {
