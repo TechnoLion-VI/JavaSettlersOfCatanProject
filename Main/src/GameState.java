@@ -148,4 +148,12 @@ public class GameState {
         }
 
     }
+    public static void buildSettlement() {
+        Intersection i=getIntersection(MainPanel.x, MainPanel.y);
+        if (i.canPlaceInitial()) {
+            i.setOwner(currentPlayer);
+            i.setIsStlmt(true);
+        }
+        else System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
+    }
 }
