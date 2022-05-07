@@ -565,6 +565,10 @@ public class MainPanel extends JPanel implements MouseListener {
         x=e.getX();
         y=e.getY();
         System.out.println("("+x+", "+y+")");
+        if (x>=450 && x<=1000 && y>=140  && y<=720) {
+            GameState.buildSettlement();
+            repaint();
+        }
     }
     @Override
     public void mousePressed(MouseEvent e) {
