@@ -4,6 +4,7 @@ public class Intersection {
     private boolean isStlmt, isCity;
     private Player owner;
     private Edge[] edges=new Edge[3];
+    private int edgeCounter=0;
     private BufferedImage stlmt, city;
     private int[] location=new int[2];  //pixels
 
@@ -73,5 +74,10 @@ public class Intersection {
         owner.buildCity();
         setIsStlmt(false);
         return true;
+    }
+    public void addEdge(Edge e) {
+        edges[edgeCounter++]=e;
+        if (edgeCounter>2)
+            System.out.println("adding edge to intersection error");
     }
 }
