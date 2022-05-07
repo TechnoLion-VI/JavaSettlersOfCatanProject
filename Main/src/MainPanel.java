@@ -7,6 +7,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -17,6 +18,8 @@ public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> yCoords;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource, blueStlmt, blueCity, orangeStlmt, orangeCity, redStlmt, redCity, whiteStlmt, whiteCity ;
+    private BufferedImage genericHarbor, brickHarbor, grainHarbor, lumberHarbor, oreHarbor, woolHarbor;
+    private BufferedImage settlement;
     private JButton endTurn, build, trade;
     private JPanel devCardPanel;
     private JScrollPane devCards;
@@ -43,6 +46,13 @@ public class MainPanel extends JPanel implements MouseListener {
             orangeCity = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Orange City.png")));
             redCity = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Red City.png")));
             whiteCity = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/White City.png")));
+            genericHarbor = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/3to1.png")));
+            brickHarbor = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/bricks2to1.png")));
+            grainHarbor = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/wheat2to1.png")));
+            lumberHarbor = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/wood2to1.png")));
+            oreHarbor = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/ore2to1.png")));
+            woolHarbor = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/sheep2to1.png")));
+            settlement = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/settlement.png")));
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,7 +87,7 @@ public class MainPanel extends JPanel implements MouseListener {
         add(devCards);
         /* END TURN, CLAIM WIN, BUILD, TRADE BUTTONS */
         trade = new JButton("Trade");
-        trade.setBounds(675, 730, 100, 50);
+        trade.setBounds(15, 520, 100, 50);
         trade.setBackground(new Color(255, 200, 100));
         trade.addActionListener(new ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,7 +149,7 @@ public class MainPanel extends JPanel implements MouseListener {
     });
 
         build = new JButton("Build/Buy");
-        build.setBounds(800, 730, 100, 50);
+        build.setBounds(140, 520, 100, 50);
         build.setBackground(new Color(255, 200, 100));
         build.addActionListener(new ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent evt){
@@ -240,7 +250,7 @@ public class MainPanel extends JPanel implements MouseListener {
         });
 
         endTurn = new JButton("End Turn");
-        endTurn.setBounds(550, 730, 100, 50);
+        endTurn.setBounds(265, 520, 100, 50);
         endTurn.setBackground(new Color(255, 200, 100));
         endTurn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -282,28 +292,55 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.setStroke(new BasicStroke(4));
         g2.drawLine(7,152,319,152);
         g2.drawLine(7,152,7,255);
+        //harbors
+        ArrayList<BufferedImage> harbors = new ArrayList<BufferedImage>();
+        for(int i = 0; i < 4; i++){
+            harbors.add(genericHarbor);
+        }
+        harbors.add(oreHarbor);
+        harbors.add(grainHarbor);
+        harbors.add(lumberHarbor);
+        harbors.add(woolHarbor);
+        harbors.add(brickHarbor);
+        Collections.shuffle(harbors);
+        g.drawImage(harbors.get(0), 437, 313, 50, 50, null);
+        g.drawImage(harbors.get(1), 538, 107, 50, 50, null);
+        g.drawImage(harbors.get(2), 755, 110, 50, 50, null);
+        g.drawImage(harbors.get(3), 905, 205, 50, 50, null);
+        g.drawImage(harbors.get(4), 1010, 400, 50, 50, null);
+        g.drawImage(harbors.get(5), 895, 610, 50, 50, null);
+        g.drawImage(harbors.get(6), 540, 706, 50, 50, null);
+        g.drawImage(harbors.get(7), 750, 700, 50, 50, null);
+        g.drawImage(harbors.get(8), 450, 510, 50, 50, null);
 
-        g.drawString("Blue Player: ",11,180);
-        g.drawString("Orange Player: ",11,220);
-        g.drawString("Red Player: ",11,260);
-        g.drawString("White Player: ",11,300);
-        g.drawString(GameState.players[0].getPublicScore() + "", 190, 180);
-        g.drawImage(trophy, 150, 158, 30, 30, null);
-        g.drawString(GameState.players[1].getPublicScore() + "", 190, 220);
-        g.drawImage(trophy, 150, 198, 30, 30, null);
-        g.drawString(GameState.players[2].getPublicScore() + "", 190, 260);
-        g.drawImage(trophy, 150, 238, 30, 30, null);
-        g.drawString(GameState.players[3].getPublicScore() + "", 190, 300);
-        g.drawImage(trophy, 150, 278, 30, 30, null);
-        g.drawString(GameState.players[0].getResourceCards().size() + "", 260, 180);
-        g.drawImage(resource, 220, 158, 30, 30, null);
-        g.drawString(GameState.players[1].getResourceCards().size() + "", 260, 220);
-        g.drawImage(resource, 220, 198, 30, 30, null);
-        g.drawString(GameState.players[2].getResourceCards().size() + "", 260, 260);
-        g.drawImage(resource, 220, 238, 30, 30, null);
-        g.drawString(GameState.players[3].getResourceCards().size() + "", 260, 300);
-        g.drawImage(resource, 220, 278, 30, 30, null);
-
+        g.drawString("Blue: ",11,180);
+        g.drawString("Orange: ",11,220);
+        g.drawString("Red: ",11,260);
+        g.drawString("White: ",11,300);
+        g.drawString(GameState.players[0].getPublicScore() + "", 130, 180);
+        g.drawImage(trophy, 90, 158, 30, 30, null);
+        g.drawString(GameState.players[1].getPublicScore() + "", 130, 220);
+        g.drawImage(trophy, 90, 198, 30, 30, null);
+        g.drawString(GameState.players[2].getPublicScore() + "", 130, 260);
+        g.drawImage(trophy, 90, 238, 30, 30, null);
+        g.drawString(GameState.players[3].getPublicScore() + "", 130, 300);
+        g.drawImage(trophy, 90, 278, 30, 30, null);
+        g.drawString(GameState.players[0].getResourceCards().size() + "", 190, 180);
+        g.drawImage(resource, 150, 158, 30, 30, null);
+        g.drawString(GameState.players[1].getResourceCards().size() + "", 190, 220);
+        g.drawImage(resource, 150, 198, 30, 30, null);
+        g.drawString(GameState.players[2].getResourceCards().size() + "", 190, 260);
+        g.drawImage(resource, 150, 238, 30, 30, null);
+        g.drawString(GameState.players[3].getResourceCards().size() + "", 190, 300);
+        g.drawImage(resource, 150, 278, 30, 30, null);
+        g.drawString(GameState.players[0].getStlmtsLeft() +"", 250, 180);
+        g.drawImage(settlement, 210, 158, 30, 30, null);
+        g.drawString(GameState.players[1].getStlmtsLeft() + "", 250, 220);
+        g.drawImage(settlement, 210, 198, 30, 30, null);
+        g.drawString(GameState.players[2].getStlmtsLeft() + "", 250, 260);
+        g.drawImage(settlement, 210, 238, 30, 30, null);
+        g.drawString(GameState.players[3].getStlmtsLeft() + "", 250, 300);
+        g.drawImage(settlement, 210, 278, 30, 30, null);
         g.setFont(victoryTitleFont);
         g.drawString("DEVELOPMENT CARDS",5,373);
         g2.drawLine(7,380,319,380);
@@ -432,8 +469,6 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.currentPlayer.getSecretScore() + "", 40, 700);
         g.drawImage(sword, 60, 675, 40, 40, null);
         g.drawString(GameState.currentPlayer.getPlayedKnightCards() + "", 100, 700);
-        g.drawImage(brick, 120, 675, 40, 40, null);
-        g.drawString(GameState.currentPlayer.getNumResources("Brick") + "", 160, 700);
         g.drawImage(ore, 0, 725, 40, 40, null);
         g.drawString(GameState.currentPlayer.getNumResources("Ore") + "", 40, 750);
         g.drawImage(grain, 60, 725, 40, 40, null);
@@ -442,6 +477,8 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.currentPlayer.getNumResources("Lumber") + "", 160, 750);
         g.drawImage(wool, 180, 725, 40, 40, null);
         g.drawString(GameState.currentPlayer.getNumResources("Wool") + "", 220, 750);
+        g.drawImage(brick, 240, 725, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getNumResources("Brick") + "", 280, 750);
 
 
 

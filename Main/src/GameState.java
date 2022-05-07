@@ -138,10 +138,10 @@ public class GameState {
     }
 
     public static void setUpPhase() {
-        JOptionPane.showMessageDialog(null,"Players, please build your first settlement and road (done in that order)");
+        //JOptionPane.showMessageDialog(null,"Players, please build your first settlement and road (done in that order)");
         for (int i=0; i<4; i++) {
             currentPlayer=players[i];
-            JOptionPane.showMessageDialog(null, currentPlayer + ", please build your first settlement and road (done in that order).");
+            //JOptionPane.showMessageDialog(null, currentPlayer + ", please build your first settlement and road (done in that order).");
             Intersection stlmt=getIntersection(MainPanel.x, MainPanel.y);
             stlmt.setOwner(currentPlayer);
             stlmt.setIsStlmt(true);
