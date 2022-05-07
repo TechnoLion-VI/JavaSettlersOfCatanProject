@@ -76,8 +76,9 @@ public class Intersection {
         return true;
     }
     public void addEdge(Edge e) {
-        edges[edgeCounter++]=e;
-        if (edgeCounter>2)
+        if (edges[0]!=e && edges[1]!=e && edges[2]!=e)
+            edges[edgeCounter++]=e;
+        if (edgeCounter>3)
             System.out.println("adding edge to intersection error");
     }
 }
