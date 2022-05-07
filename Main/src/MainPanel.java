@@ -287,7 +287,7 @@ public class MainPanel extends JPanel implements MouseListener {
                         break;
                     }
                     else if(GameState.currentPlayer == GameState.players[3]){
-                        GameState.currentPlayer = GameState.players[4];
+                        GameState.currentPlayer = GameState.players[0];
                         break;
                     }
                     else{
