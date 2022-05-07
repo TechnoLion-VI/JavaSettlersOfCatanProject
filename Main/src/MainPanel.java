@@ -308,6 +308,7 @@ public class MainPanel extends JPanel implements MouseListener {
         rollDice.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 GameState.rollDice();
+                rollDice.setEnabled(false);
                 repaint();
             }});
         add(rollDice);
@@ -324,6 +325,7 @@ public class MainPanel extends JPanel implements MouseListener {
                             break;
                     }
                 }
+                rollDice.setEnabled(true);
                 repaint();
             }
         });

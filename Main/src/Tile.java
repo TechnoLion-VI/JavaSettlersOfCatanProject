@@ -106,9 +106,7 @@ public class Tile {
     public void setResource(ResourceCard rc) {
         resource=rc;
     }
-//    public Tile(ResourceCard r) {
-//        this(r, null, null);
-//    }
+
     public int resourcesNeeded() {
         int count=0;
         ArrayList<Player> players = new ArrayList<Player>();
