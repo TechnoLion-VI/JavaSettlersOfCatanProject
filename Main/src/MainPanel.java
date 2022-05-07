@@ -120,51 +120,18 @@ public class MainPanel extends JPanel implements MouseListener {
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, options, options[0]);
                 if(response == 0){
-//                    for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
-//                        JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
-//                        c1.setBounds(40,20, 100,150);
-//                        p.add(c1);
-//                        if(y >= 600){
-//                            x = 1300;
-//                            y = 350;
-//                        }
-//                        else{
-//                            y += 60;
-//                        }
-                    ArrayList<String>
-                            testArray = new ArrayList<String>();
-//                    JLabel tradeLabel = new JLabel(); //create a jlabel, add some text to it, then add it to the jpanel
-//                    tradeLabel.setText("Please select which resources you wish to trade with.");
-//                    tradeLabel.setBounds(0, 20, 5, 5);
-//                    p.add(tradeLabel);
+                    JLabel tradeMessage = new JLabel("Please select what you wish to trade with.");
+                    tradeMessage.setFont(new Font("Serif", 1, 10));
+                    tradeMessage.setBounds(0, 0, 400, 80);
+                    p.add(tradeMessage);
                     int x = 5;
                     int y = 20;
-                    testArray.add("hi");
-                    testArray.add("no");
-                    testArray.add("bro");
-                    testArray.add("bro");
-                    testArray.add("bro");
-                    testArray.add("bro");
-                    testArray.add("bro");
-                    testArray.add("bro");
-                    testArray.add("bro");
-                    testArray.add("bro");
-                    testArray.add("bro");
-                    testArray.add("bro");
-                    testArray.add("bro");
-                    testArray.add("bro");
-                    testArray.add("bro");
-                    testArray.add("bro");
-                    testArray.add("bro");
-
-
-
-                    for(int i = 0; i < testArray.size(); i++){
-                        JCheckBox c = new JCheckBox(testArray.get(i));;
-                        c.setBackground(new Color(255, 220, 100));
-                        c.setBounds(x, y, 50, 20);
-                        p.add(c);
-                        if(y >= 400){
+                    for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                        JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
+                        c1.setBackground(new Color(255, 220, 100));
+                        c1.setBounds(x, y, 50, 20);
+                        p.add(c1);
+                        if(y >= 400) {
                             x += 80;
                             y = 20;
                         }
