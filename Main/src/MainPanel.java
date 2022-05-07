@@ -11,6 +11,7 @@ import java.util.Objects;
 public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> xCoords;  //for intersections
     private ArrayList<Integer> yCoords;
+    ArrayList<BufferedImage> harbors;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource, blueStlmt, blueCity, orangeStlmt, orangeCity, redStlmt, redCity, whiteStlmt, whiteCity ;
     private BufferedImage genericHarbor, brickHarbor, grainHarbor, lumberHarbor, oreHarbor, woolHarbor;
@@ -71,6 +72,18 @@ public class MainPanel extends JPanel implements MouseListener {
 
 
     public void initComponents() {
+        //harbors
+        harbors = new ArrayList<BufferedImage>();
+        for(int i = 0; i < 4; i++){
+            harbors.add(genericHarbor);
+        }
+        harbors.add(oreHarbor);
+        harbors.add(grainHarbor);
+        harbors.add(lumberHarbor);
+        harbors.add(woolHarbor);
+        harbors.add(brickHarbor);
+        Collections.shuffle(harbors);
+        //components
         JPanel p = new JPanel();
         p.setLocation(1140, 300);
         p.setSize(300, 450);
@@ -294,6 +307,7 @@ public class MainPanel extends JPanel implements MouseListener {
         rollDice.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 GameState.rollDice();
+                repaint();
             }});
         add(rollDice);
 
@@ -304,25 +318,9 @@ public class MainPanel extends JPanel implements MouseListener {
             public void actionPerformed(ActionEvent e) {
                 System.out.println(GameState.currentPlayer.toString() + " has ended their turn.");
                 for (int i = 0; i < 4; i++) {
-                    if (GameState.currentPlayer == GameState.players[0]) {
-                            GameState.currentPlayer = GameState.players[1];
+                    if (GameState.currentPlayer == GameState.players[i]) {
+                            GameState.currentPlayer = GameState.players[(i + 1) % 4];
                             break;
-                    }
-                    else if(GameState.currentPlayer == GameState.players[1]){
-                        GameState.currentPlayer = GameState.players[2];
-                        break;
-                    }
-                    else if(GameState.currentPlayer == GameState.players[2]){
-                        GameState.currentPlayer = GameState.players[3];
-                        break;
-                    }
-                    else if(GameState.currentPlayer == GameState.players[3]){
-                        GameState.currentPlayer = GameState.players[0];
-                        break;
-                    }
-                    else{
-                        GameState.currentPlayer = GameState.players[0];
-                        break;
                     }
                 }
                 repaint();
@@ -390,16 +388,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.drawLine(7,152,380,152);
         g2.drawLine(7,152,7,300);
         //harbors
-        ArrayList<BufferedImage> harbors = new ArrayList<BufferedImage>();
-        for(int i = 0; i < 4; i++){
-            harbors.add(genericHarbor);
-        }
-        harbors.add(oreHarbor);
-        harbors.add(grainHarbor);
-        harbors.add(lumberHarbor);
-        harbors.add(woolHarbor);
-        harbors.add(brickHarbor);
-        Collections.shuffle(harbors);
+
         g.drawImage(harbors.get(0), 437, 313, 50, 50, null);
         g.drawImage(harbors.get(1), 538, 107, 50, 50, null);
         g.drawImage(harbors.get(2), 755, 110, 50, 50, null);
