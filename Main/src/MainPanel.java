@@ -125,7 +125,6 @@ public class MainPanel extends JPanel implements MouseListener {
         devCards.setBounds(12, 385, 350, 100);
         add(devCards);
         /* END TURN, CLAIM WIN, BUILD, TRADE BUTTONS */
-//      trade = new JButton("Trade");
         trade.setBounds(15, 520, 100, 50);
         trade.setBackground(new Color(255, 200, 100));
         trade.addActionListener(new ActionListener(){
@@ -136,9 +135,23 @@ public class MainPanel extends JPanel implements MouseListener {
                         null, options, options[0]);
                 if(response == 0){
                     JLabel tradeMessage = new JLabel("Please select what you wish to trade with.");
-                    tradeMessage.setFont(new Font("Serif", 1, 10));
-                    tradeMessage.setBounds(0, 0, 400, 80);
+                    tradeMessage.setFont(new Font("Serif", 1, 15));
+                    tradeMessage.setBounds(0, -30, 400, 80);
                     p.add(tradeMessage);
+                    JButton done = new JButton("Done");
+                    done.setFont(new Font("Serif", 1, 15));
+                    done.setBackground(new Color(255, 220, 100));
+                    done.setBounds(115, 400, 75, 25);
+                    p.add(done);
+                    done.addActionListener(new ActionListener(){
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            JLabel tradeMessageTwo = new JLabel("Please select what you wish to trade for.");
+                            tradeMessageTwo.setFont(new Font("Serif", 1, 15));
+                            tradeMessageTwo.setBounds(0, -30, 400, 80);
+                            p.add(tradeMessageTwo);
+                        }
+                        });
+
                     int x = 5;
                     int y = 20;
                     for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
@@ -285,6 +298,7 @@ public class MainPanel extends JPanel implements MouseListener {
         });
 
 //      rollDice = new JButton("Roll Dice");
+        endTurn.setEnabled(false);
         rollDice.setBounds(920, 30, 100, 50);
         rollDice.setBackground(new Color(255, 200, 100));
         rollDice.addActionListener(new ActionListener(){
@@ -633,7 +647,7 @@ public class MainPanel extends JPanel implements MouseListener {
         y=e.getY();
         System.out.println("("+x+", "+y+")");
         if (x>=450 && x<=1000 && y>=140  && y<=720) {
-            GameState.buildSettlement();
+            GameState.initBuildSettlement();
             repaint();
         }
     }
