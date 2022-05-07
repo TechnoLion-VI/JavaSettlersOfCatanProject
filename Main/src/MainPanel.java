@@ -303,7 +303,7 @@ public class MainPanel extends JPanel implements MouseListener {
         });
 
         rollDice = new JButton("Roll Dice");
-        rollDice.setBounds(870, 30, 100, 50);
+        rollDice.setBounds(900, 30, 100, 50);
         rollDice.setBackground(new Color(255, 200, 100));
         rollDice.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
