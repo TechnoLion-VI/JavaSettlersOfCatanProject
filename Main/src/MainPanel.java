@@ -19,8 +19,9 @@ public class MainPanel extends JPanel implements MouseListener {
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource, blueStlmt, blueCity, orangeStlmt, orangeCity, redStlmt, redCity, whiteStlmt, whiteCity ;
     private BufferedImage genericHarbor, brickHarbor, grainHarbor, lumberHarbor, oreHarbor, woolHarbor;
-    private BufferedImage settlement;
-    private JButton endTurn, build, trade;
+    private BufferedImage settlement, city, road;
+    private BufferedImage one, two, three, four, five, six;
+    private JButton endTurn, build, trade, rollDice;
     private JPanel devCardPanel;
     private JScrollPane devCards;
     private boolean devCardPlayed;
@@ -53,6 +54,14 @@ public class MainPanel extends JPanel implements MouseListener {
             oreHarbor = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/ore2to1.png")));
             woolHarbor = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/sheep2to1.png")));
             settlement = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/settlement.png")));
+            city = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/city2.png")));
+            road = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/road.png")));
+            one = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/one.jpg")));
+            two = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/two.jpg")));
+            three = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/three.jpg")));
+            four = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/four.jpg")));
+            five = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/five.jpg")));
+            six = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/six.jpg")));
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         } catch (Exception e) {
             e.printStackTrace();
@@ -249,6 +258,15 @@ public class MainPanel extends JPanel implements MouseListener {
                 //dialog.setVisible(true);
         });
 
+        rollDice = new JButton("Roll Dice");
+        rollDice.setBounds(970, 30, 100, 50);
+        rollDice.setBackground(new Color(255, 200, 100));
+        rollDice.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                GameState.rollDice();
+            }});
+        add(rollDice);
+
         endTurn = new JButton("End Turn");
         endTurn.setBounds(265, 520, 100, 50);
         endTurn.setBackground(new Color(255, 200, 100));
@@ -256,12 +274,27 @@ public class MainPanel extends JPanel implements MouseListener {
             public void actionPerformed(ActionEvent e) {
                 System.out.println(GameState.currentPlayer.toString() + " has ended their turn.");
                 for (int i = 0; i < 4; i++) {
-                    if (GameState.currentPlayer == GameState.players[i]) {
-                        GameState.currentPlayer = GameState.players[(i + 1) % 4];
+                    if (GameState.currentPlayer == GameState.players[0]) {
+                            GameState.currentPlayer = GameState.players[1];
+                            break;
+                    }
+                    else if(GameState.currentPlayer == GameState.players[1]){
+                        GameState.currentPlayer = GameState.players[2];
+                        break;
+                    }
+                    else if(GameState.currentPlayer == GameState.players[2]){
+                        GameState.currentPlayer = GameState.players[3];
+                        break;
+                    }
+                    else if(GameState.currentPlayer == GameState.players[3]){
+                        GameState.currentPlayer = GameState.players[4];
+                        break;
+                    }
+                    else{
+                        GameState.currentPlayer = GameState.players[0];
                         break;
                     }
                 }
-                GameState.rollDice();
                 repaint();
             }
         });
@@ -283,15 +316,49 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString("Trade Panel", 1190, 285);
         g.setFont (playerTitleFont);
         g.drawString(GameState.currentPlayer.toString(), 20, 75);
+        g.setFont(tradeFont);
+        g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
 
-        //g.setFont(myFontsmall);
         Font victoryTitleFont = new Font("Serif", Font.BOLD, 20);
         g.setFont(victoryTitleFont);
+
+        g.drawImage(trophy, 0, 675, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getSecretScore() + "", 40, 700);
+
+        g.drawImage(sword, 60, 675, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getPlayedKnightCards() + "", 100, 700);
+
+        g.drawImage(road, 120, 675, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getRoadsLeft() + "", 160, 700);
+
+        g.drawImage(settlement, 195, 675, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getStlmtsLeft() + "", 240, 700);
+
+        g.drawImage(city, 260, 665, 50, 50, null);
+        g.drawString(GameState.currentPlayer.getCitiesLeft() + "", 310, 700);
+
+        g.drawImage(ore, 0, 725, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getNumResources("Ore") + "", 40, 750);
+
+        g.drawImage(grain, 60, 725, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getNumResources("Grain") + "", 100, 750);
+
+        g.drawImage(lumber, 120, 725, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getNumResources("Lumber") + "", 160, 750);
+
+        g.drawImage(wool, 180, 725, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getNumResources("Wool") + "", 220, 750);
+
+        g.drawImage(brick, 240, 725, 40, 40, null);
+        g.drawString(GameState.currentPlayer.getNumResources("Brick") + "", 280, 750);
+
+        //g.setFont(myFontsmall);
+
         g.drawString("PUBLIC PLAYER STATS",5,145);
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
-        g2.drawLine(7,152,319,152);
-        g2.drawLine(7,152,7,255);
+        g2.drawLine(7,152,380,152);
+        g2.drawLine(7,152,7,300);
         //harbors
         ArrayList<BufferedImage> harbors = new ArrayList<BufferedImage>();
         for(int i = 0; i < 4; i++){
@@ -325,6 +392,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(trophy, 90, 238, 30, 30, null);
         g.drawString(GameState.players[3].getPublicScore() + "", 130, 300);
         g.drawImage(trophy, 90, 278, 30, 30, null);
+
         g.drawString(GameState.players[0].getResourceCards().size() + "", 190, 180);
         g.drawImage(resource, 150, 158, 30, 30, null);
         g.drawString(GameState.players[1].getResourceCards().size() + "", 190, 220);
@@ -333,25 +401,45 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(resource, 150, 238, 30, 30, null);
         g.drawString(GameState.players[3].getResourceCards().size() + "", 190, 300);
         g.drawImage(resource, 150, 278, 30, 30, null);
-        g.drawString(GameState.players[0].getStlmtsLeft() +"", 250, 180);
-        g.drawImage(settlement, 210, 158, 30, 30, null);
-        g.drawString(GameState.players[1].getStlmtsLeft() + "", 250, 220);
-        g.drawImage(settlement, 210, 198, 30, 30, null);
-        g.drawString(GameState.players[2].getStlmtsLeft() + "", 250, 260);
-        g.drawImage(settlement, 210, 238, 30, 30, null);
-        g.drawString(GameState.players[3].getStlmtsLeft() + "", 250, 300);
-        g.drawImage(settlement, 210, 278, 30, 30, null);
+
+        g.drawString(GameState.players[0].getRoadsLeft() +"", 250, 180);
+        g.drawImage(road, 210, 158, 30, 30, null);
+        g.drawString(GameState.players[1].getRoadsLeft() + "", 250, 220);
+        g.drawImage(road, 210, 198, 30, 30, null);
+        g.drawString(GameState.players[2].getRoadsLeft() + "", 250, 260);
+        g.drawImage(road, 210, 238, 30, 30, null);
+        g.drawString(GameState.players[3].getRoadsLeft() + "", 250, 300);
+        g.drawImage(road, 210, 278, 30, 30, null);
+
+        g.drawString(GameState.players[0].getStlmtsLeft() + "", 315, 180);
+        g.drawImage(settlement, 280, 158, 30, 30, null);
+        g.drawString(GameState.players[1].getStlmtsLeft() + "", 315, 220);
+        g.drawImage(settlement, 280, 198, 30, 30, null);
+        g.drawString(GameState.players[2].getStlmtsLeft() + "", 315, 260);
+        g.drawImage(settlement, 280, 238, 30, 30, null);
+        g.drawString(GameState.players[3].getStlmtsLeft() + "", 315, 300);
+        g.drawImage(settlement, 280, 278, 30, 30, null);
+
+        g.drawString(GameState.players[0].getCitiesLeft() + "", 375, 180);
+        g.drawImage(city, 340, 158, 30, 30, null);
+        g.drawString(GameState.players[1].getCitiesLeft() + "", 375, 220);
+        g.drawImage(city, 340, 198, 30, 30, null);
+        g.drawString(GameState.players[2].getCitiesLeft() + "", 375, 260);
+        g.drawImage(city, 340, 238, 30, 30, null);
+        g.drawString(GameState.players[3].getCitiesLeft() + "", 375, 300);
+        g.drawImage(city, 340, 278, 30, 30, null);
+
+
+
         g.setFont(victoryTitleFont);
         g.drawString("DEVELOPMENT CARDS",5,373);
-        g2.drawLine(7,380,319,380);
-        g2.drawLine(7,380,7,425);
-        g.drawRect(500,10, 400,75);
-        Font diceRollFont = new Font("Serif", Font.BOLD, 35);
+        g2.drawLine(7,380,360,380);
+        g2.drawLine(7,380,7,480);
+        g.drawRect(480,20, 230,60);
+        Font diceRollFont = new Font("Serif", Font.BOLD, 20);
         g.setFont(diceRollFont);
-        g.drawString("DICE ROLL TOTAL: " + GameState.getDiceNum(), 510, 60);
-        g.setColor(Color.WHITE);
-        g.fillRect(915, 10, 75, 75);
-        g.fillRect(1000, 10, 75, 75);
+        g.drawString("DICE ROLL TOTAL: " + GameState.diceNum, 490, 55);
+
         //drawing tiles and tokens
         g.setFont(new Font("Serif", Font.BOLD, 25));
         for (int i=0; i<3; i++) {
@@ -461,28 +549,6 @@ public class MainPanel extends JPanel implements MouseListener {
 //                g.drawLine(e[5].getPoint1()[0], e[5].getPoint1()[1], e[5].getPoint2()[0], e[5].getPoint2()[1]);
 //            }
 //        }
-        g.setColor(Color.BLACK);
-        g.setFont(tradeFont);
-        g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
-        g.setFont(victoryTitleFont);
-        g.drawImage(trophy, 0, 675, 40, 40, null);
-        g.drawString(GameState.currentPlayer.getSecretScore() + "", 40, 700);
-        g.drawImage(sword, 60, 675, 40, 40, null);
-        g.drawString(GameState.currentPlayer.getPlayedKnightCards() + "", 100, 700);
-        g.drawImage(ore, 0, 725, 40, 40, null);
-        g.drawString(GameState.currentPlayer.getNumResources("Ore") + "", 40, 750);
-        g.drawImage(grain, 60, 725, 40, 40, null);
-        g.drawString(GameState.currentPlayer.getNumResources("Grain") + "", 100, 750);
-        g.drawImage(lumber, 120, 725, 40, 40, null);
-        g.drawString(GameState.currentPlayer.getNumResources("Lumber") + "", 160, 750);
-        g.drawImage(wool, 180, 725, 40, 40, null);
-        g.drawString(GameState.currentPlayer.getNumResources("Wool") + "", 220, 750);
-        g.drawImage(brick, 240, 725, 40, 40, null);
-        g.drawString(GameState.currentPlayer.getNumResources("Brick") + "", 280, 750);
-
-
-
-
     }
 
     public BufferedImage resize(BufferedImage img, int w, int h) {
