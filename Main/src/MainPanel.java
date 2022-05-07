@@ -1,17 +1,12 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.font.GlyphMetrics;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
-import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
-import java.awt.MouseInfo;
-import java.awt.Point;
-
 
 public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> xCoords;  //for intersections
