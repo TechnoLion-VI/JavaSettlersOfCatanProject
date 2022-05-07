@@ -20,24 +20,24 @@ public class GameState {
         double dist;
         int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
         Intersection min = null;
-//        for (Tile[] tiles:GameState.board.getTiles()) {
-//            for (Tile tile:tiles) {
-//                for (Intersection i:tile.getIntersections()) {
-//                    dist = Math.sqrt(Math.pow(x - i.getX(), 2) + Math.pow(y - i.getY(), 2));
-//                    if (dist < minDist) {
-//                        minDist = dist;
-//                        min = i;
-//                    }
-//                }
-//            }
-//        }
-        for (Intersection i:board.getIntersections()) {
-            if (Math.abs(i.getX()-x)<minX && Math.abs(i.getY()-y)<minY) {
-                minX=Math.abs(i.getX()-x);
-                minY=Math.abs(i.getY()-y);
-                min=i;
+        for (Tile[] tiles:GameState.board.getTiles()) {
+            for (Tile tile:tiles) {
+                for (Intersection i:tile.getIntersections()) {
+                    dist = Math.sqrt(Math.pow(x - i.getX(), 2) + Math.pow(y - i.getY(), 2));
+                    if (dist < minDist) {
+                        minDist = dist;
+                        min = i;
+                    }
+                }
             }
         }
+//        for (Intersection i:board.getIntersections()) {
+//            if (Math.abs(i.getX()-x)<minX && Math.abs(i.getY()-y)<minY) {
+//                minX=Math.abs(i.getX()-x);
+//                minY=Math.abs(i.getY()-y);
+//                min=i;
+//            }
+//        }
         return min;
     }
 
@@ -148,12 +148,12 @@ public class GameState {
         }
 
     }
-    public static void buildSettlement() {
+    public static void initBuildSettlement() {
         Intersection i=getIntersection(MainPanel.x, MainPanel.y);
-        if (i.canPlaceInitial()) {
+        //if (i.canPlaceInitial()) {
             i.setOwner(currentPlayer);
             i.setIsStlmt(true);
-        }
-        else System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
+        //}
+        //else System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
     }
 }
