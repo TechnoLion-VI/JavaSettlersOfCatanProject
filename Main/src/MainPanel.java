@@ -552,13 +552,22 @@ public class MainPanel extends JPanel implements MouseListener {
         //drawing edges
         for (Edge e:GameState.board.getEdges()) {
             if (e.getOwner()!=null) {
-                if (e.getOwner().getColor().equals("Blue"))
+                if (e.getOwner().getColor().equals("Blue")) {
                     g.setColor(Color.BLUE);
-                else if (e.getOwner().getColor().equals("Orange"))
+                    System.out.println("color has been set");
+                }
+                else if (e.getOwner().getColor().equals("Orange")) {
                     g.setColor(Color.ORANGE);
-                else if (e.getOwner().getColor().equals("White"))
+                    System.out.println("color has been set");
+                }
+                else if (e.getOwner().getColor().equals("White")) {
                     g.setColor(Color.WHITE);
-                else g.setColor(Color.RED);
+                    System.out.println("color has been set");
+                }
+                else {
+                    g.setColor(Color.RED);
+                    System.out.println("color has been set");
+                }
                 g.drawLine(e.getPoint1()[0], e.getPoint1()[1], e.getPoint2()[0], e.getPoint2()[1]);
             }
         }
@@ -649,6 +658,9 @@ public class MainPanel extends JPanel implements MouseListener {
         System.out.println("("+x+", "+y+")");
         if (x>=450 && x<=1000 && y>=140  && y<=720) {
             GameState.initBuildSettlement();
+//            GameState.initBuildRoad();
+            Edge edge=GameState.getEdge(x, y);
+            edge.setOwner(GameState.currentPlayer);
             repaint();
         }
     }

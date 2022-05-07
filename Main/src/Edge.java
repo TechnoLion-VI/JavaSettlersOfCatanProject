@@ -4,7 +4,7 @@ public class Edge {
     private Intersection[] intersections;
     int[] point1;
     int[] point2;
-    int[] midpoint;
+    int[] midpoint=new int[2];
     private boolean isHarbor;
     private ResourceCard type;
     private int id;
@@ -25,8 +25,8 @@ public class Edge {
     public boolean canPlace(Player p) {
         if (owner != null || p.getRoadsLeft() <= 0) return false;
         for (Intersection i:intersections) {
-            if (i.getOwner().equals(p)) return true;
-            for (Edge e:i.getEdges()) {
+            if (!i.getOwner().equals(p)) return false;
+            for (Edge e:i.getEdges()) { //what does this do?
                 if (e.getOwner().equals(p)) return true;
             }
         }

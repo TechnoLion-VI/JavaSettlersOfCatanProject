@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,26 +32,23 @@ public class GameState {
                 }
             }
         }
-//        for (Intersection i:board.getIntersections()) {
-//            if (Math.abs(i.getX()-x)<minX && Math.abs(i.getY()-y)<minY) {
-//                minX=Math.abs(i.getX()-x);
-//                minY=Math.abs(i.getY()-y);
-//                min=i;
-//            }
-//        }
         return min;
     }
 
     public static Edge getEdge(int x, int y){
         double minDist = Double.MAX_VALUE;
-        double dist;
+        double dist = Double.MAX_VALUE;
         int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
         Edge min = null;
-        for (Edge e:board.getEdges()) {
-            if (Math.abs(e.getMidpoint()[0]-x)<minX && Math.abs(e.getMidpoint()[1]-y)<minY) {
-                minX=Math.abs(e.getMidpoint()[0]-x);
-                minY=Math.abs(e.getMidpoint()[1]-y);
-                min=e;
+        for (Tile[] tiles:GameState.board.getTiles()) {
+            for (Tile tile : tiles) {
+                for (Edge e : tile.getEdges()) {
+                    dist = Math.sqrt(Math.pow(x - e.getMidpoint()[0], 2) + Math.pow(y - e.getMidpoint()[1], 2));
+                    if (dist < minDist) {
+                        minDist = dist;
+                        min = e;
+                    }
+                }
             }
         }
         return min;
@@ -155,5 +153,10 @@ public class GameState {
             i.setIsStlmt(true);
         //}
         //else System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
+    }
+    public static void initBuildRoad() {
+        Edge e=getEdge(MainPanel.x, MainPanel.y);
+        e.setOwner(currentPlayer);
+        System.out.println("road built");
     }
 }
