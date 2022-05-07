@@ -9,7 +9,6 @@ public class Tile {
     private ResourceCard resource;
     private BufferedImage img;
     private int[] location = new int[2];
-    private ArrayList<Player> players;
     private int xPixel, yPixel;
 
     // NW = 0, NE = 1, E = 2, SE = 3, SW = 4, W = 5
@@ -112,6 +111,11 @@ public class Tile {
 //    }
     public int resourcesNeeded() {
         int count=0;
+        ArrayList<Player> players = new ArrayList<Player>();
+        for (Intersection i:intersections) {
+            if (i.getOwner() != null) players.add(i.getOwner()); //keep player duplicates, trust me
+        }
+
         for(int i = 0; i < players.size(); i++){
             Player p = players.get(i);
             for(int n = 0; n < intersections.length; n++) {
@@ -178,6 +182,11 @@ public class Tile {
         return intersections;
     }
     public void giveResource() {
+        ArrayList<Player> players = new ArrayList<Player>();
+        for (Intersection i:intersections) {
+            if (i.getOwner() != null) players.add(i.getOwner()); //keep player duplicates, trust me
+        }
+
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
             for (int n = 0; n < intersections.length; n++) {
@@ -205,13 +214,6 @@ public class Tile {
         }
     }
 
-    public void addPlayer(Player p) {
-        for (int i = 0; i < intersections.length; i++) {
-            if (intersections[i].getOwner() == p) {
-                players.add(p);
-            }
-        }
-    }
     public void setAssignedNum(int num) {
         assignedNum=num;
     }
