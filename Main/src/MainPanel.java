@@ -435,6 +435,8 @@ public class MainPanel extends JPanel implements MouseListener {
                 GameState.rollDice();
                 GameState.board.giveResources(GameState.getDiceNum());
                 endTurn.setEnabled(true);
+                trade.setEnabled(true);
+                build.setEnabled(true);
                 rollDice.setEnabled(false);
                 repaint();
             }
@@ -454,7 +456,8 @@ public class MainPanel extends JPanel implements MouseListener {
                     }
                 }
                 rollDice.setEnabled(true);
-                trade.setEnabled(true);
+                trade.setEnabled(false);
+                build.setEnabled(false);
                 endTurn.setEnabled(false);
                 repaint();
             }
