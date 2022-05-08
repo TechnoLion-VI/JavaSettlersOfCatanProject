@@ -18,7 +18,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private ArrayList<Integer> yCoords;
     ArrayList<BufferedImage> harbors;
     private String playerIndStr = "PLAYER ONE";
-    private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource, blueStlmt, blueCity, orangeStlmt, orangeCity, redStlmt, redCity, whiteStlmt, whiteCity ;
+    private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource, blueStlmt, blueCity, orangeStlmt, orangeCity, redStlmt, redCity, whiteStlmt, whiteCity;
     private BufferedImage genericHarbor, brickHarbor, grainHarbor, lumberHarbor, oreHarbor, woolHarbor;
     private BufferedImage settlement, city, road;
     private BufferedImage one, two, three, four, five, six;
@@ -29,13 +29,13 @@ public class MainPanel extends JPanel implements MouseListener {
     //private Font playerTitleFont;
     public static int x, y;
     private Color blue, orange, white, red;
-    public static int state=0;
+    public static int state = 0;
 
     public MainPanel() {
-        blue=new Color(68, 115, 196);
-        orange=new Color(237, 125, 49);
-        white=new Color(255, 255, 255);
-        red=new Color(192, 0, 0);
+        blue = new Color(68, 115, 196);
+        orange = new Color(237, 125, 49);
+        white = new Color(255, 255, 255);
+        red = new Color(192, 0, 0);
         try {
             playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Player Indicator.png")));
             brick = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Brick Resource Card.png")));
@@ -81,7 +81,6 @@ public class MainPanel extends JPanel implements MouseListener {
     }
 
 
-
     public void initComponents() {
         //init components
         JPanel p = new JPanel();
@@ -95,7 +94,7 @@ public class MainPanel extends JPanel implements MouseListener {
         endTurn = new JButton("End Turn");
         //harbors
         harbors = new ArrayList<BufferedImage>();
-        for(int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             harbors.add(genericHarbor);
         }
         harbors.add(oreHarbor);
@@ -133,13 +132,13 @@ public class MainPanel extends JPanel implements MouseListener {
         /* END TURN, CLAIM WIN, BUILD, TRADE BUTTONS */
         trade.setBounds(15, 520, 100, 50);
         trade.setBackground(new Color(255, 200, 100));
-        trade.addActionListener(new ActionListener(){
+        trade.addActionListener(new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                String[] options = new String[] {"Domestic", "Maritime"};
+                String[] options = new String[]{"Domestic", "Maritime"};
                 int response = JOptionPane.showOptionDialog(null, "Choose what type of trade you wish to perform.", "Trade",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, options, options[0]);
-                if(response == 0){
+                if (response == 0) {
                     JLabel tradeMessage = new JLabel("Please select what you wish to trade with.");
                     tradeMessage.setFont(new Font("Serif", 1, 15));
                     tradeMessage.setBounds(0, -30, 400, 80);
@@ -148,7 +147,7 @@ public class MainPanel extends JPanel implements MouseListener {
                     done.setFont(new Font("Serif", 1, 15));
                     done.setBackground(new Color(255, 220, 100));
                     done.setBounds(115, 400, 75, 25);
-                    done.addActionListener(new ActionListener(){
+                    done.addActionListener(new ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                             tradeMessage.setText("");
                             JLabel tradeMessageTwo = new JLabel("Please select what you wish to trade for.");
@@ -156,21 +155,20 @@ public class MainPanel extends JPanel implements MouseListener {
                             tradeMessageTwo.setBounds(0, -30, 400, 80);
                             p.add(tradeMessageTwo);
                         }
-                        });
+                    });
                     p.add(done);
 
                     int x = 5;
                     int y = 20;
-                    for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                    for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
                         JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
                         c1.setBackground(new Color(255, 220, 100));
                         c1.setBounds(x, y, 50, 20);
                         p.add(c1);
-                        if(y >= 400) {
+                        if (y >= 400) {
                             x += 80;
                             y = 20;
-                        }
-                        else{
+                        } else {
                             y += 40;
                         }
                     }
@@ -195,30 +193,31 @@ public class MainPanel extends JPanel implements MouseListener {
 //                    p.add(wool);
                     //add(p);
                 }
-                if(response == 1){
+                if (response == 1) {
                     //maritime
                     System.out.println(GameState.currentPlayer.toString() + " has performed a maritime trade at a harbor."); //NOT DONE; need to specify kind of harbor
                 }
                 repaint();
             }
-    });
+        });
 
 //      build = new JButton("Build/Buy");
         build.setBounds(140, 520, 100, 50);
         build.setBackground(new Color(255, 200, 100));
-        build.addActionListener(new ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent evt){
-                String[] options = new String[] {"Road", "Settlement", "City", "Development Card"};
+        build.addActionListener(new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String[] options = new String[]{"Road", "Settlement", "City", "Development Card"};
                 int response = JOptionPane.showOptionDialog(null, "Choose what you want to build/buy.", "Build/Buy",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                            null, options, options[0]);
+                        null, options, options[0]);
                 if (response == 0) {
                     if (GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber")) {
                         GameState.currentPlayer.getResourceCards().remove("Brick");
                         GameState.currentPlayer.getResourceCards().remove("Lumber");
                         //let them select where they want to place road, check if they can
                         Edge road = GameState.getEdge(x, y);
-                        if (road != null && road.canPlace(GameState.currentPlayer)) road.setOwner(GameState.currentPlayer);
+                        if (road != null && road.canPlace(GameState.currentPlayer))
+                            road.setOwner(GameState.currentPlayer);
                         System.out.println(GameState.currentPlayer.toString() + " has built a road.");
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a road.");
@@ -232,24 +231,25 @@ public class MainPanel extends JPanel implements MouseListener {
                         GameState.currentPlayer.getResourceCards().remove("Grain");
                         //let them select where they want to place settlement, check if they can
                         Intersection stlmt = GameState.getIntersection(x, y);
-                        if (stlmt != null && stlmt.canPlace(GameState.currentPlayer)) stlmt.setOwner(GameState.currentPlayer);
+                        if (stlmt != null && stlmt.canPlace(GameState.currentPlayer))
+                            stlmt.setOwner(GameState.currentPlayer);
                         System.out.println(GameState.currentPlayer.toString() + " has built a settlement.");
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
                     }
                 }
-                if (response == 2){
+                if (response == 2) {
                     int ore = 0;
-                    for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                    for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
                         ArrayList<ResourceCard> rc = GameState.currentPlayer.getResourceCards();
-                        if(rc.get(i).getType().equals("Ore")){
+                        if (rc.get(i).getType().equals("Ore")) {
                             ore++;
                         }
                     }
                     int grain = 0;
-                    for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                    for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
                         ArrayList<ResourceCard> rc = GameState.currentPlayer.getResourceCards();
-                        if (rc.get(i).getType().equals("Grain")){
+                        if (rc.get(i).getType().equals("Grain")) {
                             grain++;
                         }
                     }
@@ -261,22 +261,23 @@ public class MainPanel extends JPanel implements MouseListener {
                         GameState.currentPlayer.getResourceCards().remove("Grain");
 
                         Intersection city = GameState.getIntersection(x, y);
-                        if (city != null && city.getOwner() == GameState.currentPlayer && city.isStlmt()) city.setIsCity();
+                        if (city != null && city.getOwner() == GameState.currentPlayer && city.isStlmt())
+                            city.setIsCity();
                         System.out.println(GameState.currentPlayer.toString() + " has built a city.");
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a city.");
                     }
                     //let them select a settlement of theirs
                 }
-                if (response == 3){
-                    if (GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Ore") && GameState.currentPlayer.getResourceCards().contains("Grain")){
+                if (response == 3) {
+                    if (GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Ore") && GameState.currentPlayer.getResourceCards().contains("Grain")) {
                         GameState.currentPlayer.getResourceCards().remove("Wool");
                         GameState.currentPlayer.getResourceCards().remove("Grain");
                         GameState.currentPlayer.getResourceCards().remove("Ore");
                         //take it from development card deck and display it visually
                         GameState.currentPlayer.addDev(DevelopmentCardDeck.draw());
                         devCardPanel.removeAll();
-                        for (DevelopmentCard dc:GameState.currentPlayer.getDevCards()) {
+                        for (DevelopmentCard dc : GameState.currentPlayer.getDevCards()) {
                             JButton b = new JButton(new ImageIcon(resize(dc.getImage(), 25, 75)));
                             b.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent e) {
@@ -299,23 +300,24 @@ public class MainPanel extends JPanel implements MouseListener {
                     }
                 }
             }
-                //JOptionPane optionPane = new JOptionPane("Choose what you want to build/buy.", JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION); //not done
-                //JDialog dialog = optionPane.createDialog("Dialog");
-                //dialog.setVisible(true);
+            //JOptionPane optionPane = new JOptionPane("Choose what you want to build/buy.", JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION); //not done
+            //JDialog dialog = optionPane.createDialog("Dialog");
+            //dialog.setVisible(true);
         });
 
 //      rollDice = new JButton("Roll Dice");
         endTurn.setEnabled(false);
         rollDice.setBounds(920, 30, 100, 50);
         rollDice.setBackground(new Color(255, 200, 100));
-        rollDice.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+        rollDice.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 GameState.rollDice();
                 GameState.board.giveResources(GameState.getDiceNum());
                 endTurn.setEnabled(true);
                 rollDice.setEnabled(false);
                 repaint();
-            }});
+            }
+        });
         add(rollDice);
 
 //      endTurn = new JButton("End Turn");
@@ -326,8 +328,8 @@ public class MainPanel extends JPanel implements MouseListener {
                 System.out.println(GameState.currentPlayer.toString() + " has ended their turn.");
                 for (int i = 0; i < 4; i++) {
                     if (GameState.currentPlayer == GameState.players[i]) {
-                            GameState.currentPlayer = GameState.players[(i + 1) % 4];
-                            break;
+                        GameState.currentPlayer = GameState.players[(i + 1) % 4];
+                        break;
                     }
                 }
                 rollDice.setEnabled(true);
@@ -351,11 +353,10 @@ public class MainPanel extends JPanel implements MouseListener {
         Font tradeFont = new Font("Serif", Font.BOLD, 40);
         g.setFont(tradeFont);
         g.drawString("Trade Panel", 1190, 285);
-        g.setFont (playerTitleFont);
+        g.setFont(playerTitleFont);
         g.drawString(GameState.currentPlayer.toString(), 20, 75);
         g.setFont(tradeFont);
         g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
-
 
 
         Font victoryTitleFont = new Font("Serif", Font.BOLD, 20);
@@ -391,11 +392,11 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(brick, 240, 725, 40, 40, null);
         g.drawString(GameState.currentPlayer.getNumResources("Brick") + "", 280, 750);
 
-        g.drawString("PUBLIC PLAYER STATS",5,145);
+        g.drawString("PUBLIC PLAYER STATS", 5, 145);
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
-        g2.drawLine(7,152,380,152);
-        g2.drawLine(7,152,7,300);
+        g2.drawLine(7, 152, 380, 152);
+        g2.drawLine(7, 152, 7, 300);
         //harbors
 
         g.drawImage(harbors.get(0), 437, 313, 50, 50, null);
@@ -408,10 +409,10 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(harbors.get(7), 750, 700, 50, 50, null);
         g.drawImage(harbors.get(8), 450, 510, 50, 50, null);
 
-        g.drawString("Blue: ",11,180);
-        g.drawString("Orange: ",11,220);
-        g.drawString("Red: ",11,260);
-        g.drawString("White: ",11,300);
+        g.drawString("Blue: ", 11, 180);
+        g.drawString("Orange: ", 11, 220);
+        g.drawString("Red: ", 11, 260);
+        g.drawString("White: ", 11, 300);
         g.drawString(GameState.players[0].getPublicScore() + "", 130, 180);
         g.drawImage(trophy, 90, 158, 30, 30, null);
         g.drawString(GameState.players[1].getPublicScore() + "", 130, 220);
@@ -430,7 +431,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.players[3].getResourceCards().size() + "", 190, 300);
         g.drawImage(resource, 150, 278, 30, 30, null);
 
-        g.drawString(GameState.players[0].getRoadsLeft() +"", 250, 180);
+        g.drawString(GameState.players[0].getRoadsLeft() + "", 250, 180);
         g.drawImage(road, 210, 158, 30, 30, null);
         g.drawString(GameState.players[1].getRoadsLeft() + "", 250, 220);
         g.drawImage(road, 210, 198, 30, 30, null);
@@ -458,48 +459,48 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(city, 340, 278, 30, 30, null);
 
         g.setFont(victoryTitleFont);
-        g.drawString("DEVELOPMENT CARDS",5,373);
-        g2.drawLine(7,380,360,380);
-        g2.drawLine(7,380,7,480);
-        g.drawRect(480,20, 230,60);
+        g.drawString("DEVELOPMENT CARDS", 5, 373);
+        g2.drawLine(7, 380, 360, 380);
+        g2.drawLine(7, 380, 7, 480);
+        g.drawRect(480, 20, 230, 60);
         Font diceRollFont = new Font("Serif", Font.BOLD, 20);
         g.setFont(diceRollFont);
         g.drawString("DICE ROLL TOTAL: " + GameState.diceNum, 490, 55);
-        if(GameState.diceOne == 1){
-            g.drawImage(one, 740, 20, 60, 60,null);
+        if (GameState.diceOne == 1) {
+            g.drawImage(one, 740, 20, 60, 60, null);
         }
-        if(GameState.diceOne == 2){
-            g.drawImage(two, 740, 20, 60, 60,null);
+        if (GameState.diceOne == 2) {
+            g.drawImage(two, 740, 20, 60, 60, null);
         }
-        if(GameState.diceOne == 3){
-            g.drawImage(three, 740, 20, 60, 60,null);
+        if (GameState.diceOne == 3) {
+            g.drawImage(three, 740, 20, 60, 60, null);
         }
-        if(GameState.diceOne == 4){
-            g.drawImage(four, 740, 20, 60, 60,null);
+        if (GameState.diceOne == 4) {
+            g.drawImage(four, 740, 20, 60, 60, null);
         }
-        if(GameState.diceOne == 5){
-            g.drawImage(five, 740, 20, 60, 60,null);
+        if (GameState.diceOne == 5) {
+            g.drawImage(five, 740, 20, 60, 60, null);
         }
-        if(GameState.diceOne == 6){
-            g.drawImage(six, 740, 20, 60, 60,null);
+        if (GameState.diceOne == 6) {
+            g.drawImage(six, 740, 20, 60, 60, null);
         }
 
-        if(GameState.diceTwo == 1){
+        if (GameState.diceTwo == 1) {
             g.drawImage(one, 830, 20, 60, 60, null);
         }
-        if(GameState.diceTwo == 2){
+        if (GameState.diceTwo == 2) {
             g.drawImage(two, 830, 20, 60, 60, null);
         }
-        if(GameState.diceTwo == 3){
+        if (GameState.diceTwo == 3) {
             g.drawImage(three, 830, 20, 60, 60, null);
         }
-        if(GameState.diceTwo == 4){
+        if (GameState.diceTwo == 4) {
             g.drawImage(four, 830, 20, 60, 60, null);
         }
-        if(GameState.diceTwo == 5){
+        if (GameState.diceTwo == 5) {
             g.drawImage(five, 830, 20, 60, 60, null);
         }
-        if(GameState.diceTwo == 6){
+        if (GameState.diceTwo == 6) {
             g.drawImage(six, 830, 20, 60, 60, null);
         }
 
@@ -507,73 +508,70 @@ public class MainPanel extends JPanel implements MouseListener {
         //drawing tiles and tokens
         g.setColor(Color.WHITE);
         g.setFont(new Font("Serif", Font.BOLD, 25));
-        for (int i=0; i<3; i++) {
-            g.drawImage(GameState.board.getTiles()[0][i].getImg(), 560+i*110, 142, 110, 145, null);
+        for (int i = 0; i < 3; i++) {
+            g.drawImage(GameState.board.getTiles()[0][i].getImg(), 560 + i * 110, 142, 110, 145, null);
             if (!GameState.board.getTiles()[0][i].getIsDesert()) {
-                if (GameState.board.getTiles()[0][i].getAssignedNum()==6 || GameState.board.getTiles()[0][i].getAssignedNum()==8)
+                if (GameState.board.getTiles()[0][i].getAssignedNum() == 6 || GameState.board.getTiles()[0][i].getAssignedNum() == 8)
                     g.setColor(Color.RED);
-                g.drawString(""+GameState.board.getTiles()[0][i].getAssignedNum(), 607+i*112, 270);
+                g.drawString("" + GameState.board.getTiles()[0][i].getAssignedNum(), 607 + i * 112, 270);
                 g.setColor(Color.WHITE);
             }
-            GameState.board.getTiles()[0][i].setPixel(560+i*110, 142);
+            GameState.board.getTiles()[0][i].setPixel(560 + i * 110, 142);
 
-            g.drawImage(GameState.board.getTiles()[4][i].getImg(), 560+i*110, 578, 110, 145, null);
+            g.drawImage(GameState.board.getTiles()[4][i].getImg(), 560 + i * 110, 578, 110, 145, null);
             if (!GameState.board.getTiles()[4][i].getIsDesert()) {
-                if (GameState.board.getTiles()[4][i].getAssignedNum()==6 || GameState.board.getTiles()[4][i].getAssignedNum()==8)
+                if (GameState.board.getTiles()[4][i].getAssignedNum() == 6 || GameState.board.getTiles()[4][i].getAssignedNum() == 8)
                     g.setColor(Color.RED);
                 g.drawString("" + GameState.board.getTiles()[4][i].getAssignedNum(), 607 + i * 112, 700);
                 g.setColor(Color.WHITE);
             }
-            GameState.board.getTiles()[4][i].setPixel(560+i*110, 578);
+            GameState.board.getTiles()[4][i].setPixel(560 + i * 110, 578);
         }
-        for (int i=0; i<4; i++) {
-            g.drawImage(GameState.board.getTiles()[1][i].getImg(), 505+i*110, 251, 110, 145, null);
+        for (int i = 0; i < 4; i++) {
+            g.drawImage(GameState.board.getTiles()[1][i].getImg(), 505 + i * 110, 251, 110, 145, null);
             if (!GameState.board.getTiles()[1][i].getIsDesert()) {
-                if (GameState.board.getTiles()[1][i].getAssignedNum()==6 || GameState.board.getTiles()[1][i].getAssignedNum()==8)
+                if (GameState.board.getTiles()[1][i].getAssignedNum() == 6 || GameState.board.getTiles()[1][i].getAssignedNum() == 8)
                     g.setColor(Color.RED);
-                g.drawString(""+GameState.board.getTiles()[1][i].getAssignedNum(), 550+i*112, 380);
+                g.drawString("" + GameState.board.getTiles()[1][i].getAssignedNum(), 550 + i * 112, 380);
                 g.setColor(Color.WHITE);
             }
-            GameState.board.getTiles()[1][i].setPixel(505+i*110, 251);
+            GameState.board.getTiles()[1][i].setPixel(505 + i * 110, 251);
 
-            g.drawImage(GameState.board.getTiles()[3][i].getImg(), 505+i*110, 469, 110, 145, null);
+            g.drawImage(GameState.board.getTiles()[3][i].getImg(), 505 + i * 110, 469, 110, 145, null);
             if (!GameState.board.getTiles()[3][i].getIsDesert()) {
-                if (GameState.board.getTiles()[3][i].getAssignedNum()==6 || GameState.board.getTiles()[3][i].getAssignedNum()==8)
+                if (GameState.board.getTiles()[3][i].getAssignedNum() == 6 || GameState.board.getTiles()[3][i].getAssignedNum() == 8)
                     g.setColor(Color.RED);
-                g.drawString(""+GameState.board.getTiles()[3][i].getAssignedNum(), 550+i*112, 598);
+                g.drawString("" + GameState.board.getTiles()[3][i].getAssignedNum(), 550 + i * 112, 598);
                 g.setColor(Color.WHITE);
             }
-            GameState.board.getTiles()[3][i].setPixel(505+i*110, 469);
+            GameState.board.getTiles()[3][i].setPixel(505 + i * 110, 469);
         }
-        for (int i=0; i<5; i++) {
-            g.drawImage(GameState.board.getTiles()[2][i].getImg(), 450+i*110, 360, 110, 145, null);
+        for (int i = 0; i < 5; i++) {
+            g.drawImage(GameState.board.getTiles()[2][i].getImg(), 450 + i * 110, 360, 110, 145, null);
             if (!GameState.board.getTiles()[2][i].getIsDesert()) {
-                if (GameState.board.getTiles()[2][i].getAssignedNum()==6 || GameState.board.getTiles()[2][i].getAssignedNum()==8)
+                if (GameState.board.getTiles()[2][i].getAssignedNum() == 6 || GameState.board.getTiles()[2][i].getAssignedNum() == 8)
                     g.setColor(Color.RED);
-                g.drawString(""+GameState.board.getTiles()[2][i].getAssignedNum(), 490+i*112, 485);
+                g.drawString("" + GameState.board.getTiles()[2][i].getAssignedNum(), 490 + i * 112, 485);
                 g.setColor(Color.WHITE);
             }
-            GameState.board.getTiles()[2][i].setPixel(452+i*110, 360);
+            GameState.board.getTiles()[2][i].setPixel(452 + i * 110, 360);
         }
         GameState.board.setTilesIntersectionsLocations();
         GameState.board.fillEdges();
         //drawing edges
-        for (Edge e:GameState.board.getEdges()) {
+        for (Edge e : GameState.board.getEdges()) {
             //e.setOwner(GameState.currentPlayer);
-            if (e.getOwner()!=null) {
+            if (e.getOwner() != null) {
                 if (e.getOwner().getColor().equals("Blue")) {
                     g.setColor(blue);
 //                    System.out.println("color has been set");
-                }
-                else if (e.getOwner().getColor().equals("Orange")) {
+                } else if (e.getOwner().getColor().equals("Orange")) {
                     g.setColor(orange);
 //                    System.out.println("color has been set");
-                }
-                else if (e.getOwner().getColor().equals("White")) {
+                } else if (e.getOwner().getColor().equals("White")) {
                     g.setColor(white);
 //                    System.out.println("color has been set");
-                }
-                else {
+                } else {
                     g.setColor(red);
 //                    System.out.println("color has been set");
                 }
@@ -582,9 +580,9 @@ public class MainPanel extends JPanel implements MouseListener {
             //System.out.println(e.getPoint1()[0]+" "+e.getPoint1()[1]+"; "+e.getPoint2()[0]+" "+e.getPoint2()[1]);
         }
         //drawing stlmts and cities
-        for (Intersection i:GameState.board.getIntersections()) {
-            if (i.getOwner()!=null) {
-                g.drawImage(i.getImage(), i.getX()-10, i.getY()-10, 20, 20, null);
+        for (Intersection i : GameState.board.getIntersections()) {
+            if (i.getOwner() != null) {
+                g.drawImage(i.getImage(), i.getX() - 10, i.getY() - 10, 20, 20, null);
             }
         }
 //        ArrayList<BufferedImage> harbors = new ArrayList<BufferedImage>();
@@ -663,109 +661,112 @@ public class MainPanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        x=e.getX();
-        y=e.getY();
-        System.out.println("("+x+", "+y+")");
+        x = e.getX();
+        y = e.getY();
+        System.out.println("(" + x + ", " + y + ")");
 //        if (x>=450 && x<=1000 && y>=140  && y<=720) {
-            switch(state) {
-                case 0: {
-                    GameState.initBuildSettlement();
-                    repaint();
-                    break;
-                }
-                case 1: {
-                    GameState.buildRoad();
-                    repaint();
-                    break;
-                }
-                case 2: {
-                    GameState.initBuildSettlement();
-                    repaint();
-                    break;
-                }
-                case 3: {
-                    GameState.buildRoad();
-                    repaint();
-                    break;
-                }
-                case 4: {
-                    GameState.initBuildSettlement();
-                    repaint();
-                    break;
-                }
-                case 5: {
-                    GameState.buildRoad();
-                    repaint();
-                    break;
-                }
-                case 6: {
-                    GameState.initBuildSettlement();
-                    repaint();
-                    break;
-                }
-                case 7: {
-                    GameState.buildRoad();
-                    repaint();
-                    break;
-                }
-                case 8: {
-                    GameState.initBuildSettlement();
-                    repaint();
-                    break;
-                }
-                case 9: {
-                    GameState.buildRoad();
-                    repaint();
-                    break;
-                }
-                case 10: {
-                    GameState.initBuildSettlement();
-                    repaint();
-                    break;
-                }
-                case 11: {
-                    GameState.buildRoad();
-                    repaint();
-                    break;
-                }
-                case 12: {
-                    GameState.initBuildSettlement();
-                    repaint();
-                    break;
-                }
-                case 13: {
-                    GameState.buildRoad();
-                    repaint();
-                    break;
-                }
-                case 14: {
-                    GameState.initBuildSettlement();
-                    repaint();
-                    break;
-                }
-                case 15: {
-                    GameState.buildRoad();
-                    repaint();
-                    break;
-                }
+        switch (state) {
+            case 0: {
+                GameState.initBuildSettlement();
+                repaint();
+                break;
             }
+            case 1: {
+                GameState.buildRoad();
+                repaint();
+                break;
+            }
+            case 2: {
+                GameState.initBuildSettlement();
+                repaint();
+                break;
+            }
+            case 3: {
+                GameState.buildRoad();
+                repaint();
+                break;
+            }
+            case 4: {
+                GameState.initBuildSettlement();
+                repaint();
+                break;
+            }
+            case 5: {
+                GameState.buildRoad();
+                repaint();
+                break;
+            }
+            case 6: {
+                GameState.initBuildSettlement();
+                repaint();
+                break;
+            }
+            case 7: {
+                GameState.buildRoad();
+                repaint();
+                break;
+            }
+            case 8: {
+                GameState.initBuildSettlement();
+                repaint();
+                break;
+            }
+            case 9: {
+                GameState.buildRoad();
+                repaint();
+                break;
+            }
+            case 10: {
+                GameState.initBuildSettlement();
+                repaint();
+                break;
+            }
+            case 11: {
+                GameState.buildRoad();
+                repaint();
+                break;
+            }
+            case 12: {
+                GameState.initBuildSettlement();
+                repaint();
+                break;
+            }
+            case 13: {
+                GameState.buildRoad();
+                repaint();
+                break;
+            }
+            case 14: {
+                GameState.initBuildSettlement();
+                repaint();
+                break;
+            }
+            case 15: {
+                GameState.buildRoad();
+                repaint();
+                break;
+            }
+        }
         //}
     }
+
     @Override
     public void mousePressed(MouseEvent e) {
 
     }
+
     @Override
     public void mouseReleased(MouseEvent e) {
 
     }
+
     @Override
     public void mouseEntered(MouseEvent e) {
 
     }
+
     @Override
     public void mouseExited(MouseEvent e) {
 
     }
-
 }
