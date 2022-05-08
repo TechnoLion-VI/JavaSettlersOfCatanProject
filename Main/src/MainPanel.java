@@ -26,6 +26,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private JPanel devCardPanel;
     private JScrollPane devCards;
     private boolean devCardPlayed;
+    //private Font playerTitleFont;
     public static int x, y;
     private Color blue, orange, white, red;
     public static int state = 0;
@@ -348,14 +349,13 @@ public class MainPanel extends JPanel implements MouseListener {
                             JButton b = new JButton(new ImageIcon(resize(dc.getImage(), 25, 75)));
                             b.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent e) {
-                                    String dcType = dc.getType();
-                                    if (!devCardPlayed && dc.use()) {
+                                    if (!devCardPlayed) {
+                                        // use to be implemented
                                         devCardPlayed = true;
                                         GameState.currentPlayer.removeDev(dc);
                                         devCardPanel.remove(b);
                                         devCardPanel.revalidate();
-                                        devCardPanel.repaint();
-                                    } else System.out.println(GameState.currentPlayer.toString() + " cannot play another development card this turn.");
+                                    }
                                 }
                             });
                             devCardPanel.add(b);
@@ -386,6 +386,7 @@ public class MainPanel extends JPanel implements MouseListener {
                 repaint();
             }
         });
+        add(rollDice);
 
 //      endTurn = new JButton("End Turn");
         endTurn.setBounds(265, 520, 100, 50);
@@ -408,7 +409,6 @@ public class MainPanel extends JPanel implements MouseListener {
         add(endTurn);
         add(build);
         add(trade);
-        add(rollDice);
         //GameState.setUpPhase();
     }
 
