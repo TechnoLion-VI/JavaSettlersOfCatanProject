@@ -168,20 +168,34 @@ public class GameState {
             currentPlayer.decrementRoadsLeft();
             ActionLogPanel.builtRoad();
             MainPanel.state++;
-            if (MainPanel.state==2 )
-                currentPlayer=players[1];
-            if (MainPanel.state==4 )
-                currentPlayer=players[2];
-            if (MainPanel.state==6 )
-                currentPlayer=players[3];
-            if (MainPanel.state==8 )
-                currentPlayer=players[3];
-            if (MainPanel.state==10 )
-                currentPlayer=players[2];
-            if (MainPanel.state==12 )
-                currentPlayer=players[1];
-            if (MainPanel.state==14)
-                currentPlayer=players[0];
+            if (MainPanel.state==2 ) {
+                currentPlayer = players[1];
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your first settlement and road.");
+            }
+            if (MainPanel.state==4 ) {
+                currentPlayer = players[2];
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your first settlement and road.");
+            }
+            if (MainPanel.state==6 ) {
+                currentPlayer = players[3];
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your first settlement and road.");
+            }
+            if (MainPanel.state==8 ) {
+                currentPlayer = players[3];
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road.");
+            }
+            if (MainPanel.state==10 ) {
+                currentPlayer = players[2];
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road.");
+            }
+            if (MainPanel.state==12 ) {
+                currentPlayer = players[1];
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road.");
+            }
+            if (MainPanel.state==14) {
+                currentPlayer = players[0];
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road.");
+            }
         }
         else System.out.println(GameState.currentPlayer.toString() + " was unable to build a road.");
     }
