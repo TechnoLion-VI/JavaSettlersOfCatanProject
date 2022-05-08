@@ -8,7 +8,7 @@ public class ResourceDeck {
 //    public static ArrayList<Wool> woolDeck;
     public static ArrayList<ResourceCard> brickDeck, grainDeck, lumberDeck, oreDeck, woolDeck;
 
-    public ResourceDeck() {
+    static {
         brickDeck = new ArrayList<>();
         grainDeck = new ArrayList<>();
         lumberDeck = new ArrayList<>();
@@ -26,16 +26,27 @@ public class ResourceDeck {
             }
         }
     }
-    //adds ResourceCard to Player's hand
-    public boolean remove(ResourceCard type, int num) {
-        if (getNumLeft(type)<num)
+    //need to code resourcesNeeded in Board Class
+    public static boolean canDraw(String type, int resourcesNeeded) {
+        if (getNumLeft(type)<resourcesNeeded)
             return false;
+        return true;
+    }
 
-        return false; // to be coded
+    //draws card from indicated deck
+    public static ResourceCard draw(String type) {
+        return switch (type) {
+            case "Brick" -> brickDeck.remove(0);
+            case "Grain" -> grainDeck.remove(0);
+            case "Lumber" -> lumberDeck.remove(0);
+            case "Ore" -> oreDeck.remove(0);
+            case "Wool" -> woolDeck.remove(0);
+            default -> null;
+        };
     }
 
     //get number of cards left in the deck of a specified type
-    public int getNumLeft(String type) {
+    public static int getNumLeft(String type) {
         return switch (type) {
             case "Brick" -> brickDeck.size();
             case "Grain" -> grainDeck.size();
@@ -46,8 +57,8 @@ public class ResourceDeck {
         };
     }
 
-    public static ArrayList<ResourceCard> getDeck(String s){
-        return switch (s) {
+    public static ArrayList<ResourceCard> getDeck(String type){
+        return switch (type) {
             case "Brick" -> brickDeck;
             case "Grain" -> grainDeck;
             case "Lumber" -> lumberDeck;
@@ -56,8 +67,10 @@ public class ResourceDeck {
             default -> null;
         };
     }
-    //same as above, just with the specified type being a ResourceCard instead of a String
-    public int getNumLeft(ResourceCard rc) {
+    //same as above, just with the specified type being a ResourceCard instead of a String; overloaded getDeck
+    public static ResourceCard draw(ResourceCard rc) {return draw(rc.getType());}
+    public static int getNumLeft(ResourceCard rc) {
         return getNumLeft(rc.getType());
     }
+    public static ArrayList<ResourceCard> getDeck(ResourceCard rc) { return getDeck(rc.getType());}
 }

@@ -305,6 +305,7 @@ public class MainPanel extends JPanel implements MouseListener {
         rollDice.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 GameState.rollDice();
+                GameState.board.giveResources(GameState.getDiceNum());
                 endTurn.setEnabled(true);
                 rollDice.setEnabled(false);
                 repaint();

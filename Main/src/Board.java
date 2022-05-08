@@ -543,11 +543,10 @@ public class Board {
     }
 
 
-    public void giveResources(int numRolled){
-        for(int r=0; r<tiles.length; r++){
-            for (int c=0; c<tiles[r].length; c++)
-            if(tiles[r][c].getAssignedNum() == numRolled){
-                tiles[r][c].giveResource();
+    public void giveResources(int numRolled) {
+        for (Tile[] tt:tiles) {
+            for (Tile t:tt) {
+                if (t.getAssignedNum() == numRolled && t.getResource() != null && ResourceDeck.canDraw(t.getResource().getType(), t.resourcesNeeded())) t.giveResource();
             }
         }
     }

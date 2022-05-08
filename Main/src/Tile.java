@@ -107,26 +107,6 @@ public class Tile {
         resource=rc;
     }
 
-    public int resourcesNeeded() {
-        int count=0;
-        ArrayList<Player> players = new ArrayList<Player>();
-        for (Intersection i:intersections) {
-            if (i.getOwner() != null) players.add(i.getOwner()); //keep player duplicates, trust me
-        }
-
-        for(int i = 0; i < players.size(); i++){
-            Player p = players.get(i);
-            for(int n = 0; n < intersections.length; n++) {
-                if (intersections[n].getOwner() == p && intersections[n].isStlmt() == true) {
-                    count++;
-                }
-                else if(intersections[n].getOwner() == p && intersections[n].isCity() == true) {
-                    count+=2;
-                }
-            }
-        }
-        return count;
-    }
     public void setPixel(int x, int y) {
         xPixel=x;
         yPixel=y;
@@ -179,66 +159,56 @@ public class Tile {
     public Intersection[] getIntersections() {
         return intersections;
     }
+    public void setAssignedNum(int num) {assignedNum=num;}
+    public int getAssignedNum(){return assignedNum;}
+    public int[] getLocation(){return location;}
+    public int getX() {return location[0];}
+    public int getY() {return location[1];}
+    public void setImg(BufferedImage b) {img=b;}
+    public BufferedImage getImg() {return img;}
+    public ResourceCard getResource() {return resource;}
+    public void setIsDesert(boolean b) {isDesert=b;}
+    public boolean getIsDesert() {return isDesert;}
+    public boolean getHasRobber() {return hasRobber;}
+    public void setHasRobber(boolean hR) {hasRobber = hR;}
+    public boolean canGive() {return !isDesert && !hasRobber;}
+
+    public int resourcesNeeded() {
+        int cnt=0;
+        ArrayList<Player> players = new ArrayList<Player>();
+        for (Intersection i:intersections) {
+            if (i.getOwner() != null) players.add(i.getOwner()); //keep player duplicates, trust me
+        }
+
+        for(Player p:players){
+            for(Intersection i:intersections) {
+                if (i.getOwner() == p && i.isStlmt() == true) {
+                    cnt++;
+                }
+                else if(i.getOwner() == p && i.isCity() == true) {
+                    cnt+=2;
+                }
+            }
+        }
+        return cnt;
+    }
+
     public void giveResource() {
         ArrayList<Player> players = new ArrayList<Player>();
         for (Intersection i:intersections) {
             if (i.getOwner() != null) players.add(i.getOwner()); //keep player duplicates, trust me
         }
 
-        for (int i = 0; i < players.size(); i++) {
-            Player p = players.get(i);
-            for (int n = 0; n < intersections.length; n++) {
-                if (intersections[n].getOwner() == p && intersections[n].isStlmt() == true) {
-                    if (ResourceDeck.getDeck(resource.getType()).size() >= 1) {
-                        ResourceDeck.getDeck(resource.getType()).remove(0);
-                        p.add(resource);
-                        System.out.println(intersections[n].getOwner() + " received a " + ResourceDeck.getDeck(resource.getType()) + ".");
-                    } else {
-                        System.out.println("There are not enough " + resource.getType() + "s to distribute to all players.");
-                    }
-                } else if (intersections[n].getOwner() == p && intersections[n].isCity() == true) {
-                    if (ResourceDeck.getDeck(resource.getType()).size() >= 2) {
-                        ResourceDeck.getDeck(resource.getType()).remove(0);
-                        ResourceDeck.getDeck(resource.getType()).remove(0);
-                        p.add(resource);
-                        p.add(resource);
-                        System.out.println(intersections[n].getOwner() + " received two " + ResourceDeck.getDeck(resource.getType()) + ".");
-                    }
-                    else{
-                        System.out.println("There are not enough " + resource.getType() + "s to distribute to all players.");
-                    }
+        for (Player p:players) {
+            for (Intersection i:intersections) {
+                if (i.getOwner() == p && i.isStlmt() == true) {
+                    p.add(ResourceDeck.draw(resource));
+                } else if (i.getOwner() == p && i.isCity() == true) {
+                    p.add(ResourceDeck.draw(resource));
+                    p.add(ResourceDeck.draw(resource));
                 }
             }
         }
     }
 
-    public void setAssignedNum(int num) {
-        assignedNum=num;
-    }
-    public int getAssignedNum(){
-        return assignedNum;
-    }
-    public int[] getLocation(){
-        return location;
-    }
-    public int getX() { return location[0]; }
-    public int getY() { return location[1]; }
-    public void setImg(BufferedImage b) {
-        img=b;
-    }
-    public BufferedImage getImg() {
-        return img;
-    }
-    public ResourceCard getResource() {
-        return resource;
-    }
-    public void setIsDesert(boolean b) {
-        isDesert=b;
-    }
-    public boolean getIsDesert() {return isDesert;}
-    public boolean getHasRobber() {return hasRobber;}
-    public void setHasRobber(boolean hR) {hasRobber = hR;}
-    public boolean canGive() {
-        return !isDesert && !hasRobber;
-    }
 }
