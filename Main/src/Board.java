@@ -12,6 +12,7 @@ public class Board {
     private ArrayList<Tile> tilesList;
     private Tile[][] tiles;
     private BufferedImage brick, grain, lumber, ore, wool, desert;
+    private int[] robberLoc=new int[2];
 
     //INITIALIZE THE FULL BOARD
     public Board() {
@@ -108,13 +109,19 @@ public class Board {
         }
         Tile desertTile=new Tile(desert);
         desertTile.setIsDesert(true);
+        desertTile.setHasRobber(true);
         tilesArray.add(desertTile);
         Collections.shuffle(tilesArray);
 
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles[x].length; y++) {
-                tiles[x][y] = tilesArray.remove(0);
+                Tile temp=tilesArray.remove(0);
+                tiles[x][y] = temp;
                 tiles[x][y].setLocation(x, y);
+                if (temp.getIsDesert()) {
+                    robberLoc[0]=x;
+                    robberLoc[1]=y;
+                }
             }
         }
     }
@@ -599,7 +606,7 @@ public class Board {
     public void giveResources(int numRolled) {
         for (Tile[] tt:tiles) {
             for (Tile t:tt) {
-                if (t.getAssignedNum() == numRolled && t.getResource() != null && ResourceDeck.canDraw(t.getResource().getType(), t.resourcesNeeded())) t.giveResource();
+                if (t.canGive() && t.getAssignedNum() == numRolled && t.getResource() != null && ResourceDeck.canDraw(t.getResource().getType(), t.resourcesNeeded())) t.giveResource();
             }
         }
     }
@@ -690,5 +697,9 @@ public class Board {
 
     public Tile[][] getTiles() {
         return tiles;
+    }
+    public void setRobberLoc(Tile t) {
+        robberLoc[0]=t.getLocation()[0];
+        robberLoc[1]=t.getLocation()[1];
     }
 }

@@ -103,12 +103,10 @@ public class GameState {
     public static Player[] getPlayers() { return players; }
 
     public boolean moveRobber(Player p, Tile t){ //p is the player you are stealing from
-        if(diceNum == 7){
-            for(int i = 0; i < players.length; i++){ //anyone with more than 7 resource cards discards half rounded down (chooses which ones) (not for knight card)
-                ArrayList <ResourceCard> rc = players[i].getResourceCards();
-                if(rc.size() > 7){
-                    //goes in graphics
-                }
+        for(int i = 0; i < players.length; i++){ //anyone with more than 7 resource cards discards half rounded down (chooses which ones) (not for knight card)
+            ArrayList <ResourceCard> rc = players[i].getResourceCards();
+            if(rc.size() > 7){
+                //goes in graphics
             }
         }
         //no one gets resources
@@ -121,6 +119,7 @@ public class GameState {
         ActionLogPanel.robber();
         return true;
     }
+
     public void checkLargestArmyPlayer() {
         int playerindex=-1, size=3;
         for (int i=0; i<players.length; i++) {
@@ -195,6 +194,7 @@ public class GameState {
         if (e.canPlace(currentPlayer)) {
             e.setOwner(currentPlayer);
             currentPlayer.decrementRoadsLeft();
+            //board.setLongestRoad();
             ActionLogPanel.builtRoad();
             MainPanel.state++;
             if (MainPanel.state==2 ) {
@@ -227,5 +227,14 @@ public class GameState {
             }
         }
         else System.out.println(GameState.currentPlayer.toString() + " was unable to build a road.");
+    }
+    public static void buildSettlement() {
+        Intersection i=getIntersection(MainPanel.x, MainPanel.y);
+        if (i.canPlaceInitial()) {
+            i.setOwner(currentPlayer);
+            i.setIsStlmt(true);
+            ActionLogPanel.builtSettlement();
+        }
+        else System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
     }
 }

@@ -433,7 +433,13 @@ public class MainPanel extends JPanel implements MouseListener {
         rollDice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 GameState.rollDice();
-                GameState.board.giveResources(GameState.getDiceNum());
+                if (GameState.diceNum!=7) {
+                    GameState.board.giveResources(GameState.getDiceNum());
+                }
+                else {
+                    JOptionPane.showMessageDialog(null,"Please select where you'd like to move the robber.");
+
+                }
                 endTurn.setEnabled(true);
                 trade.setEnabled(true);
                 build.setEnabled(true);
