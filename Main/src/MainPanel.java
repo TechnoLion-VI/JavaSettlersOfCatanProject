@@ -143,25 +143,15 @@ public class MainPanel extends JPanel implements MouseListener {
                     tradeMessage.setFont(new Font("Serif", 1, 15));
                     tradeMessage.setBounds(0, -30, 400, 80);
                     p.add(tradeMessage);
-                    JButton done = new JButton("Done");
-                    done.setFont(new Font("Serif", 1, 15));
-                    done.setBackground(new Color(255, 220, 100));
-                    done.setBounds(115, 400, 75, 25);
-                    done.addActionListener(new ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            tradeMessage.setText("");
-                            JLabel tradeMessageTwo = new JLabel("Please select what you wish to trade for.");
-                            tradeMessageTwo.setFont(new Font("Serif", 1, 15));
-                            tradeMessageTwo.setBounds(0, -30, 400, 80);
-                            p.add(tradeMessageTwo);
-                        }
-                    });
-                    p.add(done);
-
                     int x = 5;
                     int y = 20;
-                    for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
-                        JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
+                    ArrayList<String> testArray = new ArrayList<String>();
+                    testArray.add("woo");
+                    testArray.add("hoo");
+//                    for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
+                    for(int i = 0; i < testArray.size(); i++){
+//                        JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
+                        JCheckBox c1 = new JCheckBox(testArray.get(i) + "");
                         c1.setBackground(new Color(255, 220, 100));
                         c1.setBounds(x, y, 50, 20);
                         p.add(c1);
@@ -172,10 +162,88 @@ public class MainPanel extends JPanel implements MouseListener {
                             y += 40;
                         }
                     }
-
                     System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + TradeManager.p1offer + ".");
+                    JButton done = new JButton("Done");
+                    done.setFont(new Font("Serif", 1, 15));
+                    done.setBackground(new Color(255, 220, 100));
+                    done.setBounds(115, 400, 75, 25);
+                    done.addActionListener(new ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            tradeMessage.setText("");
+                            JLabel tradeMessageTwo = new JLabel("");
+                            tradeMessageTwo.setFont(new Font("Serif", 1, 15));
+                            tradeMessageTwo.setBounds(0, -20, 400, 80);
+                            tradeMessageTwo.setText("<html>Please type in how many of each resource<br>you wish to trade for.");
+                            p.add(tradeMessageTwo);
+                            JLabel ore = new JLabel("Ore");
+                            ore.setFont(new Font("Serif", 1, 15));
+                            ore.setBounds(10, 50, 30, 30);
+                            ore.requestFocus();
+                            ore.setVisible(true);
+                            JTextField oreText = new JTextField(10);
+                            oreText.setBounds(70, 55, 30, 25);
+                            oreText.setBackground(new Color(255, 220, 100));
+                            p.add(oreText);
+                            p.add(ore);
+                            p.repaint();
 
+                            JLabel grain = new JLabel("Grain");
+                            grain.setFont(new Font("Serif", 1, 15));
+                            grain.setBounds(10, 90, 60, 30);
+                            grain.requestFocus();
+                            grain.setVisible(true);
+                            JTextField grainText = new JTextField(10);
+                            grainText.setBounds(70, 95, 30, 25);
+                            grainText.setBackground(new Color(255, 220, 100));
+                            p.add(grainText);
+                            p.add(grain);
+                            p.repaint();
 
+                            JLabel lumber = new JLabel("Lumber");
+                            lumber.setFont(new Font("Serif", 1, 15));
+                            lumber.setBounds(10, 130, 60, 30);
+                            lumber.requestFocus();
+                            lumber.setVisible(true);
+                            JTextField lumberText = new JTextField(10);
+                            lumberText.setBounds(70, 135, 30, 25);
+                            lumberText.setBackground(new Color(255, 220, 100));
+                            p.add(lumberText);
+                            p.add(lumber);
+                            p.repaint();
+
+                            JLabel brick = new JLabel("Brick");
+                            brick.setFont(new Font("Serif", 1, 15));
+                            brick.setBounds(10, 170, 60, 30);
+                            brick.requestFocus();
+                            brick.setVisible(true);
+                            JTextField brickText = new JTextField(10);
+                            brickText.setBounds(70, 175, 30, 25);
+                            brickText.setBackground(new Color(255, 220, 100));
+                            p.add(brickText);
+                            p.add(brick);
+                            p.repaint();
+
+                            JLabel wool = new JLabel("Wool");
+                            wool.setFont(new Font("Serif", 1, 15));
+                            wool.setBounds(10, 210, 60, 30);
+                            wool.requestFocus();
+                            wool.setVisible(true);
+                            JTextField woolText = new JTextField(10);
+                            woolText.setBounds(70, 215, 30, 25);
+                            woolText.setBackground(new Color(255, 220, 100));
+                            p.add(woolText);
+                            p.add(wool);
+                            p.repaint();
+                        }
+
+                        //check if input is not a number
+                        //make sure they are not trading the same thing
+                        //show what they requested on action log
+                        //allow each player to accept or decline
+                        //display whether player accepted or declined on action log
+                        //give cards
+                    });
+                    p.add(done);
 //                    JCheckBox brick = new JCheckBox("Brick");
 //                    brick.setBounds(100,100, 150,150);
 //                    JCheckBox grain = new JCheckBox("Grain");
