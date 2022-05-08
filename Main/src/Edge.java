@@ -24,10 +24,13 @@ public class Edge {
     //determines if the player can place a road on this edge
     public boolean canPlace(Player p) {
         if (owner != null || p.getRoadsLeft() <= 0) return false;
+
         for (Intersection i:intersections) {
-            if (!i.getOwner().equals(p)) return false;
-            for (Edge e:i.getEdges()) { //what does this do?
-                if (e.getOwner().equals(p)) return true;
+            if (i.getOwner()!=null && i.getOwner().equals(p))
+                return true;
+            for (int k=0; k<i.getEdges().length; k++) {
+                Edge e=i.getEdges()[k];
+                if (e!=null && e.getOwner()!=null && e.getOwner().equals(p)) return true;
             }
         }
         return false;
@@ -69,9 +72,9 @@ public class Edge {
         midpoint[0]=(p1[0]+p2[0])/2;
         midpoint[1]=(p1[1]+p2[1])/2;
     }
-    public void setLocation(int x1, int y1, int x2, int y2) {
-        setPoint1(x1, y1); setPoint2(x2, y2);
-    }
+//    public void setLocation(int x1, int y1, int x2, int y2) {
+//        setPoint1(x1, y1); setPoint2(x2, y2);
+//    }
     //getter and setter for owner variable
     public Player getOwner() {
         return owner;
@@ -90,6 +93,8 @@ public class Edge {
         intersections = new Intersection[]{i1, i2};
         point1=i1.getLocation();
         point2=i2.getLocation();
+        midpoint[0]=(point1[0]+point2[0])/2;
+        midpoint[1]=(point1[1]+point2[1])/2;
     }
     //accessor for isHarbor
     public boolean isHarbor() {

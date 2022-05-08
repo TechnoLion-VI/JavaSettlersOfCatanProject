@@ -37,7 +37,7 @@ public class Board {
         setAdjacentTiles();
         fillIntersections();
         assignTileNums();
-        fillEdges();
+        //fillEdges();
     }
 
     public void fillTiles() {
@@ -293,7 +293,7 @@ public class Board {
                 }
 
                 adjacentEdges[0].setIntersections(tiles[x][y].getIntersections()[5], tiles[x][y].getIntersections()[0]);
-                tiles[x][y].getIntersections()[5].addEdge(adjacentEdges[0]);tiles[x][y].getIntersections()[0].addEdge(adjacentEdges[0]);
+                tiles[x][y].getIntersections()[5].addEdge(adjacentEdges[0]); tiles[x][y].getIntersections()[0].addEdge(adjacentEdges[0]);
                 adjacentEdges[1].setIntersections(tiles[x][y].getIntersections()[0], tiles[x][y].getIntersections()[1]);
                 tiles[x][y].getIntersections()[0].addEdge(adjacentEdges[1]); tiles[x][y].getIntersections()[1].addEdge(adjacentEdges[1]);
                 adjacentEdges[2].setIntersections(tiles[x][y].getIntersections()[1], tiles[x][y].getIntersections()[2]);
@@ -305,6 +305,12 @@ public class Board {
                 adjacentEdges[5].setIntersections(tiles[x][y].getIntersections()[4], tiles[x][y].getIntersections()[5]);
                 tiles[x][y].getIntersections()[4].addEdge(adjacentEdges[5]); tiles[x][y].getIntersections()[5].addEdge(adjacentEdges[5]);
                 tiles[x][y].setEdges(adjacentEdges);
+                for (Edge e:adjacentEdges) {
+                    if (!edges.contains(e)) {
+                        edges.add(e);
+                        //System.out.println(e.getMidpoint()[0]+" "+e.getMidpoint()[1]);
+                    }
+                }
             }
         }
     }

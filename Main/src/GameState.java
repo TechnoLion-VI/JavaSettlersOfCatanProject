@@ -1,4 +1,6 @@
 
+import com.sun.tools.javac.Main;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,21 +38,24 @@ public class GameState {
     }
 
     public static Edge getEdge(int x, int y){
-        double minDist = Double.MAX_VALUE;
-        double dist = Double.MAX_VALUE;
+        double minDist = 99999;
+        double dist;
         int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
         Edge min = null;
-        for (Tile[] tiles:GameState.board.getTiles()) {
-            for (Tile tile : tiles) {
-                for (Edge e : tile.getEdges()) {
-                    dist = Math.sqrt(Math.pow(x - e.getMidpoint()[0], 2) + Math.pow(y - e.getMidpoint()[1], 2));
+//        for (Tile[] tiles:GameState.board.getTiles()) {
+//            for (Tile tile : tiles) {
+        int count=0, temp=0;
+                for (Edge e : board.getEdges()) {
+                    dist = Math.sqrt(Math.pow(Math.abs(x - e.getMidpoint()[0]), 2) + Math.pow(Math.abs(y - e.getMidpoint()[1]), 2));
                     if (dist < minDist) {
                         minDist = dist;
-                        min = e;
+                        min = e;temp=count;
                     }
+                    count++;
                 }
-            }
-        }
+//            }
+//        }
+//        System.out.println(temp);
         return min;
     }
 
@@ -148,15 +153,36 @@ public class GameState {
     }
     public static void initBuildSettlement() {
         Intersection i=getIntersection(MainPanel.x, MainPanel.y);
-        //if (i.canPlaceInitial()) {
+        if (i.canPlaceInitial()) {
             i.setOwner(currentPlayer);
             i.setIsStlmt(true);
-        //}
-        //else System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
+            ActionLogPanel.builtSettlement();
+            MainPanel.state++;
+        }
+        else System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
     }
-    public static void initBuildRoad() {
+    public static void buildRoad() {
         Edge e=getEdge(MainPanel.x, MainPanel.y);
-        e.setOwner(currentPlayer);
-        System.out.println("road built");
+        if (e.canPlace(currentPlayer)) {
+            e.setOwner(currentPlayer);
+            currentPlayer.decrementRoadsLeft();
+            ActionLogPanel.builtRoad();
+            MainPanel.state++;
+            if (MainPanel.state==2 )
+                currentPlayer=players[1];
+            if (MainPanel.state==4 )
+                currentPlayer=players[2];
+            if (MainPanel.state==6 )
+                currentPlayer=players[3];
+            if (MainPanel.state==8 )
+                currentPlayer=players[3];
+            if (MainPanel.state==10 )
+                currentPlayer=players[2];
+            if (MainPanel.state==12 )
+                currentPlayer=players[1];
+            if (MainPanel.state==14)
+                currentPlayer=players[0];
+        }
+        else System.out.println(GameState.currentPlayer.toString() + " was unable to build a road.");
     }
 }

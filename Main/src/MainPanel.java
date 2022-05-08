@@ -28,8 +28,14 @@ public class MainPanel extends JPanel implements MouseListener {
     private boolean devCardPlayed;
     //private Font playerTitleFont;
     public static int x, y;
+    private Color blue, orange, white, red;
+    public static int state=0;
 
     public MainPanel() {
+        blue=new Color(68, 115, 196);
+        orange=new Color(237, 125, 49);
+        white=new Color(255, 255, 255);
+        red=new Color(192, 0, 0);
         try {
             playerIndicator = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Player Indicator.png")));
             brick = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/Final Brick Resource Card.png")));
@@ -550,27 +556,30 @@ public class MainPanel extends JPanel implements MouseListener {
             GameState.board.getTiles()[2][i].setPixel(452+i*110, 360);
         }
         GameState.board.setTilesIntersectionsLocations();
+        GameState.board.fillEdges();
         //drawing edges
         for (Edge e:GameState.board.getEdges()) {
+            //e.setOwner(GameState.currentPlayer);
             if (e.getOwner()!=null) {
                 if (e.getOwner().getColor().equals("Blue")) {
-                    g.setColor(Color.BLUE);
-                    System.out.println("color has been set");
+                    g.setColor(blue);
+//                    System.out.println("color has been set");
                 }
                 else if (e.getOwner().getColor().equals("Orange")) {
-                    g.setColor(Color.ORANGE);
-                    System.out.println("color has been set");
+                    g.setColor(orange);
+//                    System.out.println("color has been set");
                 }
                 else if (e.getOwner().getColor().equals("White")) {
-                    g.setColor(Color.WHITE);
-                    System.out.println("color has been set");
+                    g.setColor(white);
+//                    System.out.println("color has been set");
                 }
                 else {
-                    g.setColor(Color.RED);
-                    System.out.println("color has been set");
+                    g.setColor(red);
+//                    System.out.println("color has been set");
                 }
                 g.drawLine(e.getPoint1()[0], e.getPoint1()[1], e.getPoint2()[0], e.getPoint2()[1]);
             }
+            //System.out.println(e.getPoint1()[0]+" "+e.getPoint1()[1]+"; "+e.getPoint2()[0]+" "+e.getPoint2()[1]);
         }
         //drawing stlmts and cities
         for (Intersection i:GameState.board.getIntersections()) {
@@ -657,13 +666,90 @@ public class MainPanel extends JPanel implements MouseListener {
         x=e.getX();
         y=e.getY();
         System.out.println("("+x+", "+y+")");
-        if (x>=450 && x<=1000 && y>=140  && y<=720) {
-            GameState.initBuildSettlement();
-//            GameState.initBuildRoad();
-            Edge edge=GameState.getEdge(x, y);
-            edge.setOwner(GameState.currentPlayer);
-            repaint();
-        }
+//        if (x>=450 && x<=1000 && y>=140  && y<=720) {
+            switch(state) {
+                case 0: {
+                    GameState.initBuildSettlement();
+                    repaint();
+                    break;
+                }
+                case 1: {
+                    GameState.buildRoad();
+                    repaint();
+                    break;
+                }
+                case 2: {
+                    GameState.initBuildSettlement();
+                    repaint();
+                    break;
+                }
+                case 3: {
+                    GameState.buildRoad();
+                    repaint();
+                    break;
+                }
+                case 4: {
+                    GameState.initBuildSettlement();
+                    repaint();
+                    break;
+                }
+                case 5: {
+                    GameState.buildRoad();
+                    repaint();
+                    break;
+                }
+                case 6: {
+                    GameState.initBuildSettlement();
+                    repaint();
+                    break;
+                }
+                case 7: {
+                    GameState.buildRoad();
+                    repaint();
+                    break;
+                }
+                case 8: {
+                    GameState.initBuildSettlement();
+                    repaint();
+                    break;
+                }
+                case 9: {
+                    GameState.buildRoad();
+                    repaint();
+                    break;
+                }
+                case 10: {
+                    GameState.initBuildSettlement();
+                    repaint();
+                    break;
+                }
+                case 11: {
+                    GameState.buildRoad();
+                    repaint();
+                    break;
+                }
+                case 12: {
+                    GameState.initBuildSettlement();
+                    repaint();
+                    break;
+                }
+                case 13: {
+                    GameState.buildRoad();
+                    repaint();
+                    break;
+                }
+                case 14: {
+                    GameState.initBuildSettlement();
+                    repaint();
+                    break;
+                }
+                case 15: {
+                    GameState.buildRoad();
+                    repaint();
+                    break;
+                }
+            }
+        //}
     }
     @Override
     public void mousePressed(MouseEvent e) {
