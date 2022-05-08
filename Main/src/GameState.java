@@ -185,8 +185,10 @@ public class GameState {
             }
         }
         for (Tile t:connectedTiles) {
-            currentPlayer.add(t.getResource());
-            ResourceDeck.draw(t.getResource());
+            if (t.getResource()!=null) {
+                currentPlayer.add(t.getResource());
+                ResourceDeck.draw(t.getResource());
+            }
         }
     }
     public static void buildRoad() {
