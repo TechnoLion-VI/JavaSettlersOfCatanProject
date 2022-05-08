@@ -157,9 +157,37 @@ public class GameState {
             i.setOwner(currentPlayer);
             i.setIsStlmt(true);
             ActionLogPanel.builtSettlement();
+            if (MainPanel.state==8) {
+                initGiveResource(i);
+            }
+            if (MainPanel.state==10) {
+                initGiveResource(i);
+            }
+            if (MainPanel.state==12) {
+                initGiveResource(i);
+            }
+            if (MainPanel.state==14) {
+                initGiveResource(i);
+            }
             MainPanel.state++;
         }
         else System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
+    }
+    public static void initGiveResource(Intersection i) {
+        ArrayList<Tile> connectedTiles=new ArrayList<>();
+        for (Tile[] tiles:board.getTiles()) {
+            for (Tile t:tiles) {
+                for (Intersection tileInt:t.getIntersections()) {
+                    if (tileInt.equals(i)) {
+                        connectedTiles.add(t);
+                    }
+                }
+            }
+        }
+        for (Tile t:connectedTiles) {
+            currentPlayer.add(t.getResource());
+            ResourceDeck.draw(t.getResource());
+        }
     }
     public static void buildRoad() {
         Edge e=getEdge(MainPanel.x, MainPanel.y);
@@ -170,31 +198,31 @@ public class GameState {
             MainPanel.state++;
             if (MainPanel.state==2 ) {
                 currentPlayer = players[1];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your first settlement and road.");
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your first settlement and road by clicking on the respective locations.");
             }
             if (MainPanel.state==4 ) {
                 currentPlayer = players[2];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your first settlement and road.");
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your first settlement and road by clicking on the respective locations.");
             }
             if (MainPanel.state==6 ) {
                 currentPlayer = players[3];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your first settlement and road.");
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your first settlement and road by clicking on the respective locations.");
             }
             if (MainPanel.state==8 ) {
                 currentPlayer = players[3];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road.");
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road by clicking on the respective locations.");
             }
             if (MainPanel.state==10 ) {
                 currentPlayer = players[2];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road.");
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road by clicking on the respective locations.");
             }
             if (MainPanel.state==12 ) {
                 currentPlayer = players[1];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road.");
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road by clicking on the respective locations.");
             }
             if (MainPanel.state==14) {
                 currentPlayer = players[0];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road.");
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road by clicking on the respective locations.");
             }
         }
         else System.out.println(GameState.currentPlayer.toString() + " was unable to build a road.");
