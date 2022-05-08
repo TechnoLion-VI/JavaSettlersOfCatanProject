@@ -7,13 +7,11 @@ public class DevelopmentCard {
         type=s;
     }
 
+    //to be overridden
+    public boolean use() { return false; }
     //type getter
     public String getType() {
         return type;
-    }
-    //to be overridden by children
-    public boolean use(Player p) {
-        return false;
     }
     //image getter
     public BufferedImage getImage() { return img; }

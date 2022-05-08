@@ -1,6 +1,8 @@
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 public class Monopoly extends DevelopmentCard{
     public Monopoly() {
         super("Monopoly");
@@ -14,8 +16,11 @@ public class Monopoly extends DevelopmentCard{
         }
         setImg(card);
     }
-    public boolean use(String rc) {
+    public boolean use() {
         //check if card can be played
+        String[] options = new String[]{"Brick", "Lumber", "Grain", "Ore", "Wool"};
+        int response = JOptionPane.showOptionDialog(null, "Choose resource", "Monopoly", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+        String rc = options[response];
         //take cards of type rc from all players and add it to player's hand
         Player[] p = GameState.getPlayers();
         ArrayList<ResourceCard> cards = new ArrayList<>();

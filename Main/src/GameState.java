@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameState {
-    public static ResourceDeck resourceDeck = new ResourceDeck();
     public static Player currentPlayer, largestArmyPlayer;
     public static Board board = new Board();
     public static int diceNum, diceOne, diceTwo;
