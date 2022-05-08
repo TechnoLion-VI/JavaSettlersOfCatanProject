@@ -146,8 +146,8 @@ public class MainPanel extends JPanel implements MouseListener {
                     int x = 5;
                     int y = 20;
                     ArrayList<String> testArray = new ArrayList<String>();
-                    testArray.add("woo");
                     testArray.add("hoo");
+                    testArray.add("woo");
 //                    for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
                     for(int i = 0; i < testArray.size(); i++){
 //                        JCheckBox c1 = new JCheckBox(GameState.currentPlayer.getResourceCards().get(i) + "");
