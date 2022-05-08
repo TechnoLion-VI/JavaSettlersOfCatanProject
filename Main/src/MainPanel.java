@@ -22,7 +22,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private BufferedImage genericHarbor, brickHarbor, grainHarbor, lumberHarbor, oreHarbor, woolHarbor;
     private BufferedImage settlement, city, road;
     private BufferedImage one, two, three, four, five, six;
-    private JButton endTurn, build, trade, rollDice;
+    private JButton endTurn, build, trade, rollDice, playDevcard;
     private JPanel devCardPanel;
     private JScrollPane devCards;
     private boolean devCardPlayed;
@@ -69,7 +69,6 @@ public class MainPanel extends JPanel implements MouseListener {
             four = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/four.jpg")));
             five = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/five.jpg")));
             six = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/six.jpg")));
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,6 +91,7 @@ public class MainPanel extends JPanel implements MouseListener {
         build = new JButton("Build/Buy");
         rollDice = new JButton("Roll Dice");
         endTurn = new JButton("End Turn");
+        playDevcard = new JButton("Play Development Card");
         //harbors
         harbors = new ArrayList<BufferedImage>();
         for (int i = 0; i < 4; i++) {
