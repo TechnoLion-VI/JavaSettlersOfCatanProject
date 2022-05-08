@@ -7,7 +7,7 @@ public class ResourceCard {
         this.type = type;
         this.img = img;
     }
-
+    public ResourceCard(){}
     //type getter
     public String getType() {
         return type;

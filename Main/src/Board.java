@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import javax.naming.spi.ResolveResult;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -49,15 +50,61 @@ public class Board {
 
         // 1 desert, 3 ore, 3 brick, 4 wheat, 4 lumber, 4 wool
         ArrayList<Tile> tilesArray = new ArrayList<>();
+//        Tile brickTile=new Tile(brick);
+//        Tile grainTile=new Tile(grain);
+//        Tile lumberTile=new Tile(lumber);
+//        Tile oreTile=new Tile(ore);
+//        Tile woolTile=new Tile(wool);
+//        try {
+//            brickTile.setResource(new Brick());
+//            grainTile.setResource(new Grain());
+//            lumberTile.setResource(new Lumber());
+//            oreTile.setResource(new Ore());
+//            woolTile.setResource(new Wool());
+//        }
+//        catch(Exception e) {
+//            System.out.println("creating tiles error");
+//        }
+//        for (int i = 0; i < 3; i++) {
+//            tilesArray.add(oreTile);
+//            tilesArray.add(brickTile);
+//        }
+//
+//        for (int i = 0; i < 4; i++) {
+//            tilesArray.add(grainTile);
+//            tilesArray.add(lumberTile);
+//            tilesArray.add(woolTile);
+//        }
+        ResourceCard brickResource=new ResourceCard(), grainResource=new ResourceCard(), lumberResource=new ResourceCard(), oreResource=new ResourceCard(), woolResource=new ResourceCard();
+        try {
+            brickResource=new Brick();
+            grainResource=new Grain();
+            lumberResource=new Lumber();
+            oreResource=new Ore();
+            woolResource=new Wool();
+        }
+        catch(Exception e) {
+            System.out.println("creating resource cards for tiles error");
+        }
         for (int i = 0; i < 3; i++) {
-            tilesArray.add(new Tile(ore));
-            tilesArray.add(new Tile(brick));
+            Tile brickTile=new Tile(brick);
+            brickTile.setResource(brickResource);
+            Tile oreTile=new Tile(ore);
+            oreTile.setResource(oreResource);
+            tilesArray.add(brickTile);
+            tilesArray.add(oreTile);
         }
 
         for (int i = 0; i < 4; i++) {
-            tilesArray.add(new Tile(grain));
-            tilesArray.add(new Tile(lumber));
-            tilesArray.add(new Tile(wool));
+            Tile grainTile=new Tile(grain);
+            grainTile.setResource(grainResource);
+            Tile lumberTile=new Tile(lumber);
+            lumberTile.setResource(lumberResource);
+            Tile woolTile=new Tile(wool);
+            woolTile.setResource(woolResource);
+            tilesArray.add(grainTile);
+            tilesArray.add(lumberTile);
+            tilesArray.add(woolTile);
         }
         Tile desertTile=new Tile(desert);
         desertTile.setIsDesert(true);
