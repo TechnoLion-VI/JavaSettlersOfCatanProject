@@ -663,7 +663,6 @@ public class MainPanel extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         x = e.getX();
         y = e.getY();
-        System.out.println("(" + x + ", " + y + ")");
 //        if (x>=450 && x<=1000 && y>=140  && y<=720) {
         switch (state) {
             case 0: {
