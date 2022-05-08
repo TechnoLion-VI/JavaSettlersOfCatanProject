@@ -336,6 +336,7 @@ public class MainPanel extends JPanel implements MouseListener {
                         if (road != null && road.canPlace(GameState.currentPlayer))
                             road.setOwner(GameState.currentPlayer);
                         System.out.println(GameState.currentPlayer.toString() + " has built a road.");
+                        trade.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a road.");
                     }
@@ -351,6 +352,7 @@ public class MainPanel extends JPanel implements MouseListener {
                         if (stlmt != null && stlmt.canPlace(GameState.currentPlayer))
                             stlmt.setOwner(GameState.currentPlayer);
                         System.out.println(GameState.currentPlayer.toString() + " has built a settlement.");
+                        trade.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
                     }
@@ -381,6 +383,7 @@ public class MainPanel extends JPanel implements MouseListener {
                         if (city != null && city.getOwner() == GameState.currentPlayer && city.isStlmt())
                             city.setIsCity();
                         System.out.println(GameState.currentPlayer.toString() + " has built a city.");
+                        trade.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a city.");
                     }
@@ -412,6 +415,7 @@ public class MainPanel extends JPanel implements MouseListener {
                             revalidate();
                         }
                         System.out.println(GameState.currentPlayer.toString() + " has bought a development card.");
+                        trade.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to buy a development card.");
                     }
@@ -450,6 +454,7 @@ public class MainPanel extends JPanel implements MouseListener {
                     }
                 }
                 rollDice.setEnabled(true);
+                trade.setEnabled(true);
                 endTurn.setEnabled(false);
                 repaint();
             }
