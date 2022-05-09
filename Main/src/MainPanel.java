@@ -130,9 +130,7 @@ public class MainPanel extends JPanel implements MouseListener {
         logPanel.setBounds(1100, 10, 400, 200);
         add(logPanel);
         /* DEVELOPMENT CARDS PANEL */
-//      devCardPanel = new JPanel();
         devCardPanel.setBackground(new Color(255, 220, 100));
-//      devCards = new JScrollPane(devCardPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         devCards.setBounds(12, 385, 350, 100);
         add(devCards);
         /* END TURN, CLAIM WIN, BUILD, TRADE BUTTONS */
@@ -581,6 +579,8 @@ public class MainPanel extends JPanel implements MouseListener {
                         GameState.currentPlayer.addDev(DevelopmentCardDeck.draw());
                         devCardPanel.removeAll();
                         for (DevelopmentCard dc : GameState.currentPlayer.getDevCards()) {
+                            int x = 0;
+                            int y = 0;
                             JButton b = new JButton(new ImageIcon(resize(dc.getImage(), 25, 75)));
                             b.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent e) {
@@ -594,6 +594,8 @@ public class MainPanel extends JPanel implements MouseListener {
                                 }
                             });
                             devCardPanel.add(b);
+                            b.setBounds(x, y, 25, 75);
+                            x+= 20;
                             devCards.revalidate();
                             revalidate();
                             repaint();
