@@ -45,8 +45,12 @@ public class ActionLogPanel extends OutputStream{
         System.out.println(p.toString() + " acquired the longest road card.");
     }
 
-    public static void robber(){
+    public static void robber7(){
         System.out.println(GameState.currentPlayer.toString() + " rolled a seven and moved the robber.");
+    }
+
+    public static void robberK(){
+        System.out.println(GameState.currentPlayer.toString() + " played a knight card and moved the robber.");
     }
 
     public static void winClaimed() {

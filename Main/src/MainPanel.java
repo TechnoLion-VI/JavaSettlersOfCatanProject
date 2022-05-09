@@ -14,8 +14,6 @@ import java.awt.Point;
 
 
 public class MainPanel extends JPanel implements MouseListener {
-    private ArrayList<Integer> xCoords;  //for intersections
-    private ArrayList<Integer> yCoords;
     ArrayList<BufferedImage> harbors;
     private String playerIndStr = "PLAYER ONE";
     private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource, blueStlmt, blueCity, orangeStlmt, orangeCity, redStlmt, redCity, whiteStlmt, whiteCity;
@@ -449,8 +447,18 @@ public class MainPanel extends JPanel implements MouseListener {
                     GameState.board.giveResources(GameState.getDiceNum());
                 }
                 else {
+                    for (Player p:GameState.getPlayers()) {
+                        if (p.size() > 7) {
+                            int disc = p.size() / 2;
+                            while (disc < p.size()) {
+                                int response = JOptionPane.showOptionDialog(null, "Choose card to discard", p.toString() + " Discard Phase", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, p.getResourceCards().toArray(), p.getResourceCards().toArray()[0]);
+                                p.remove(response);
+                            }
+                        }
+                    }
                     JOptionPane.showMessageDialog(null,"Please select where you'd like to move the robber.");
-
+                    state = 20;
+                    ActionLogPanel.robber7();
                 }
                 endTurn.setEnabled(true);
                 trade.setEnabled(true);
@@ -728,6 +736,13 @@ public class MainPanel extends JPanel implements MouseListener {
                 g.drawImage(i.getImage(), i.getX() - 10, i.getY() - 10, 20, 20, null);
             }
         }
+        //drawing Robber
+        g.setColor(Color.GRAY);
+        for (Tile[] tiles:GameState.board.getTiles()) {
+            for (Tile t:tiles) {
+                if (t.getHasRobber()) g.fillOval(t.getX(), t.getY(), 100, 100);
+            }
+        }
 //        ArrayList<BufferedImage> harbors = new ArrayList<BufferedImage>();
 //        for(int i = 0; i < 4; i++){
 //            harbors.add(genericHarbor);
@@ -885,6 +900,11 @@ public class MainPanel extends JPanel implements MouseListener {
             }
             case 15: {
                 GameState.buildRoad();
+                repaint();
+                break;
+            }
+            case 20: {
+                GameState.moveRobber();
                 repaint();
                 break;
             }

@@ -1,12 +1,13 @@
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 public class Knight extends DevelopmentCard{
     public Knight() {
         super("Knight");
         BufferedImage card;
         try {
-            card= ImageIO.read(Knight.class.getResource("/Images/Knight.png"));
+            card= ImageIO.read(Objects.requireNonNull(Knight.class.getResource("/Images/Knight.png")));
         }
         catch (Exception e) {
             System.out.println("Knight Image Error");
@@ -15,8 +16,9 @@ public class Knight extends DevelopmentCard{
         setImg(card);
     }
     public boolean use(){
+        MainPanel.state = 20;
         GameState.currentPlayer.addToPlayedKnightCards();
-        /* allow the player to choose where they want to move the robber (moveRobber method in GameState) */
+        ActionLogPanel.robberK();
         return true;
     }
 }

@@ -22,7 +22,7 @@ public class GameState {
         double dist;
         int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
         Intersection min = null;
-        for (Tile[] tiles:GameState.board.getTiles()) {
+        for (Tile[] tiles:board.getTiles()) {
             for (Tile tile:tiles) {
                 for (Intersection i:tile.getIntersections()) {
                     dist = Math.sqrt(Math.pow(x - i.getX(), 2) + Math.pow(y - i.getY(), 2));
@@ -41,7 +41,7 @@ public class GameState {
         double dist;
         int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
         Edge min = null;
-//        for (Tile[] tiles:GameState.board.getTiles()) {
+//        for (Tile[] tiles:board.getTiles()) {
 //            for (Tile tile : tiles) {
         int count=0, temp=0;
                 for (Edge e : board.getEdges()) {
@@ -63,7 +63,7 @@ public class GameState {
         double dist;
         int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
         Tile min = null;
-        for (Tile[] tiles:GameState.board.getTiles()) {
+        for (Tile[] tiles:board.getTiles()) {
             for (Tile tile:tiles) {
 //                dist = Math.sqrt(Math.pow(x - tile.getX(), 2) + Math.pow(y - tile.getY(), 2));
 //                if (dist < minDist) {
@@ -102,22 +102,30 @@ public class GameState {
 
     public static Player[] getPlayers() { return players; }
 
-    public boolean moveRobber(Player p, Tile t){ //p is the player you are stealing from
-        for(int i = 0; i < players.length; i++){ //anyone with more than 7 resource cards discards half rounded down (chooses which ones) (not for knight card)
-            ArrayList <ResourceCard> rc = players[i].getResourceCards();
-            if(rc.size() > 7){
-                //goes in graphics
+    public static void moveRobber(){ //p is the player you are stealing from
+        Tile t = getTile(MainPanel.x, MainPanel.y);
+        //move robber to a new place
+        if (t.getHasRobber()) return; else t.setHasRobber(true);
+        ArrayList<Player> options = new ArrayList<>();
+        for (Intersection i:t.getIntersections()) {
+            if (i.getOwner() != null && i.getOwner() != currentPlayer) options.add(i.getOwner()); //keep player duplicates, trust me
+        }
+        if (options.isEmpty()) {
+            MainPanel.state++;
+            return;
+        }
+        int response = JOptionPane.showOptionDialog(null, "Choose player", "Robber Phase", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options.toArray(), options.toArray()[0]);
+        Player p = options.get(response);
+        //disable hasRobber in old place
+        for (Tile[] tiles: board.getTiles()) {
+            for (Tile tile:tiles) {
+                if (tile == t) continue;
+                if (tile.getHasRobber()) tile.setHasRobber(false);
             }
         }
-        //no one gets resources
-        //move robber to a new place
-        if (t.getHasRobber()) return false; else t.setHasRobber(true);
-        //disable hasRobber in old place
         //player who moves robber can steal one random card from a player of their choice (adjacent to new hex)
-        if (p == null || p == GameState.currentPlayer) return true;
-        GameState.currentPlayer.add(p.remove((int)(Math.random()*p.getResourceCards().size())));
-        ActionLogPanel.robber();
-        return true;
+        currentPlayer.add(p.remove((int)(Math.random()*p.size())));
+        MainPanel.state++;
     }
 
     public void checkLargestArmyPlayer() {
@@ -169,7 +177,7 @@ public class GameState {
             }
             MainPanel.state++;
         }
-        else System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
+        else System.out.println(currentPlayer.toString() + " was unable to build a settlement.");
     }
     public static void initGiveResource(Intersection i) {
         ArrayList<Tile> connectedTiles=new ArrayList<>();
@@ -199,34 +207,34 @@ public class GameState {
             MainPanel.state++;
             if (MainPanel.state==2 ) {
                 currentPlayer = players[1];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your first settlement and road by clicking on the respective locations.");
+                JOptionPane.showMessageDialog(null, currentPlayer.toString() + ", please build your first settlement and road by clicking on the respective locations.");
             }
             if (MainPanel.state==4 ) {
                 currentPlayer = players[2];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your first settlement and road by clicking on the respective locations.");
+                JOptionPane.showMessageDialog(null, currentPlayer.toString() + ", please build your first settlement and road by clicking on the respective locations.");
             }
             if (MainPanel.state==6 ) {
                 currentPlayer = players[3];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your first settlement and road by clicking on the respective locations.");
+                JOptionPane.showMessageDialog(null, currentPlayer.toString() + ", please build your first settlement and road by clicking on the respective locations.");
             }
             if (MainPanel.state==8 ) {
                 currentPlayer = players[3];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road by clicking on the respective locations.");
+                JOptionPane.showMessageDialog(null, currentPlayer.toString() + ", please build your second settlement and road by clicking on the respective locations.");
             }
             if (MainPanel.state==10 ) {
                 currentPlayer = players[2];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road by clicking on the respective locations.");
+                JOptionPane.showMessageDialog(null, currentPlayer.toString() + ", please build your second settlement and road by clicking on the respective locations.");
             }
             if (MainPanel.state==12 ) {
                 currentPlayer = players[1];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road by clicking on the respective locations.");
+                JOptionPane.showMessageDialog(null, currentPlayer.toString() + ", please build your second settlement and road by clicking on the respective locations.");
             }
             if (MainPanel.state==14) {
                 currentPlayer = players[0];
-                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your second settlement and road by clicking on the respective locations.");
+                JOptionPane.showMessageDialog(null, currentPlayer.toString() + ", please build your second settlement and road by clicking on the respective locations.");
             }
         }
-        else System.out.println(GameState.currentPlayer.toString() + " was unable to build a road.");
+        else System.out.println(currentPlayer.toString() + " was unable to build a road.");
     }
     public static void buildSettlement() {
         Intersection i=getIntersection(MainPanel.x, MainPanel.y);
@@ -235,6 +243,6 @@ public class GameState {
             i.setIsStlmt(true);
             ActionLogPanel.builtSettlement();
         }
-        else System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
+        else System.out.println(currentPlayer.toString() + " was unable to build a settlement.");
     }
 }
