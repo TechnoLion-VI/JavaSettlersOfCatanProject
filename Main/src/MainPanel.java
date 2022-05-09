@@ -30,6 +30,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private Color blue, orange, white, red;
     public static int state = 0;
     public static String action="";
+    public static int brickLoc, lumberLoc, oreLoc, grainLoc, woolLoc;
 
     public MainPanel() {
         blue = new Color(68, 115, 196);
@@ -333,12 +334,23 @@ public class MainPanel extends JPanel implements MouseListener {
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, options, options[0]);
                 if (response == 0) {    //road
-                    for (ResourceCard rc:GameState.currentPlayer.getResourceCards())
-                        System.out.print(rc.getType()+" ");
-                    System.out.println();
-                    if (GameState.currentPlayer.getResourceCards().contains(brickResource) && GameState.currentPlayer.getResourceCards().contains(lumberResource)) {
-                        GameState.currentPlayer.getResourceCards().remove("Brick");
-                        GameState.currentPlayer.getResourceCards().remove("Lumber");
+                    boolean containsBrick=false, containsLumber=false;
+                    brickLoc=-1; lumberLoc=-1;
+                    for (int i=0; i<GameState.currentPlayer.getResourceCards().size(); i++) {
+                        ResourceCard rc=GameState.currentPlayer.getResourceCards().get(i);
+                        //System.out.print(rc.getType() + " ");
+                        if (rc.getType().equals("Brick")) {
+                            containsBrick = true;
+                            brickLoc=i;
+                        }
+                        if (rc.getType().equals("Lumber")) {
+                            containsLumber = true;
+                            lumberLoc=i;
+                        }
+                    }
+//                    System.out.println();
+                    if (containsBrick && containsLumber) {
+
                         //let them select where they want to place road, check if they can
 //                        Edge road = GameState.getEdge(x, y);
 //                        if (road != null && road.canPlace(GameState.currentPlayer))
@@ -352,47 +364,53 @@ public class MainPanel extends JPanel implements MouseListener {
                     }
                 }
                 if (response == 1) {    //settlement
-                    if (GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber") && GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Grain")) {
-                        GameState.currentPlayer.getResourceCards().remove("Brick");
-                        GameState.currentPlayer.getResourceCards().remove("Lumber");
-                        GameState.currentPlayer.getResourceCards().remove("Wool");
-                        GameState.currentPlayer.getResourceCards().remove("Grain");
-                        //let them select where they want to place settlement, check if they can
-                        Intersection stlmt = GameState.getIntersection(x, y);
-                        if (stlmt != null && stlmt.canPlace(GameState.currentPlayer))
-                            stlmt.setOwner(GameState.currentPlayer);
-                        System.out.println(GameState.currentPlayer.toString() + " has built a settlement.");
+                    boolean containsBrick=false, containsLumber=false, containsWool=false, containsGrain=false;
+                    brickLoc=-1; lumberLoc=-1; woolLoc=-1; grainLoc=-1;
+                    for (int i=0; i<GameState.currentPlayer.getResourceCards().size(); i++) {
+                        ResourceCard rc=GameState.currentPlayer.getResourceCards().get(i);
+                        //System.out.print(rc.getType() + " ");
+                        if (rc.getType().equals("Brick")) {
+                            containsBrick = true;
+                            brickLoc=i;
+                        }
+                        if (rc.getType().equals("Lumber")) {
+                            containsLumber = true;
+                            lumberLoc=i;
+                        }
+                        if (rc.getType().equals("Wool")) {
+                            containsWool = true;
+                            woolLoc=i;
+                        }
+                        if (rc.getType().equals("Grain")) {
+                            containsGrain = true;
+                            grainLoc=i;
+                        }
+                    }
+                    if (containsBrick && containsLumber && containsWool && containsGrain) {
+//                        //let them select where they want to place settlement, check if they can
+//                        Intersection stlmt = GameState.getIntersection(x, y);
+//                        if (stlmt != null && stlmt.canPlace(GameState.currentPlayer))
+//                            stlmt.setOwner(GameState.currentPlayer);
+//                        System.out.println(GameState.currentPlayer.toString() + " has built a settlement.");
+                        action="Settlement";
                         trade.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
                     }
                 }
                 if (response == 2) {    //city
-                    int ore = 0;
+                    int ore = 0, grain = 0;
                     for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
                         ArrayList<ResourceCard> rc = GameState.currentPlayer.getResourceCards();
                         if (rc.get(i).getType().equals("Ore")) {
                             ore++;
                         }
-                    }
-                    int grain = 0;
-                    for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
-                        ArrayList<ResourceCard> rc = GameState.currentPlayer.getResourceCards();
                         if (rc.get(i).getType().equals("Grain")) {
                             grain++;
                         }
                     }
                     if (ore >= 3 && grain >= 2) {
-                        GameState.currentPlayer.getResourceCards().remove("Ore");
-                        GameState.currentPlayer.getResourceCards().remove("Ore");
-                        GameState.currentPlayer.getResourceCards().remove("Ore");
-                        GameState.currentPlayer.getResourceCards().remove("Grain");
-                        GameState.currentPlayer.getResourceCards().remove("Grain");
-
-                        Intersection city = GameState.getIntersection(x, y);
-                        if (city != null && city.getOwner() == GameState.currentPlayer && city.isStlmt())
-                            city.setIsCity();
-                        System.out.println(GameState.currentPlayer.toString() + " has built a city.");
+                        action="City";
                         trade.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a city.");
@@ -400,11 +418,28 @@ public class MainPanel extends JPanel implements MouseListener {
                     //let them select a settlement of theirs
                 }
                 if (response == 3) {    //devcard
-                    if (GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Ore") && GameState.currentPlayer.getResourceCards().contains("Grain")) {
-                        GameState.currentPlayer.getResourceCards().remove("Wool");
-                        GameState.currentPlayer.getResourceCards().remove("Grain");
-                        GameState.currentPlayer.getResourceCards().remove("Ore");
+                    boolean containsOre=false, containsWool=false, containsGrain=false;
+                    for (int i=0; i<GameState.currentPlayer.getResourceCards().size(); i++) {
+                        ResourceCard rc=GameState.currentPlayer.getResourceCards().get(i);
+                        //System.out.print(rc.getType() + " ");
+                        if (rc.getType().equals("Ore")) {
+                            containsOre = true;
+                        }
+                        if (rc.getType().equals("Wool")) {
+                            containsWool = true;
+                        }
+                        if (rc.getType().equals("Grain")) {
+                            containsGrain = true;
+                        }
+                    }
                         //take it from development card deck and display it visually
+                    if (containsGrain && containsOre && containsWool && !DevelopmentCardDeck.deck.isEmpty()) {
+                        GameState.currentPlayer.remove("Grain");
+                        GameState.currentPlayer.remove("Ore");
+                        GameState.currentPlayer.remove("Wool");
+                        ResourceDeck.add("Ore");
+                        ResourceDeck.add("Grain");
+                        ResourceDeck.add("Wool");
                         GameState.currentPlayer.addDev(DevelopmentCardDeck.draw());
                         devCardPanel.removeAll();
                         for (DevelopmentCard dc : GameState.currentPlayer.getDevCards()) {
@@ -423,6 +458,7 @@ public class MainPanel extends JPanel implements MouseListener {
                             devCardPanel.add(b);
                             devCards.revalidate();
                             revalidate();
+                            repaint();
                         }
                         System.out.println(GameState.currentPlayer.toString() + " has bought a development card.");
                         trade.setEnabled(false);
@@ -453,6 +489,7 @@ public class MainPanel extends JPanel implements MouseListener {
                             while (disc < p.size()) {
                                 int response = JOptionPane.showOptionDialog(null, "Choose card to discard", p.toString() + " Discard Phase", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, p.getResourceCards().toArray(), p.getResourceCards().toArray()[0]);
                                 p.remove(response);
+                                repaint();
                             }
                         }
                     }
@@ -912,6 +949,16 @@ public class MainPanel extends JPanel implements MouseListener {
         switch(action) {
             case "Road": {
                 GameState.buildRoad();
+                repaint();
+                break;
+            }
+            case "Settlement": {
+                GameState.buildSettlement();
+                repaint();
+                break;
+            }
+            case "City": {
+                GameState.buildCity();
                 repaint();
                 break;
             }

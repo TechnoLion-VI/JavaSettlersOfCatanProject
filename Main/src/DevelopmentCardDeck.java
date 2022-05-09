@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class DevelopmentCardDeck {
-    private static ArrayList<DevelopmentCard> deck;
+    public static ArrayList<DevelopmentCard> deck;
 
     static {
         deck = new ArrayList<>();

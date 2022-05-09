@@ -606,7 +606,10 @@ public class Board {
     public void giveResources(int numRolled) {
         for (Tile[] tt:tiles) {
             for (Tile t:tt) {
-                if (t.canGive() && t.getAssignedNum() == numRolled && t.getResource() != null && ResourceDeck.canDraw(t.getResource().getType(), t.resourcesNeeded())) t.giveResource();
+                if (t.canGive() && t.getAssignedNum() == numRolled && t.getResource() != null && ResourceDeck.canDraw(t.getResource().getType(), t.resourcesNeeded())) {
+                    t.giveResource();
+                    ResourceDeck.draw(t.getResource());
+                }
             }
         }
     }

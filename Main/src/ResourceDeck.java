@@ -45,6 +45,20 @@ public class ResourceDeck {
         };
     }
 
+    public static void add(String type) {
+        try {
+            switch (type) {
+                case "Brick" -> brickDeck.add(new Brick());
+                case "Grain" -> grainDeck.add(new Grain());
+                case "Lumber" -> lumberDeck.add(new Lumber());
+                case "Ore" -> oreDeck.add(new Ore());
+                case "Wool" -> woolDeck.add(new Wool());
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     //get number of cards left in the deck of a specified type
     public static int getNumLeft(String type) {
         return switch (type) {
