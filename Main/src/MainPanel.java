@@ -26,10 +26,12 @@ public class MainPanel extends JPanel implements MouseListener {
     private JPanel devCardPanel;
     private JScrollPane devCards;
     private boolean devCardPlayed;
+    private ResourceCard brickResource=new ResourceCard(), grainResource=new ResourceCard(), lumberResource=new ResourceCard(), oreResource=new ResourceCard(), woolResource=new ResourceCard();
     //private Font playerTitleFont;
     public static int x, y;
     private Color blue, orange, white, red;
     public static int state = 0;
+    public static String action="";
 
     public MainPanel() {
         blue = new Color(68, 115, 196);
@@ -69,6 +71,11 @@ public class MainPanel extends JPanel implements MouseListener {
             four = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/four.jpg")));
             five = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/five.jpg")));
             six = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/six.jpg")));
+            brickResource=new Brick();
+            grainResource=new Grain();
+            lumberResource=new Lumber();
+            oreResource=new Ore();
+            woolResource=new Wool();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -327,21 +334,26 @@ public class MainPanel extends JPanel implements MouseListener {
                 int response = JOptionPane.showOptionDialog(null, "Choose what you want to build/buy.", "Build/Buy",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, options, options[0]);
-                if (response == 0) {
-                    if (GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber")) {
+                if (response == 0) {    //road
+                    for (ResourceCard rc:GameState.currentPlayer.getResourceCards())
+                        System.out.print(rc.getType()+" ");
+                    System.out.println();
+                    if (GameState.currentPlayer.getResourceCards().contains(brickResource) && GameState.currentPlayer.getResourceCards().contains(lumberResource)) {
                         GameState.currentPlayer.getResourceCards().remove("Brick");
                         GameState.currentPlayer.getResourceCards().remove("Lumber");
                         //let them select where they want to place road, check if they can
-                        Edge road = GameState.getEdge(x, y);
-                        if (road != null && road.canPlace(GameState.currentPlayer))
-                            road.setOwner(GameState.currentPlayer);
-                        System.out.println(GameState.currentPlayer.toString() + " has built a road.");
+//                        Edge road = GameState.getEdge(x, y);
+//                        if (road != null && road.canPlace(GameState.currentPlayer))
+//                            road.setOwner(GameState.currentPlayer);
+//                        System.out.println(GameState.currentPlayer.toString() + " has built a road.");
+                        action="Road";
                         trade.setEnabled(false);
-                    } else {
+                    }
+                    else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a road.");
                     }
                 }
-                if (response == 1) {
+                if (response == 1) {    //settlement
                     if (GameState.currentPlayer.getResourceCards().contains("Brick") && GameState.currentPlayer.getResourceCards().contains("Lumber") && GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Grain")) {
                         GameState.currentPlayer.getResourceCards().remove("Brick");
                         GameState.currentPlayer.getResourceCards().remove("Lumber");
@@ -357,7 +369,7 @@ public class MainPanel extends JPanel implements MouseListener {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
                     }
                 }
-                if (response == 2) {
+                if (response == 2) {    //city
                     int ore = 0;
                     for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
                         ArrayList<ResourceCard> rc = GameState.currentPlayer.getResourceCards();
@@ -389,7 +401,7 @@ public class MainPanel extends JPanel implements MouseListener {
                     }
                     //let them select a settlement of theirs
                 }
-                if (response == 3) {
+                if (response == 3) {    //devcard
                     if (GameState.currentPlayer.getResourceCards().contains("Wool") && GameState.currentPlayer.getResourceCards().contains("Ore") && GameState.currentPlayer.getResourceCards().contains("Grain")) {
                         GameState.currentPlayer.getResourceCards().remove("Wool");
                         GameState.currentPlayer.getResourceCards().remove("Grain");
@@ -872,6 +884,13 @@ public class MainPanel extends JPanel implements MouseListener {
                 break;
             }
             case 15: {
+                GameState.buildRoad();
+                repaint();
+                break;
+            }
+        }
+        switch(action) {
+            case "Road": {
                 GameState.buildRoad();
                 repaint();
                 break;
