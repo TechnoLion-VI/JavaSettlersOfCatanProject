@@ -149,6 +149,7 @@ public class MainPanel extends JPanel implements MouseListener {
                     tradeMessage.setFont(new Font("Serif", 1, 15));
                     tradeMessage.setBounds(0, -30, 400, 80);
                     p.add(tradeMessage);
+
                     JLabel ore = new JLabel("Ore");
                     ore.setFont(new Font("Serif", 1, 15));
                     ore.setBounds(10, 50, 30, 30);
@@ -159,7 +160,6 @@ public class MainPanel extends JPanel implements MouseListener {
                     oreText.setBackground(new Color(255, 220, 100));
                     p.add(oreText);
                     p.add(ore);
-                    p.repaint();
 
                     JLabel grain = new JLabel("Grain");
                     grain.setFont(new Font("Serif", 1, 15));
@@ -171,7 +171,6 @@ public class MainPanel extends JPanel implements MouseListener {
                     grainText.setBackground(new Color(255, 220, 100));
                     p.add(grainText);
                     p.add(grain);
-                    p.repaint();
 
                     JLabel lumber = new JLabel("Lumber");
                     lumber.setFont(new Font("Serif", 1, 15));
@@ -183,138 +182,277 @@ public class MainPanel extends JPanel implements MouseListener {
                     lumberText.setBackground(new Color(255, 220, 100));
                     p.add(lumberText);
                     p.add(lumber);
-                    p.repaint();
 
                     JLabel brick = new JLabel("Brick");
                     brick.setFont(new Font("Serif", 1, 15));
-                    brick.setBounds(10, 170, 60, 30);
+                    brick.setBounds(130, 50, 60, 30);
                     brick.requestFocus();
                     brick.setVisible(true);
                     JTextField brickText = new JTextField(10);
-                    brickText.setBounds(70, 175, 30, 25);
+                    brickText.setEditable(true);
+                    brickText.setBounds(190, 55, 30, 25);
                     brickText.setBackground(new Color(255, 220, 100));
                     p.add(brickText);
                     p.add(brick);
-                    p.repaint();
 
                     JLabel wool = new JLabel("Wool");
                     wool.setFont(new Font("Serif", 1, 15));
-                    wool.setBounds(10, 210, 60, 30);
+                    wool.setBounds(130, 90, 60, 30);
                     wool.requestFocus();
                     wool.setVisible(true);
                     JTextField woolText = new JTextField(10);
-                    woolText.setBounds(70, 215, 30, 25);
+                    woolText.setBounds(190, 95, 30, 25);
                     woolText.setBackground(new Color(255, 220, 100));
                     p.add(woolText);
                     p.add(wool);
-                    p.repaint();
-                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + TradeManager.p1offer + ".");
+
                     JButton done = new JButton("Done");
                     done.setFont(new Font("Serif", 1, 15));
                     done.setBackground(new Color(255, 220, 100));
                     done.setBounds(115, 400, 75, 25);
                     done.addActionListener(new ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            if(oreText.isValid()){
+                            ArrayList<String> trade = new ArrayList<String>();
+                            if (oreText.isValid()) {
                                 String text = oreText.getText();
                                 int numOre = Integer.parseInt(text);
-                                if(numOre <= ResourceDeck.getNumLeft("Ore")) {
-                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " ores.");
+                                int oreLeft = 0;
+                                for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
+                                    if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Ore")) {
+                                        oreLeft++;
+                                    }
+                                }
+                                if (numOre <= oreLeft) {
+                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " ore.");
+                                    for(int i = 0; i < numOre; i++){
+                                        trade.add("ore");
+                                    }
+                                    //p.repaint();
+                                } else {
+                                    while (numOre > oreLeft) {
+                                        JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough ore to carry out this trade.");
+                                        String n = JOptionPane.showInputDialog("How many ore does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + oreLeft + ")");
+                                        numOre = Integer.parseInt(n);
+                                        tradeMessage.setText("Please select what you wish to trade with.");
+                                    }
                                 }
                             }
+
+                            if (grainText.isValid()) {
+                                String text = grainText.getText();
+                                int numGrain = Integer.parseInt(text);
+                                int grainLeft = 0;
+                                for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
+                                    if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Grain")) {
+                                        grainLeft++;
+                                    }
+                                }
+                                if (numGrain <= grainLeft) {
+                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " grain.");
+                                    for(int i = 0; i < numGrain; i++){
+                                        trade.add("grain");
+                                    }
+                                    //p.repaint();
+                                } else {
+                                    while (numGrain > grainLeft) {
+                                        JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough grain to carry out this trade.");
+                                        String n = JOptionPane.showInputDialog("How many grain does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + grainLeft + ")");
+                                        numGrain = Integer.parseInt(n);
+                                        tradeMessage.setText("Please select what you wish to trade with.");
+                                    }
+                                }
+                            }
+
+                            if (brickText.isValid()) {
+                                String text = brickText.getText();
+                                int numBrick = Integer.parseInt(text);
+                                int brickLeft = 0;
+                                for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
+                                    if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Brick")) {
+                                        brickLeft++;
+                                    }
+                                }
+                                if (numBrick <= brickLeft) {
+                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " brick.");
+                                    for(int i = 0; i < numBrick; i++){
+                                        trade.add("brick");
+                                    }
+                                    //p.repaint();
+                                } else {
+                                    //JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough brick to carry out this trade.");
+                                    while (numBrick > brickLeft) {
+                                        JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough brick to carry out this trade.");
+                                        String n = JOptionPane.showInputDialog("How many brick does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + brickLeft + ")");
+                                        numBrick = Integer.parseInt(n);
+                                        tradeMessage.setText("Please select what you wish to trade with.");
+                                    }
+                                }
+                            }
+
+                            if (lumberText.isValid()) {
+                                String text = lumberText.getText();
+                                int numLumber = Integer.parseInt(text);
+                                int lumberLeft = 0;
+                                for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
+                                    if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Lumber")) {
+                                        lumberLeft++;
+                                    }
+                                }
+                                if (numLumber <= lumberLeft) {
+                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " lumber.");
+                                    for(int i = 0; i < numLumber; i++){
+                                        trade.add("lumber");
+                                    }
+                                    //p.repaint();
+                                } else {
+                                    while (numLumber > lumberLeft) {
+                                        JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough lumber to carry out this trade.");
+                                        String n = JOptionPane.showInputDialog("How many lumber does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + lumberLeft + ")");
+                                        numLumber = Integer.parseInt(n);
+                                        tradeMessage.setText("Please select what you wish to trade with.");
+                                    }
+                                }
+                            }
+
+
+                            if (woolText.isValid()) {
+                                String text = woolText.getText();
+                                int numWool = Integer.parseInt(text);
+                                int woolLeft = 0;
+                                for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
+                                    if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Wool")) {
+                                        woolLeft++;
+                                    }
+                                }
+                                if (numWool <= woolLeft) {
+                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " wool.");
+                                    for(int i = 0; i < numWool; i++){
+                                        trade.add("wool");
+                                    }
+                                    //p.repaint();
+                                } else {
+                                    while (numWool > woolLeft) {
+                                        JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough wool to carry out this trade.");
+                                        String n = JOptionPane.showInputDialog("How many wool does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + woolLeft + ")");
+                                        numWool = Integer.parseInt(n);
+                                        tradeMessage.setText("Please select what you wish to trade with.");
+                                    }
+                                }
+                            }
+
+                            p.repaint();
+
                             tradeMessage.setText("");
-
-
                             JLabel tradeMessageTwo = new JLabel("");
                             tradeMessageTwo.setFont(new Font("Serif", 1, 15));
                             tradeMessageTwo.setBounds(0, -20, 400, 80);
                             tradeMessageTwo.setText("<html>Please type in how many of each resource<br>you wish to trade for.");
                             p.add(tradeMessageTwo);
-                            JLabel ore = new JLabel("Ore");
-                            ore.setFont(new Font("Serif", 1, 15));
-                            ore.setBounds(10, 50, 30, 30);
-                            ore.requestFocus();
-                            ore.setVisible(true);
-                            JTextField oreText = new JTextField(10);
-                            oreText.setBounds(70, 55, 30, 25);
-                            oreText.setBackground(new Color(255, 220, 100));
-                            p.add(oreText);
-                            p.add(ore);
-                            p.repaint();
 
-                            JLabel grain = new JLabel("Grain");
-                            grain.setFont(new Font("Serif", 1, 15));
-                            grain.setBounds(10, 90, 60, 30);
-                            grain.requestFocus();
-                            grain.setVisible(true);
-                            JTextField grainText = new JTextField(10);
-                            grainText.setBounds(70, 95, 30, 25);
-                            grainText.setBackground(new Color(255, 220, 100));
-                            p.add(grainText);
+                            JLabel oreTwo = new JLabel("Ore");
+                            oreTwo.setFont(new Font("Serif", 1, 15));
+                            oreTwo.setBounds(10, 50, 30, 30);
+                            oreTwo.requestFocus();
+                            oreTwo.setVisible(true);
+                            JTextField oreTextTwo = new JTextField(10);
+                            oreTextTwo.setBounds(70, 55, 30, 25);
+                            oreTextTwo.setBackground(new Color(255, 220, 100));
+                            oreTextTwo.setVisible(true);
+                            String oText = oreTextTwo.getText();
+                            int numO = Integer.parseInt(oText);
+                            if(!trade.contains("ore")) {
+                                System.out.println("BRO");
+                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numO + " ore.");
+                            }
+                            else{
+                                while(trade.contains("ore")){
+                                    JOptionPane.showInputDialog("You cannot trade the same resource.");
+                                }
+                            }
+                            p.add(oreTextTwo);
+                            p.add(oreTwo);
+
+                            JLabel grainTwo = new JLabel("Grain");
+                            grainTwo.setFont(new Font("Serif", 1, 15));
+                            grainTwo.setBounds(10, 90, 30, 30);
+                            grainTwo.requestFocus();
+                            grainTwo.setVisible(true);
+                            JTextField grainTextTwo = new JTextField(10);
+                            grainTextTwo.setBounds(70, 95, 30, 25);
+                            grainTextTwo.setBackground(new Color(255, 220, 100));
+                            String gText = grainTextTwo.getText();
+                            int numG = Integer.parseInt(gText);
+                            System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numG + " grain.");
+                            p.add(grainTextTwo);
                             p.add(grain);
-                            p.repaint();
 
-                            JLabel lumber = new JLabel("Lumber");
-                            lumber.setFont(new Font("Serif", 1, 15));
-                            lumber.setBounds(10, 130, 60, 30);
-                            lumber.requestFocus();
-                            lumber.setVisible(true);
-                            JTextField lumberText = new JTextField(10);
-                            lumberText.setBounds(70, 135, 30, 25);
-                            lumberText.setBackground(new Color(255, 220, 100));
-                            p.add(lumberText);
+                            JLabel lumberTwo = new JLabel("Lumber");
+                            lumberTwo.setFont(new Font("Serif", 1, 15));
+                            lumberTwo.setBounds(10, 130, 30, 30);
+                            lumberTwo.requestFocus();
+                            lumberTwo.setVisible(true);
+                            JTextField lumberTextTwo = new JTextField(10);
+                            lumberTextTwo.setBounds(70, 135, 30, 25);
+                            lumberTextTwo.setBackground(new Color(255, 220, 100));
+                            String lText = lumberTextTwo.getText();
+                            int numL = Integer.parseInt(lText);
+                            System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numL + " lumber.");
+                            p.add(lumberTextTwo);
                             p.add(lumber);
-                            p.repaint();
 
-                            JLabel brick = new JLabel("Brick");
-                            brick.setFont(new Font("Serif", 1, 15));
-                            brick.setBounds(10, 170, 60, 30);
-                            brick.requestFocus();
-                            brick.setVisible(true);
-                            JTextField brickText = new JTextField(10);
-                            brickText.setBounds(70, 175, 30, 25);
-                            brickText.setBackground(new Color(255, 220, 100));
-                            p.add(brickText);
+                            JLabel brickTwo = new JLabel("Brick");
+                            brickTwo.setFont(new Font("Serif", 1, 15));
+                            brickTwo.setBounds(10, 170, 30, 30);
+                            brickTwo.requestFocus();
+                            brickTwo.setVisible(true);
+                            JTextField brickTextTwo = new JTextField(10);
+                            brickTextTwo.setBounds(70, 175, 30, 25);
+                            brickTextTwo.setBackground(new Color(255, 220, 100));
+                            String bText = brickTextTwo.getText();
+                            int numB = Integer.parseInt(bText);
+                            System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numB + " brick.");
+                            p.add(brickTextTwo);
                             p.add(brick);
-                            p.repaint();
 
-                            JLabel wool = new JLabel("Wool");
-                            wool.setFont(new Font("Serif", 1, 15));
-                            wool.setBounds(10, 210, 60, 30);
-                            wool.requestFocus();
-                            wool.setVisible(true);
-                            JTextField woolText = new JTextField(10);
-                            woolText.setBounds(70, 215, 30, 25);
-                            woolText.setBackground(new Color(255, 220, 100));
-                            p.add(woolText);
+                            JLabel woolTwo = new JLabel("Wool");
+                            woolTwo.setFont(new Font("Serif", 1, 15));
+                            woolTwo.setBounds(10, 210, 30, 30);
+                            woolTwo.requestFocus();
+                            woolTwo.setVisible(true);
+                            JTextField woolTextTwo = new JTextField(10);
+                            woolTextTwo.setBounds(70, 215, 30, 25);
+                            woolTextTwo.setBackground(new Color(255, 220, 100));
+                            String wText = woolTextTwo.getText();
+                            int numW = Integer.parseInt(wText);
+                            System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numW + " wool.");
+                            p.add(woolTextTwo);
                             p.add(wool);
+
                             p.repaint();
+                            if(GameState.currentPlayer.toString().equals("Blue Player")){
+                                JLabel white = new JLabel("White Player");
+                                white.setFont(new Font("Serif", 1, 15));
+                                white.setBounds(10, 50, 30, 30);
+                                white.requestFocus();
+                                white.setVisible(true);
+                                JTextField whiteTwo = new JTextField(10);
+                                whiteTwo.setBackground(new Color(255, 220, 100));
+                                String whiteText = whiteTwo.getText();
+                                if(whiteText.equals("A")){
+                                    System.out.println(GameState.currentPlayer.toString() + " has traded with White Player.");
+                                }
+                                else{
+                                    System.out.println("White Player has declined " + GameState.currentPlayer.toString() + "'s trade.");
+                                }
+                            }
                         }
 
-                        //check if input is not a number
                         //make sure they are not trading the same thing
-                        //show what they requested on action log
                         //allow each player to accept or decline
                         //display whether player accepted or declined on action log
                         //give cards
                     });
                     p.add(done);
-//                    JCheckBox brick = new JCheckBox("Brick");
-//                    brick.setBounds(100,100, 150,150);
-//                    JCheckBox grain = new JCheckBox("Grain");
-//                    grain.setBounds(100,150, 150,150);
-//                    JCheckBox lumber = new JCheckBox("Lumber");
-//                    lumber.setBounds(100,150, 150,150);
-//                    JCheckBox ore = new JCheckBox("Ore");
-//                    ore.setBounds(100,150, 150,150);
-//                    JCheckBox wool = new JCheckBox("Wool");
-//                    wool.setBounds(100,150, 150,150);
-//                    p.add(brick);
-//                    p.add(grain);
-//                    p.add(lumber);
-//                    p.add(ore);
-//                    p.add(wool);
-                    //add(p);
                 }
                 if (response == 1) {
                     //maritime
