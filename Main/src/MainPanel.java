@@ -777,7 +777,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.setColor(Color.GRAY);
         for (Tile[] tiles:GameState.board.getTiles()) {
             for (Tile t:tiles) {
-                if (t.getHasRobber()) g.fillOval(t.getX(), t.getY(), 100, 100);
+                if (t.getHasRobber()) g.fillOval(t.getxPixel()+35, t.getyPixel()+53, 40, 40);
             }
         }
 //        ArrayList<BufferedImage> harbors = new ArrayList<BufferedImage>();

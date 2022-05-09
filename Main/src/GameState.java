@@ -65,18 +65,19 @@ public class GameState {
         Tile min = null;
         for (Tile[] tiles:board.getTiles()) {
             for (Tile tile:tiles) {
-//                dist = Math.sqrt(Math.pow(x - tile.getX(), 2) + Math.pow(y - tile.getY(), 2));
-//                if (dist < minDist) {
-//                    minDist = dist;
-//                    min = tile;
-//                }
                 int centerX=tile.getX()+55;
                 int centerY=tile.getY()+73;
-                if (Math.abs(centerX-x)<minX && Math.abs(centerY-y)<minY) {
-                    minX=Math.abs(centerX-x);
-                    minY=Math.abs(centerY-y);
-                    min=tile;
+                dist = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
+                if (dist < minDist) {
+                    minDist = dist;
+                    min = tile;
                 }
+
+//                if (Math.abs(centerX-x)<minX && Math.abs(centerY-y)<minY) {
+//                    minX=Math.abs(centerX-x);
+//                    minY=Math.abs(centerY-y);
+//                    min=tile;
+//                }
             }
         }
         return min;
