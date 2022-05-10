@@ -117,10 +117,10 @@ public class Tile {
 //        intersections[3].setLocation(xPixel+55, yPixel+145);
 //        intersections[4].setLocation(xPixel, yPixel+109);
     }
-    public int getxPixel() {
+    public int getXPixel() {
         return xPixel;
     }
-    public int getyPixel() {
+    public int getYPixel() {
         return yPixel;
     }
     public void setLocation(int x, int y) {

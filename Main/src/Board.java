@@ -552,8 +552,8 @@ public class Board {
     public void setTilesIntersectionsLocations() {
         for (Tile[] tileRow: tiles) {
             for (Tile tile: tileRow) {
-                int tilex=tile.getxPixel();
-                int tiley=tile.getyPixel();
+                int tilex=tile.getXPixel();
+                int tiley=tile.getYPixel();
                 //System.out.println(tilex+", "+tiley);
                 tile.getIntersections()[5].setLocation(tilex, tiley+36);
                 tile.getIntersections()[0].setLocation(tilex+55, tiley);

@@ -615,7 +615,7 @@ public class MainPanel extends JPanel implements MouseListener {
                         trade.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to buy a development card.");
-                    }
+                     }
                 }
             }
         });
@@ -940,7 +940,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.setColor(Color.GRAY);
         for (Tile[] tiles:GameState.board.getTiles()) {
             for (Tile t:tiles) {
-                if (t.getHasRobber()) g.fillOval(t.getxPixel()+35, t.getyPixel()+53, 40, 40);
+                if (t.getHasRobber()) g.fillOval(t.getXPixel()+35, t.getYPixel()+53, 40, 40);
             }
         }
 //        ArrayList<BufferedImage> harbors = new ArrayList<BufferedImage>();
