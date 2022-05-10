@@ -107,9 +107,15 @@ public class GameState {
         Tile t = getTile(MainPanel.x, MainPanel.y);
         //move robber to a new place
         if (t.getHasRobber()) return; else t.setHasRobber(true);
+        for (Tile[] tiles: board.getTiles()) {
+            for (Tile tile:tiles) {
+                if (tile == t) continue;
+                if (tile.getHasRobber()) tile.setHasRobber(false);
+            }
+        }
         ArrayList<Player> options = new ArrayList<>();
         for (Intersection i:t.getIntersections()) {
-            if (i.getOwner() != null && i.getOwner() != currentPlayer) options.add(i.getOwner()); //keep player duplicates, trust me
+            if (i.getOwner() != null && i.getOwner() != currentPlayer && !options.contains(i.getOwner())) options.add(i.getOwner()); //keep player duplicates, trust me
         }
         if (options.isEmpty()) {
             MainPanel.state++;
@@ -117,13 +123,6 @@ public class GameState {
         }
         int response = JOptionPane.showOptionDialog(null, "Choose player", "Robber Phase", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options.toArray(), options.toArray()[0]);
         Player p = options.get(response);
-        //disable hasRobber in old place
-        for (Tile[] tiles: board.getTiles()) {
-            for (Tile tile:tiles) {
-                if (tile == t) continue;
-                if (tile.getHasRobber()) tile.setHasRobber(false);
-            }
-        }
         //player who moves robber can steal one random card from a player of their choice (adjacent to new hex)
         currentPlayer.add(p.remove((int)(Math.random()*p.size())));
         MainPanel.state++;

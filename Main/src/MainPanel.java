@@ -20,7 +20,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private BufferedImage genericHarbor, brickHarbor, grainHarbor, lumberHarbor, oreHarbor, woolHarbor;
     private BufferedImage settlement, city, road;
     private BufferedImage one, two, three, four, five, six, HelpButton;
-    private JButton endTurn, build, trade, rollDice, playDevcard,helppls;
+    private JButton endTurn, build, trade, rollDice,helppls;
     private JPanel devCardPanel;
     private JScrollPane devCards;
     private boolean devCardPlayed;
@@ -71,7 +71,6 @@ public class MainPanel extends JPanel implements MouseListener {
             four = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/four.jpg")));
             five = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/five.jpg")));
             six = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/six.jpg")));
-            //  HelpButton = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/help-button_adobespark.png")));
             brickResource=new Brick();
             grainResource=new Grain();
             lumberResource=new Lumber();
@@ -94,12 +93,25 @@ public class MainPanel extends JPanel implements MouseListener {
         JTextArea log = new JTextArea(50, 50);
         JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         devCardPanel = new JPanel();
+        CardLayout cards = new CardLayout();
+        cards.setHgap(10);
+        cards.setVgap(10);
+        devCardPanel.setLayout(cards);
+        JPanel p1 = new JPanel(new FlowLayout());
+        JPanel p2 = new JPanel(new FlowLayout());
+        JPanel p3 = new JPanel(new FlowLayout());
+        JPanel p4 = new JPanel(new FlowLayout());
+        devCardPanel.add(GameState.players[0].toString(), p1);
+        devCardPanel.add(GameState.players[1].toString(), p2);
+        devCardPanel.add(GameState.players[2].toString(), p3);
+        devCardPanel.add(GameState.players[3].toString(), p4);
+        cards.first(devCardPanel);
         devCards = new JScrollPane(devCardPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        devCards.setViewportView(devCardPanel);
         trade = new JButton("Trade");
         build = new JButton("Build/Buy");
         rollDice = new JButton("Roll Dice");
         endTurn = new JButton("End Turn");
-        playDevcard = new JButton("Play Development Card");
         helppls = new JButton("Help");
 
         //harbors
@@ -588,15 +600,11 @@ public class MainPanel extends JPanel implements MouseListener {
                         ResourceDeck.add("Grain");
                         ResourceDeck.add("Wool");
                         GameState.currentPlayer.addDev(DevelopmentCardDeck.draw());
-                        devCardPanel.removeAll();
                         for (DevelopmentCard dc : GameState.currentPlayer.getDevCards()) {
-                            int x = 0;
-                            int y = 0;
-                            JButton b = new JButton(new ImageIcon(resize(dc.getImage(), 50, 75)));
+                            JButton b = new JButton(dc.getType());
                             b.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent e) {
                                     if (!devCardPlayed) {
-                                        // use to be implemented
                                         dc.use();
                                         devCardPlayed = true;
                                         GameState.currentPlayer.removeDev(dc);
@@ -605,9 +613,12 @@ public class MainPanel extends JPanel implements MouseListener {
                                     }
                                 }
                             });
-                            devCardPanel.add(b);
-                            b.setBounds(x, y, 25, 75);
-                            x+= 20;
+                            switch (GameState.currentPlayer.toString()) {
+                                case "Player Blue" -> p1.add(b);
+                                case "Player Orange" -> p2.add(b);
+                                case "Player Red" -> p3.add(b);
+                                case "Player White" -> p4.add(b);
+                            }
                             devCards.revalidate();
                             revalidate();
                             repaint();
@@ -669,6 +680,7 @@ public class MainPanel extends JPanel implements MouseListener {
                 rollDice.setEnabled(true);
                 trade.setEnabled(false);
                 build.setEnabled(false);
+                cards.show(devCardPanel, GameState.currentPlayer.toString());
                 devCardPanel.revalidate();
                 devCardPanel.repaint();
                 endTurn.setEnabled(false);
@@ -676,13 +688,7 @@ public class MainPanel extends JPanel implements MouseListener {
             }
         });
 
-        helppls.setBounds(320, 625, 75, 50);
-//        try {
-//            Image HelpButton2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Images/help-button_adobespark.png")));
-//            helppls.setIcon(new ImageIcon(HelpButton2));
-//        } catch (Exception ex) {
-//            System.out.println("All Images Loaded/Implemented Successfully, u alr know");
-//        }
+        helppls.setBounds(400, 615, 100, 50);
         helppls.setBackground(new Color(255, 200, 100));
         helppls.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
