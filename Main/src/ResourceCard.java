@@ -16,4 +16,6 @@ public class ResourceCard {
     public BufferedImage getImg() {
         return img;
     }
+    //toString
+    public String toString() {return getType();}
 }
