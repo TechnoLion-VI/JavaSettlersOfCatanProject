@@ -608,7 +608,7 @@ public class MainPanel extends JPanel implements MouseListener {
                         trade.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to buy a development card.");
-                    }
+                     }
                 }
             }
         });
