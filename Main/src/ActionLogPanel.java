@@ -57,4 +57,6 @@ public class ActionLogPanel extends OutputStream{
         System.out.println(GameState.currentPlayer.toString() + " claimed win.");
     }
 
+    public static void print(String s) { System.out.println(s); }
+
 }
