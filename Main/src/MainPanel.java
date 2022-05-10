@@ -674,12 +674,12 @@ public class MainPanel extends JPanel implements MouseListener {
         });
 
         helppls.setBounds(320, 625, 75, 50);
-        try {
-            Image HelpButton2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Images/help-button_adobespark.png")));
-            helppls.setIcon(new ImageIcon(HelpButton2));
-        } catch (Exception ex) {
-            System.out.println("All Images Loaded/Implemented Successfully, u alr know");
-        }
+//        try {
+//            Image HelpButton2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Images/help-button_adobespark.png")));
+//            helppls.setIcon(new ImageIcon(HelpButton2));
+//        } catch (Exception ex) {
+//            System.out.println("All Images Loaded/Implemented Successfully, u alr know");
+//        }
         helppls.setBackground(new Color(255, 200, 100));
         helppls.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
