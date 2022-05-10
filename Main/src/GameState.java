@@ -115,7 +115,7 @@ public class GameState {
         }
         ArrayList<Player> options = new ArrayList<>();
         for (Intersection i:t.getIntersections()) {
-            if (i.getOwner() != null && i.getOwner() != currentPlayer) options.add(i.getOwner()); //keep player duplicates, trust me
+            if (i.getOwner() != null && i.getOwner() != currentPlayer && !options.contains(i.getOwner())) options.add(i.getOwner()); //keep player duplicates, trust me
         }
         if (options.isEmpty()) {
             MainPanel.state++;
