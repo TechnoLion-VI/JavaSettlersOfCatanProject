@@ -476,6 +476,98 @@ public class MainPanel extends JPanel implements MouseListener {
                 }
                 if (response == 1) {
                     //maritime
+                    String[] ops = new String[]{"Bank", "Harbor"};
+                    int res = JOptionPane.showOptionDialog(null, "Choose what type of maritime trade you wish to perform.", "Maritime Trade",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                            null, options, options[0]);
+                    if(res == 0){
+                        //bank
+                        String[] bankOps = new String[]{"Brick", "Grain", "Lumber", "Ore", "Wool"};
+                        int bankRes = JOptionPane.showOptionDialog(null, "Choose what resource you want to trade with.", "Bank Trade",
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                null, options, options[0]);
+                        if(bankRes == 0){
+                            //brick
+                            int numBrick = 0;
+                            for(int i = 0; i < GameState.currentPlayer.getResourceCards().size()){
+                                if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Brick")){
+                                    numBrick++;
+                                }
+                            }
+                            if(numBrick >= 4){
+                                String[] brickOps = new String[]{"Grain", "Lumber", "Ore", "Wool"};
+                                int brickRes = JOptionPane.showOptionDialog(null, "Choose what resource you want to trade for.", "Brick Trade",
+                                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                        null, options, options[0]);
+                                if(brickRes == 0){
+                                    for(int i = 0; i < 4; i++){
+                                        if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Brick")){
+                                            GameState.currentPlayer.remove("Brick");
+                                        }
+                                    }
+                                    //CHECK IF RESOURCE DECK HAS ANY LEFT AND REMOVE
+                                    ResourceCard rc = new ResourceCard("Grain", grain);
+                                    GameState.currentPlayer.add(rc);
+                                }
+                                else if(brickRes == 1){
+                                    ResourceCard rc = new ResourceCard("Lumber", lumber);
+                                    GameState.currentPlayer.add(rc);
+                                }
+                                else if(brickRes == 2){
+                                    ResourceCard rc = new ResourceCard("Ore", ore);
+                                    GameState.currentPlayer.add(rc);
+                                }
+                                else{
+                                    ResourceCard rc = new ResourceCard("Wool", wool);
+                                    GameState.currentPlayer.add(rc);
+                                }
+                            }
+                        }
+                        else if(bankRes == 1){
+                            //grain
+                            int numGrain = 0;
+                            for(int i = 0; i < GameState.currentPlayer.getResourceCards().size()){
+                                if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Grain")){
+                                    numGrain++;
+                                }
+                            }
+                            if(numGrain >= 4){
+                                String[] grainOps = new String[]{"Brick", "Lumber", "Ore", "Wool"};
+                                int grainRes = JOptionPane.showOptionDialog(null, "Choose what resource you want to trade for.", "Grain Trade",
+                                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                        null, options, options[0]);
+                                if(grainRes == 0){
+                                    ResourceCard rc = new ResourceCard("Brick", brick);
+                                    GameState.currentPlayer.add(rc);
+                                }
+                                else if(grainRes == 1){
+                                    ResourceCard rc = new ResourceCard("Lumber", lumber);
+                                    GameState.currentPlayer.add(rc);
+                                }
+                                else if(grainRes == 2){
+                                    ResourceCard rc = new ResourceCard("Ore", ore);
+                                    GameState.currentPlayer.add(rc);
+                                }
+                                else{
+                                    ResourceCard rc = new ResourceCard("Wool", wool);
+                                    GameState.currentPlayer.add(rc);
+                                }
+                            }
+                        }
+                        else if(bankRes == 2){
+                            //lumber
+                        }
+                        else if(bankRes == 3){
+                            //ore
+                        }
+                        else{
+                            //wool
+                        }
+                    }
+                    else{
+                        //harbor
+                    }
+
                     System.out.println(GameState.currentPlayer.toString() + " has performed a maritime trade at a harbor."); //NOT DONE; need to specify kind of harbor
                 }
                 repaint();
