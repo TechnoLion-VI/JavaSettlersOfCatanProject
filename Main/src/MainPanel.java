@@ -71,7 +71,6 @@ public class MainPanel extends JPanel implements MouseListener {
             four = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/four.jpg")));
             five = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/five.jpg")));
             six = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/six.jpg")));
-            //  HelpButton = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/help-button_adobespark.png")));
             brickResource=new Brick();
             grainResource=new Grain();
             lumberResource=new Lumber();
@@ -677,7 +676,7 @@ public class MainPanel extends JPanel implements MouseListener {
             }
         });
 
-        helppls.setBounds(320, 625, 75, 50);
+        helppls.setBounds(320, 615, 100, 50);
 //        try {
 //            Image HelpButton2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Images/help-button_adobespark.png")));
 //            helppls.setIcon(new ImageIcon(HelpButton2));
