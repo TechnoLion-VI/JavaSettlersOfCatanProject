@@ -353,7 +353,6 @@ public class MainPanel extends JPanel implements MouseListener {
                                     }
                                 }
                             }
-                            tradeMessage.setText("");
                         }
                         });
 
@@ -488,6 +487,7 @@ public class MainPanel extends JPanel implements MouseListener {
         build.setBackground(new Color(255, 200, 100));
         build.addActionListener(new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JOptionPane.showMessageDialog(null,"If you have questions about build/buy, please go to page 14 of the Help Menu.");
                 String[] options = new String[]{"Road", "Settlement", "City", "Development Card"};
                 int response = JOptionPane.showOptionDialog(null, "Choose what you want to build/buy.", "Build/Buy",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
@@ -665,7 +665,6 @@ public class MainPanel extends JPanel implements MouseListener {
         });
         add(rollDice);
 
-//      endTurn = new JButton("End Turn");
         endTurn.setBounds(265, 520, 100, 50);
         endTurn.setBackground(new Color(255, 200, 100));
         endTurn.addActionListener(new ActionListener() {
