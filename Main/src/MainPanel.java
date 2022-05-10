@@ -585,11 +585,12 @@ public class MainPanel extends JPanel implements MouseListener {
                         for (DevelopmentCard dc : GameState.currentPlayer.getDevCards()) {
                             int x = 0;
                             int y = 0;
-                            JButton b = new JButton(new ImageIcon(resize(dc.getImage(), 25, 75)));
+                            JButton b = new JButton(new ImageIcon(resize(dc.getImage(), 50, 75)));
                             b.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent e) {
                                     if (!devCardPlayed) {
                                         // use to be implemented
+                                        dc.use();
                                         devCardPlayed = true;
                                         GameState.currentPlayer.removeDev(dc);
                                         devCardPanel.remove(b);
@@ -626,7 +627,7 @@ public class MainPanel extends JPanel implements MouseListener {
                     for (Player p:GameState.getPlayers()) {
                         if (p.size() > 7) {
                             int disc = p.size() / 2;
-                            while (disc < p.size()) {
+                            for (int i = 0; i < disc; i++) {
                                 int response = JOptionPane.showOptionDialog(null, "Choose card to discard", p.toString() + " Discard Phase", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, p.getResourceCards().toArray(), p.getResourceCards().toArray()[0]);
                                 p.remove(response);
                                 repaint();
@@ -661,6 +662,8 @@ public class MainPanel extends JPanel implements MouseListener {
                 rollDice.setEnabled(true);
                 trade.setEnabled(false);
                 build.setEnabled(false);
+                devCardPanel.revalidate();
+                devCardPanel.repaint();
                 endTurn.setEnabled(false);
                 repaint();
             }
