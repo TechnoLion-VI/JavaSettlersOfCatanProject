@@ -560,32 +560,213 @@ public class MainPanel extends JPanel implements MouseListener {
                                 int grainRes = JOptionPane.showOptionDialog(null, "Choose what resource you want to trade for.", "Grain Trade",
                                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                                         null, grainOps, grainOps[0]);
-                                if(grainRes == 0){
-                                    ResourceCard rc = new ResourceCard("Brick", brick);
-                                    GameState.currentPlayer.add(rc);
+                                if(grainRes == 0){ //brick
+                                    if(ResourceDeck.brickDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Brick", brick);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough bricks in the bank to perform this trade.");
+                                    }
                                 }
-                                else if(grainRes == 1){
-                                    ResourceCard rc = new ResourceCard("Lumber", lumber);
-                                    GameState.currentPlayer.add(rc);
+                                else if(grainRes == 1){//lumber
+                                    if(ResourceDeck.lumberDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Lumber", lumber);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough lumbers in the bank to perform this trade.");
+                                    }
                                 }
                                 else if(grainRes == 2){
-                                    ResourceCard rc = new ResourceCard("Ore", ore);
-                                    GameState.currentPlayer.add(rc);
+                                    if(ResourceDeck.oreDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Ore", ore);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough ores in the bank to perform this trade.");
+                                    }
                                 }
-                                else{
-                                    ResourceCard rc = new ResourceCard("Wool", wool);
-                                    GameState.currentPlayer.add(rc);
+                                else{ //wool
+                                    if(ResourceDeck.woolDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Wool", wool);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough wools in the bank to perform this trade.");
+                                    }
                                 }
                             }
                         }
                         else if(bankRes == 2){
                             //lumber
+                            int numLumber = 0;
+                            for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                                if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Lumber")){
+                                    numLumber++;
+                                }
+                            }
+                            if(numLumber >= 4){
+                                String[] lumberOps = new String[]{"Brick, Grain, Ore, Wool"};
+                                int lumberRes = JOptionPane.showOptionDialog(null, "Choose what resource you want to trade for.", "Lumber Trade", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, lumberOps, lumberOps[0]);
+                                for(int i = 0; i < 4; i++){
+                                    if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Lumber")){
+                                        GameState.currentPlayer.remove("Lumber");
+                                        ResourceDeck.lumberDeck.add(0, new ResourceCard("Lumber", lumber));
+                                    }
+                                }
+                                if(lumberRes == 0){//brick
+                                  if(ResourceDeck.brickDeck.size() >= 1){
+                                      ResourceCard rc = new ResourceCard("Brick", brick);
+                                      GameState.currentPlayer.add(rc);
+                                  }
+                                  else{
+                                      JOptionPane.showMessageDialog(null, "There are not enough bricks in the bank to perform this trade.");
+                                  }
+                                }
+
+                                else if(lumberRes == 1){//grain
+                                    if(ResourceDeck.lumberDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Grain", grain);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null,"There are not enough grains in the bank to perform this trade.");
+                                    }
+                                }
+                                else if(lumberRes == 2){//ore
+                                    if(ResourceDeck.oreDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Ore", ore);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough ores in the bank to perform this trade.");
+                                    }
+                                }
+                                else{//wool
+                                    if(ResourceDeck.woolDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Wool", wool);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough wools in the bank to perform this trade.");
+                                    }
+                                }
+                            }
                         }
                         else if(bankRes == 3){
                             //ore
+                            int numOre = 0;
+                            for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                                if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Ore")){
+                                    numOre++;
+                                }
+                            }
+                            if(numOre >= 4) {
+                                String[] oreOps = new String[]{"Brick", "Grain", "Lumber", "Wool"};
+                                int oreRes = JOptionPane.showOptionDialog(null, "Choose what resource you wish to trade for.", "Ore Trade", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, oreOps, oreOps[0]);
+                                for(int i = 0; i < 4; i++){
+                                    if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Ore")){
+                                        GameState.currentPlayer.remove("Ore");
+                                        ResourceDeck.oreDeck.add(0, new ResourceCard("Ore", ore));
+                                    }
+                                }
+                                if(oreRes == 0){//brick
+                                    if(ResourceDeck.brickDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Brick", brick);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough bricks in the bank to perform this trade.");
+                                    }
+                                }
+                                else if(oreRes == 1){//grain
+                                    if(ResourceDeck.grainDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Grain", grain);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough grains in the bank to perform this trade.");
+                                    }
+                                }
+                                else if(oreRes == 2){//lumber
+                                    if(ResourceDeck.lumberDeck.size()>=1){
+                                        ResourceCard rc = new ResourceCard("Lumber", lumber);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough lumbers in the bank to perform this trade.");
+                                    }
+                                }
+
+                                else{//wool
+                                    if(ResourceDeck.woolDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Wool", wool);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "THere are not enough wools in the bank to perform this trade.");
+                                    }
+                                }
+                            }
                         }
                         else{
                             //wool
+                            int numWool = 0;
+                            for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                                if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Wool")){
+                                    numWool++;
+                                }
+                            }
+                            if(numWool >= 4){
+                                String [] woolOps = new String[]{"Brick", "Grain", "Lumber", "Ore"};
+                                int woolRes = JOptionPane.showOptionDialog(null, "Choose what resource you want to trade for.", "Wool Trade", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, woolOps, woolOps[0]);
+                                for(int i = 0; i < 4; i++){
+                                    if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Wool")){
+                                        GameState.currentPlayer.remove("Wool");
+                                        ResourceDeck.woolDeck.add(0, new ResourceCard("Brick", brick));
+                                    }
+                                }
+                                if(woolRes == 0){//brick
+                                    if(ResourceDeck.woolDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Brick", brick);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough bricks in the bank to perform this trade.");
+                                    }
+                                }
+
+                                if(woolRes == 1){//grain
+                                    if(ResourceDeck.grainDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Grain", grain);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough grains in the bank to perform this trade.");
+                                    }
+                                }
+
+                                if(woolRes == 2){//lumber
+                                    if(ResourceDeck.lumberDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Lumber", lumber);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough lumbers in the bank to perform this trade.");
+                                    }
+                                }
+
+                                else{//ore
+                                    if(ResourceDeck.oreDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Ore", ore);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough ores in the bank to perform this trade.");
+                                    }
+                                }
+                            }
                         }
                     }
                     else{
