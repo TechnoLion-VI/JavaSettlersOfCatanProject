@@ -25,13 +25,13 @@ public class MainPanel extends JPanel implements MouseListener {
     private JScrollPane devCards;
     private boolean devCardPlayed;
     private ResourceCard brickResource=new ResourceCard(), grainResource=new ResourceCard(), lumberResource=new ResourceCard(), oreResource=new ResourceCard(), woolResource=new ResourceCard();
-    //private Font playerTitleFont;
+    private Font playerTitleFont;
     public static int x, y;
     private Color blue, orange, white, red;
     public static int state = 0;
     public static String action="";
     public static int brickLoc, lumberLoc, oreLoc, grainLoc, woolLoc;
-    //public HelpFrame frame3;
+    public HelpFrame frame3;
 
     public MainPanel() {
         blue = new Color(68, 115, 196);
@@ -100,7 +100,7 @@ public class MainPanel extends JPanel implements MouseListener {
         rollDice = new JButton("Roll Dice");
         endTurn = new JButton("End Turn");
         playDevcard = new JButton("Play Development Card");
-        //helppls = new JButton("Help");
+        helppls = new JButton("Help");
 
         //harbors
         harbors = new ArrayList<BufferedImage>();
@@ -666,20 +666,20 @@ public class MainPanel extends JPanel implements MouseListener {
             }
         });
 
-//        helppls.setBounds(320, 625, 75, 50);
-//        try {
-//            Image HelpButton2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Images/help-button_adobespark.png")));
-//            helppls.setIcon(new ImageIcon(HelpButton2));
-//        } catch (Exception ex) {
-//            System.out.println("All Images Loaded/Implemented Successfully, u alr know");
-//        }
-//        helppls.setBackground(new Color(255, 200, 100));
-//        helppls.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                //frame3 = new HelpFrame("Help");
-//            }
-//        });
-//        add(helppls);
+        helppls.setBounds(320, 625, 75, 50);
+        try {
+            Image HelpButton2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Images/help-button_adobespark.png")));
+            helppls.setIcon(new ImageIcon(HelpButton2));
+        } catch (Exception ex) {
+            System.out.println("All Images Loaded/Implemented Successfully, u alr know");
+        }
+        helppls.setBackground(new Color(255, 200, 100));
+        helppls.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame3 = new HelpFrame("Help");
+            }
+        });
+        add(helppls);
         add(endTurn);
         add(build);
         add(trade);
