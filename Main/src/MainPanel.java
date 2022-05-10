@@ -31,7 +31,7 @@ public class MainPanel extends JPanel implements MouseListener {
     public static int state = 0;
     public static String action="";
     public static int brickLoc, lumberLoc, oreLoc, grainLoc, woolLoc;
-    HelpFrame frame3;
+    //public HelpFrame frame3;
 
     public MainPanel() {
         blue = new Color(68, 115, 196);
@@ -100,7 +100,7 @@ public class MainPanel extends JPanel implements MouseListener {
         rollDice = new JButton("Roll Dice");
         endTurn = new JButton("End Turn");
         playDevcard = new JButton("Play Development Card");
-        helppls = new JButton("Help");
+        //helppls = new JButton("Help");
 
         //harbors
         harbors = new ArrayList<BufferedImage>();
@@ -572,7 +572,7 @@ public class MainPanel extends JPanel implements MouseListener {
                             containsGrain = true;
                         }
                     }
-                        //take it from development card deck and display it visually
+                    //take it from development card deck and display it visually
                     if (containsGrain && containsOre && containsWool && !DevelopmentCardDeck.deck.isEmpty()) {
                         GameState.currentPlayer.remove("Grain");
                         GameState.currentPlayer.remove("Ore");
@@ -611,12 +611,8 @@ public class MainPanel extends JPanel implements MouseListener {
                     }
                 }
             }
-            //JOptionPane optionPane = new JOptionPane("Choose what you want to build/buy.", JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION); //not done
-            //JDialog dialog = optionPane.createDialog("Dialog");
-            //dialog.setVisible(true);
         });
 
-//      rollDice = new JButton("Roll Dice");
         endTurn.setEnabled(false);
         rollDice.setBounds(920, 30, 100, 50);
         rollDice.setBackground(new Color(255, 200, 100));
@@ -670,20 +666,20 @@ public class MainPanel extends JPanel implements MouseListener {
             }
         });
 
-        helppls.setBounds(320, 625, 75, 50);
-        try {
-            Image HelpButton2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Images/help-button_adobespark.png")));
-            helppls.setIcon(new ImageIcon(HelpButton2));
-        } catch (Exception ex) {
-            System.out.println("All Images Loaded/Implemeted Successfully, u alr know");
-        }
-        helppls.setBackground(new Color(255, 200, 100));
-        helppls.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                frame3 = new HelpFrame("Help");
-            }
-        });
-        add(helppls);
+//        helppls.setBounds(320, 625, 75, 50);
+//        try {
+//            Image HelpButton2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Images/help-button_adobespark.png")));
+//            helppls.setIcon(new ImageIcon(HelpButton2));
+//        } catch (Exception ex) {
+//            System.out.println("All Images Loaded/Implemented Successfully, u alr know");
+//        }
+//        helppls.setBackground(new Color(255, 200, 100));
+//        helppls.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                //frame3 = new HelpFrame("Help");
+//            }
+//        });
+//        add(helppls);
         add(endTurn);
         add(build);
         add(trade);
