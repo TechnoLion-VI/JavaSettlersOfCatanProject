@@ -19,8 +19,8 @@ public class MainPanel extends JPanel implements MouseListener {
     private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource, blueStlmt, blueCity, orangeStlmt, orangeCity, redStlmt, redCity, whiteStlmt, whiteCity;
     private BufferedImage genericHarbor, brickHarbor, grainHarbor, lumberHarbor, oreHarbor, woolHarbor;
     private BufferedImage settlement, city, road;
-    private BufferedImage one, two, three, four, five, six;
-    private JButton endTurn, build, trade, rollDice, playDevcard;
+    private BufferedImage one, two, three, four, five, six, HelpButton;
+    private JButton endTurn, build, trade, rollDice, playDevcard,helppls;
     private JPanel devCardPanel;
     private JScrollPane devCards;
     private boolean devCardPlayed;
@@ -31,6 +31,7 @@ public class MainPanel extends JPanel implements MouseListener {
     public static int state = 0;
     public static String action="";
     public static int brickLoc, lumberLoc, oreLoc, grainLoc, woolLoc;
+    HelpFrame frame3;
 
     public MainPanel() {
         blue = new Color(68, 115, 196);
@@ -70,6 +71,7 @@ public class MainPanel extends JPanel implements MouseListener {
             four = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/four.jpg")));
             five = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/five.jpg")));
             six = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/six.jpg")));
+            //  HelpButton = ImageIO.read(Objects.requireNonNull(MainPanel.class.getResource("/Images/help-button_adobespark.png")));
             brickResource=new Brick();
             grainResource=new Grain();
             lumberResource=new Lumber();
@@ -98,6 +100,8 @@ public class MainPanel extends JPanel implements MouseListener {
         rollDice = new JButton("Roll Dice");
         endTurn = new JButton("End Turn");
         playDevcard = new JButton("Play Development Card");
+        helppls = new JButton("Help");
+
         //harbors
         harbors = new ArrayList<BufferedImage>();
         for (int i = 0; i < 4; i++) {
@@ -666,10 +670,24 @@ public class MainPanel extends JPanel implements MouseListener {
             }
         });
 
+        helppls.setBounds(320, 625, 75, 50);
+        try {
+            Image HelpButton2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Images/help-button_adobespark.png")));
+            helppls.setIcon(new ImageIcon(HelpButton2));
+        } catch (Exception ex) {
+            System.out.println("All Images Loaded/Implemeted Successfully, u alr know");
+        }
+        helppls.setBackground(new Color(255, 200, 100));
+        helppls.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame3 = new HelpFrame("Help");
+            }
+        });
+        add(helppls);
         add(endTurn);
         add(build);
         add(trade);
-        //GameState.setUpPhase();
+
     }
 
     public void paintComponent(Graphics g) {
@@ -685,6 +703,8 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.currentPlayer.toString(), 20, 75);
         g.setFont(tradeFont);
         g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
+
+        g.drawImage(HelpButton,1575,25,40,40,null);
 
 
         Font victoryTitleFont = new Font("Serif", Font.BOLD, 20);
