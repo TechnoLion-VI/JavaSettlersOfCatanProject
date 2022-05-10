@@ -26,7 +26,7 @@ public class HelpFrame extends JFrame {
         JPanel p11=new JPanel();
         JPanel p12=new JPanel();
         JPanel p13=new JPanel();
-        //JPanel p14=new JPanel();
+        JPanel p14=new JPanel();
 
         ImageIcon pg1 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg1.PNG")));
         ImageIcon pg2 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg2.PNG")));
@@ -41,6 +41,8 @@ public class HelpFrame extends JFrame {
         ImageIcon pg11 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg11.PNG")));
         ImageIcon pg12 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg12.PNG")));
         ImageIcon pg13 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg13.PNG")));
+        ImageIcon pg14 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg14.png")));
+
         //ImageIcon pg14 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg14.PNG")));
 
         JLabel label1 = new JLabel();
@@ -82,9 +84,9 @@ public class HelpFrame extends JFrame {
         JLabel label13 = new JLabel();
         label13.setIcon(pg13);
         p13.add(label13);
-//        JLabel label14 = new JLabel();
-//        label14.setIcon(pg14);
-//        p14.add(label14);
+        JLabel label14 = new JLabel();
+        label14.setIcon(pg14);
+        p14.add(label14);
 
         add(tp, BorderLayout.CENTER);
 
@@ -140,9 +142,9 @@ public class HelpFrame extends JFrame {
         scrollp13.setPreferredSize(new Dimension(300, 300));
         tp.add(scrollp13, "Page 13");
 
-//        JScrollPane scrollp14 = new JScrollPane(p14);
-//        scrollp14.setPreferredSize(new Dimension(300, 300));
-//        tp.add(scrollp14, "Page 14");
+        JScrollPane scrollp14 = new JScrollPane(p14);
+        scrollp14.setPreferredSize(new Dimension(300, 300));
+        tp.add(scrollp14, "Page 14");
 
         setResizable(true);
         setVisible(true);
