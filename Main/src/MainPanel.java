@@ -94,6 +94,7 @@ public class MainPanel extends JPanel implements MouseListener {
         JTextArea log = new JTextArea(50, 50);
         JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         devCardPanel = new JPanel();
+        devCardPanel.setLayout(new FlowLayout());
         devCards = new JScrollPane(devCardPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         trade = new JButton("Trade");
         build = new JButton("Build/Buy");
@@ -592,7 +593,7 @@ public class MainPanel extends JPanel implements MouseListener {
                         for (DevelopmentCard dc : GameState.currentPlayer.getDevCards()) {
                             int x = 0;
                             int y = 0;
-                            JButton b = new JButton(new ImageIcon(resize(dc.getImage(), 50, 75)));
+                            JButton b = new JButton(dc.getType());
                             b.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent e) {
                                     if (!devCardPlayed) {
