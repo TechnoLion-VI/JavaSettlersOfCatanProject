@@ -4,13 +4,10 @@ import java.awt.*;
 import java.awt.font.GlyphMetrics;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
-import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
-import java.awt.MouseInfo;
-import java.awt.Point;
 
 
 public class MainPanel extends JPanel implements MouseListener {
@@ -93,19 +90,6 @@ public class MainPanel extends JPanel implements MouseListener {
         JTextArea log = new JTextArea(50, 50);
         JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         devCardPanel = new JPanel();
-        CardLayout cards = new CardLayout();
-        cards.setHgap(10);
-        cards.setVgap(10);
-        devCardPanel.setLayout(cards);
-        JPanel p1 = new JPanel(new FlowLayout());
-        JPanel p2 = new JPanel(new FlowLayout());
-        JPanel p3 = new JPanel(new FlowLayout());
-        JPanel p4 = new JPanel(new FlowLayout());
-        devCardPanel.add(GameState.players[0].toString(), p1);
-        devCardPanel.add(GameState.players[1].toString(), p2);
-        devCardPanel.add(GameState.players[2].toString(), p3);
-        devCardPanel.add(GameState.players[3].toString(), p4);
-        cards.first(devCardPanel);
         devCards = new JScrollPane(devCardPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         devCards.setViewportView(devCardPanel);
         trade = new JButton("Trade");
@@ -895,12 +879,12 @@ public class MainPanel extends JPanel implements MouseListener {
                         ResourceDeck.add("Grain");
                         ResourceDeck.add("Wool");
                         GameState.currentPlayer.addDev(DevelopmentCardDeck.draw());
+                        devCardPanel.removeAll();
                         for (DevelopmentCard dc : GameState.currentPlayer.getDevCards()) {
                             JButton b = new JButton(dc.getType());
                             b.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent e) {
-                                    if (!devCardPlayed) {
-                                        dc.use();
+                                    if (!devCardPlayed && dc.use()) {
                                         devCardPlayed = true;
                                         GameState.currentPlayer.removeDev(dc);
                                         devCardPanel.remove(b);
@@ -908,15 +892,9 @@ public class MainPanel extends JPanel implements MouseListener {
                                     }
                                 }
                             });
-                            switch (GameState.currentPlayer.toString()) {
-                                case "Player Blue" -> p1.add(b);
-                                case "Player Orange" -> p2.add(b);
-                                case "Player Red" -> p3.add(b);
-                                case "Player White" -> p4.add(b);
-                            }
+                            devCardPanel.add(b);
                             devCards.revalidate();
                             revalidate();
-                            repaint();
                         }
                         System.out.println(GameState.currentPlayer.toString() + " has bought a development card.");
                         trade.setEnabled(false);
@@ -974,9 +952,26 @@ public class MainPanel extends JPanel implements MouseListener {
                 rollDice.setEnabled(true);
                 trade.setEnabled(false);
                 build.setEnabled(false);
-                cards.show(devCardPanel, GameState.currentPlayer.toString());
+                devCardPanel.removeAll();
+                for (DevelopmentCard dc : GameState.currentPlayer.getDevCards()) {
+                    JButton b = new JButton(dc.getType());
+                    b.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            if (!devCardPlayed && dc.use()) {
+                                devCardPlayed = true;
+                                GameState.currentPlayer.removeDev(dc);
+                                devCardPanel.remove(b);
+                                devCardPanel.revalidate();
+                            }
+                        }
+                    });
+                    devCardPanel.add(b);
+                    devCards.revalidate();
+                    revalidate();
+                }
                 devCardPanel.revalidate();
                 devCardPanel.repaint();
+                devCardPlayed = false;
                 endTurn.setEnabled(false);
                 repaint();
             }
@@ -1309,7 +1304,6 @@ public class MainPanel extends JPanel implements MouseListener {
 //            }
 //        }
     }
-
 
     public BufferedImage resize(BufferedImage img, int w, int h) {
         BufferedImage resizedImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
