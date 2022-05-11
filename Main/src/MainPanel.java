@@ -932,6 +932,7 @@ public class MainPanel extends JPanel implements MouseListener {
         trade.setEnabled(false);
         rollDice.setBounds(920, 30, 100, 50);
         rollDice.setBackground(new Color(255, 200, 100));
+        rollDice.setEnabled(false);
         rollDice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 GameState.rollDice();
@@ -1357,6 +1358,7 @@ public class MainPanel extends JPanel implements MouseListener {
             case 15: {
                 GameState.buildRoad();
                 repaint();
+                rollDice.setEnabled(true);
                 break;
             }
         }
