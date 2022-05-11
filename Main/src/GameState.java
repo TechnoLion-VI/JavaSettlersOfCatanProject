@@ -118,7 +118,7 @@ public class GameState {
             }
         }
 
-        if (currentLargestArmySize<size && !largestArmyPlayer.equals(players[playerindex])) {
+        if (currentLargestArmySize<size && largestArmyPlayer != null && !largestArmyPlayer.equals(players[playerindex])) {
             largestArmyPlayer.setHasLargestArmy(false);
             players[playerindex].setHasLargestArmy(true);
             largestArmyPlayer=players[playerindex];

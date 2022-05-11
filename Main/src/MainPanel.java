@@ -907,10 +907,11 @@ public class MainPanel extends JPanel implements MouseListener {
                                     if (!devCardPlayed && dc.use()) {
                                         devCardPlayed = true;
                                         GameState.currentPlayer.removeDev(dc);
+                                        b.setEnabled(false);
                                         devCardPanel.remove(b);
-                                        devCardPanel.revalidate();
-                                        devCardPanel.repaint();
                                     }
+                                    devCardPanel.revalidate();
+                                    devCardPanel.repaint();
                                 }
                             });
                             devCardPanel.add(b);
@@ -984,9 +985,11 @@ public class MainPanel extends JPanel implements MouseListener {
                             if (!devCardPlayed && dc.use()) {
                                 devCardPlayed = true;
                                 GameState.currentPlayer.removeDev(dc);
+                                b.setEnabled(false);
                                 devCardPanel.remove(b);
-                                devCardPanel.revalidate();
                             }
+                            devCardPanel.revalidate();
+                            devCardPanel.repaint();
                         }
                     });
                     devCardPanel.add(b);
