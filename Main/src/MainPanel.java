@@ -1069,8 +1069,8 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.setStroke(new BasicStroke(4));
         g2.drawLine(7, 152, 380, 152);
         g2.drawLine(7, 152, 7, 300);
-        //harbors
 
+        //harbors
         g.drawImage(harbors.get(0), 437, 313, 50, 50, null);
         g.drawImage(harbors.get(1), 538, 107, 50, 50, null);
         g.drawImage(harbors.get(2), 755, 110, 50, 50, null);
@@ -1081,6 +1081,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(harbors.get(7), 750, 700, 50, 50, null);
         g.drawImage(harbors.get(8), 450, 510, 50, 50, null);
 
+        //img:trophy stat:victorypoints
         g.drawString("Blue: ", 11, 180);
         g.drawString("Orange: ", 11, 220);
         g.drawString("Red: ", 11, 260);
@@ -1093,7 +1094,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(trophy, 90, 238, 30, 30, null);
         g.drawString(GameState.players[3].getPublicScore() + "", 130, 300);
         g.drawImage(trophy, 90, 278, 30, 30, null);
-
+        //img:resource stat:resourcecards
         g.drawString(GameState.players[0].getResourceCards().size() + "", 190, 180);
         g.drawImage(resource, 150, 158, 30, 30, null);
         g.drawString(GameState.players[1].getResourceCards().size() + "", 190, 220);
@@ -1102,8 +1103,8 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(resource, 150, 238, 30, 30, null);
         g.drawString(GameState.players[3].getResourceCards().size() + "", 190, 300);
         g.drawImage(resource, 150, 278, 30, 30, null);
-
-        g.drawString(GameState.players[0].getRoadsLeft() + "", 250, 180);
+        //img:road stat:roadsbuilt
+        g.drawString((15 - GameState.players[0].getRoadsLeft()) + "", 250, 180);
         g.drawImage(road, 210, 158, 30, 30, null);
         g.drawString(GameState.players[1].getRoadsLeft() + "", 250, 220);
         g.drawImage(road, 210, 198, 30, 30, null);
@@ -1111,8 +1112,8 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(road, 210, 238, 30, 30, null);
         g.drawString(GameState.players[3].getRoadsLeft() + "", 250, 300);
         g.drawImage(road, 210, 278, 30, 30, null);
-
-        g.drawString(GameState.players[0].getStlmtsLeft() + "", 315, 180);
+        //img:settlement stat:settlementsbuilt
+        g.drawString((5 - GameState.players[0].getStlmtsLeft()) + "", 315, 180);
         g.drawImage(settlement, 280, 158, 30, 30, null);
         g.drawString(GameState.players[1].getStlmtsLeft() + "", 315, 220);
         g.drawImage(settlement, 280, 198, 30, 30, null);
@@ -1120,8 +1121,8 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(settlement, 280, 238, 30, 30, null);
         g.drawString(GameState.players[3].getStlmtsLeft() + "", 315, 300);
         g.drawImage(settlement, 280, 278, 30, 30, null);
-
-        g.drawString(GameState.players[0].getCitiesLeft() + "", 375, 180);
+        //img:city stat:citiesbuilt
+        g.drawString((4 - GameState.players[0].getCitiesLeft()) + "", 375, 180);
         g.drawImage(city, 340, 158, 30, 30, null);
         g.drawString(GameState.players[1].getCitiesLeft() + "", 375, 220);
         g.drawImage(city, 340, 198, 30, 30, null);
@@ -1129,6 +1130,15 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(city, 340, 238, 30, 30, null);
         g.drawString(GameState.players[3].getCitiesLeft() + "", 375, 300);
         g.drawImage(city, 340, 278, 30, 30, null);
+        //imgs:sword+road stats:largestArmy+longestRoad
+        for (int i = 0; i < GameState.players.length; i++) {
+            if (GameState.players[i].getHasLargestArmy()) {
+                g.drawImage(sword, 400, 158 + (40 * i), 30, 30, null);
+            }
+            if (GameState.players[i].getHasLongestRoad()) {
+                g.drawImage(sword, 460, 158 + (40 * i), 30, 30, null);
+            }
+        }
 
         g.setFont(victoryTitleFont);
         g.drawString("DEVELOPMENT CARDS", 5, 373);

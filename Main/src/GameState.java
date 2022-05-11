@@ -123,8 +123,8 @@ public class GameState {
             players[playerindex].setHasLargestArmy(true);
             largestArmyPlayer=players[playerindex];
             currentLargestArmySize=size;
+            ActionLogPanel.largestArmy(players[playerindex]);
         }
-        ActionLogPanel.largestArmy();
     }
 
     public static void setUpPhase() {
