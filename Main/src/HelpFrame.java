@@ -28,20 +28,20 @@ public class HelpFrame extends JFrame {
         JPanel p13=new JPanel();
         JPanel p14=new JPanel();
 
-        ImageIcon pg1 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg1.PNG")));
-        ImageIcon pg2 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg2.PNG")));
-        ImageIcon pg3 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg3.PNG")));
-        ImageIcon pg4 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg4.PNG")));
-        ImageIcon pg5 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg5.PNG")));
-        ImageIcon pg6 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg6.PNG")));
-        ImageIcon pg7 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg7.PNG")));
-        ImageIcon pg8 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg8.PNG")));
-        ImageIcon pg9 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg9.PNG")));
-        ImageIcon pg10 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg10.PNG")));
-        ImageIcon pg11 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg11.PNG")));
-        ImageIcon pg12 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg12.PNG")));
-        ImageIcon pg13 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg13.PNG")));
-        ImageIcon pg14 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/catanrules.PNG")));
+        ImageIcon pg1 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg1.png")));
+        ImageIcon pg2 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg2.png")));
+        ImageIcon pg3 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg3.png")));
+        ImageIcon pg4 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg4.png")));
+        ImageIcon pg5 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg5.png")));
+        ImageIcon pg6 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg6.png")));
+        ImageIcon pg7 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg7.png")));
+        ImageIcon pg8 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg8.png")));
+        ImageIcon pg9 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg9.png")));
+        ImageIcon pg10 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg10.png")));
+        ImageIcon pg11 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg11.png")));
+        ImageIcon pg12 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg12.png")));
+        ImageIcon pg13 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/SOC rules pg13.png")));
+        ImageIcon pg14 = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/catanrules.png")));
 
         JLabel label1 = new JLabel();
         label1.setIcon(pg1);
