@@ -942,7 +942,7 @@ public class MainPanel extends JPanel implements MouseListener {
                             int disc = p.size() / 2;
                             for (int i = 0; i < disc; i++) {
                                 int response = JOptionPane.showOptionDialog(null, "Choose card to discard", p.toString() + " Discard Phase", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, p.getResourceCards().toArray(), p.getResourceCards().toArray()[0]);
-                                p.remove(response);
+                                ResourceDeck.add(p.remove(response));
                                 repaint();
                             }
                         }

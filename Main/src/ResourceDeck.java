@@ -82,6 +82,7 @@ public class ResourceDeck {
         };
     }
     //same as above, just with the specified type being a ResourceCard instead of a String; overloaded getDeck
+    public static void add(ResourceCard rc) {add(rc.getType());}
     public static ResourceCard draw(ResourceCard rc) {return draw(rc.getType());}
     public static int getNumLeft(ResourceCard rc) {
         return getNumLeft(rc.getType());
