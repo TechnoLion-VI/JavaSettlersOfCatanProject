@@ -909,7 +909,7 @@ public class MainPanel extends JPanel implements MouseListener {
                                         GameState.currentPlayer.removeDev(dc);
                                         b.setEnabled(false);
                                         devCardPanel.remove(b);
-                                    }
+                                    } else System.out.println(GameState.currentPlayer.toString() + " cannot play development card.");
                                     devCardPanel.revalidate();
                                     devCardPanel.repaint();
                                 }
@@ -987,7 +987,7 @@ public class MainPanel extends JPanel implements MouseListener {
                                 GameState.currentPlayer.removeDev(dc);
                                 b.setEnabled(false);
                                 devCardPanel.remove(b);
-                            }
+                            } else System.out.println(GameState.currentPlayer.toString() + " cannot play development card.");
                             devCardPanel.revalidate();
                             devCardPanel.repaint();
                         }
