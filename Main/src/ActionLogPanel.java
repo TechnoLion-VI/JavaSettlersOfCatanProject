@@ -37,8 +37,8 @@ public class ActionLogPanel extends OutputStream{
         System.out.println(GameState.currentPlayer.toString() + " bought a development card.");
     }
 
-    public static void largestArmy(){
-        System.out.println(GameState.currentPlayer.toString() + " acquired the largest army card.");
+    public static void largestArmy(Player p){
+        System.out.println(p.toString() + " acquired the largest army card.");
     }
 
     public static void longestRoad(Player p){
@@ -54,7 +54,11 @@ public class ActionLogPanel extends OutputStream{
     }
 
     public static void winClaimed() {
-        System.out.println(GameState.currentPlayer.toString() + " claimed win.");
+        System.out.println(GameState.currentPlayer.toString() + " has won the game!");
     }
+
+    public static void cancel() { System.out.println(GameState.currentPlayer.toString() + " cancelled their action."); }
+
+    public static void println(String s) { System.out.println(s); } //for testing
 
 }

@@ -15,8 +15,7 @@ public class RoadBuilding extends DevelopmentCard{
         setImg(card);
     }
     public boolean use() {
-        GameState.buildRoad();
-        GameState.buildRoad();
+        MainPanel.action = "RoadBuilding";
         return true;
     }
 }

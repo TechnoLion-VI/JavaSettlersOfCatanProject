@@ -16,8 +16,9 @@ public class Knight extends DevelopmentCard{
         setImg(card);
     }
     public boolean use(){
-        MainPanel.state = 20;
+        MainPanel.action = "Robber";
         GameState.currentPlayer.addToPlayedKnightCards();
+        GameState.checkLargestArmyPlayer();
         ActionLogPanel.robberK();
         return true;
     }

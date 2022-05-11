@@ -1,16 +1,12 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.font.GlyphMetrics;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
-import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
-import java.awt.MouseInfo;
-import java.awt.Point;
 
 
 public class MainPanel extends JPanel implements MouseListener {
@@ -19,18 +15,19 @@ public class MainPanel extends JPanel implements MouseListener {
     private BufferedImage playerIndicator, brick, ore, grain, lumber, wool, sword, trophy, resource, blueStlmt, blueCity, orangeStlmt, orangeCity, redStlmt, redCity, whiteStlmt, whiteCity;
     private BufferedImage genericHarbor, brickHarbor, grainHarbor, lumberHarbor, oreHarbor, woolHarbor;
     private BufferedImage settlement, city, road;
-    private BufferedImage one, two, three, four, five, six;
-    private JButton endTurn, build, trade, rollDice, playDevcard;
+    private BufferedImage one, two, three, four, five, six, HelpButton;
+    private JButton endTurn, build, trade, rollDice, help, cancel;
     private JPanel devCardPanel;
     private JScrollPane devCards;
     private boolean devCardPlayed;
     private ResourceCard brickResource=new ResourceCard(), grainResource=new ResourceCard(), lumberResource=new ResourceCard(), oreResource=new ResourceCard(), woolResource=new ResourceCard();
-    //private Font playerTitleFont;
+    private Font playerTitleFont;
     public static int x, y;
     private Color blue, orange, white, red;
     public static int state = 0;
     public static String action="";
     public static int brickLoc, lumberLoc, oreLoc, grainLoc, woolLoc;
+    public HelpFrame frame3;
 
     public MainPanel() {
         blue = new Color(68, 115, 196);
@@ -82,7 +79,6 @@ public class MainPanel extends JPanel implements MouseListener {
         devCardPlayed = false;
         initComponents();
         addMouseListener(this);
-        //GameState.rollDice();
     }
 
 
@@ -93,11 +89,14 @@ public class MainPanel extends JPanel implements MouseListener {
         JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         devCardPanel = new JPanel();
         devCards = new JScrollPane(devCardPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        devCards.setViewportView(devCardPanel);
         trade = new JButton("Trade");
         build = new JButton("Build/Buy");
         rollDice = new JButton("Roll Dice");
         endTurn = new JButton("End Turn");
-        playDevcard = new JButton("Play Development Card");
+        help = new JButton("Help");
+        cancel = new JButton("Cancel");
+
         //harbors
         harbors = new ArrayList<BufferedImage>();
         for (int i = 0; i < 4; i++) {
@@ -110,7 +109,7 @@ public class MainPanel extends JPanel implements MouseListener {
         harbors.add(brickHarbor);
         Collections.shuffle(harbors);
         //components
-//      JPanel p = new JPanel();
+
         p.setLocation(1140, 300);
         p.setSize(300, 450);
         p.setBackground(new Color(255, 220, 100));
@@ -126,7 +125,7 @@ public class MainPanel extends JPanel implements MouseListener {
         log.setLineWrap(true);
         PrintStream printStream = new PrintStream(new ActionLogPanel(log));
         System.setOut(printStream);
-//        JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//      JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         logPanel.setBounds(1100, 10, 400, 200);
         add(logPanel);
         /* DEVELOPMENT CARDS PANEL */
@@ -210,7 +209,7 @@ public class MainPanel extends JPanel implements MouseListener {
                     done.setBounds(115, 400, 75, 25);
                     done.addActionListener(new ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            ArrayList<String> trade = new ArrayList<String>();
+                            ArrayList<String> trading = new ArrayList<String>();
                             if (oreText.isValid()) {
                                 String text = oreText.getText();
                                 int numOre = Integer.parseInt(text);
@@ -222,8 +221,8 @@ public class MainPanel extends JPanel implements MouseListener {
                                 }
                                 if (numOre <= oreLeft) {
                                     System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " ore.");
-                                    for(int i = 0; i < numOre; i++){
-                                        trade.add("ore");
+                                    for (int i = 0; i < numOre; i++) {
+                                        trading.add("ore");
                                     }
                                     //p.repaint();
                                 } else {
@@ -247,8 +246,8 @@ public class MainPanel extends JPanel implements MouseListener {
                                 }
                                 if (numGrain <= grainLeft) {
                                     System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " grain.");
-                                    for(int i = 0; i < numGrain; i++){
-                                        trade.add("grain");
+                                    for (int i = 0; i < numGrain; i++) {
+                                        trading.add("grain");
                                     }
                                     //p.repaint();
                                 } else {
@@ -272,12 +271,11 @@ public class MainPanel extends JPanel implements MouseListener {
                                 }
                                 if (numBrick <= brickLeft) {
                                     System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " brick.");
-                                    for(int i = 0; i < numBrick; i++){
-                                        trade.add("brick");
+                                    for (int i = 0; i < numBrick; i++) {
+                                        trading.add("brick");
                                     }
                                     //p.repaint();
                                 } else {
-                                    //JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough brick to carry out this trade.");
                                     while (numBrick > brickLeft) {
                                         JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough brick to carry out this trade.");
                                         String n = JOptionPane.showInputDialog("How many brick does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + brickLeft + ")");
@@ -298,8 +296,8 @@ public class MainPanel extends JPanel implements MouseListener {
                                 }
                                 if (numLumber <= lumberLeft) {
                                     System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " lumber.");
-                                    for(int i = 0; i < numLumber; i++){
-                                        trade.add("lumber");
+                                    for (int i = 0; i < numLumber; i++) {
+                                        trading.add("lumber");
                                     }
                                     //p.repaint();
                                 } else {
@@ -324,8 +322,8 @@ public class MainPanel extends JPanel implements MouseListener {
                                 }
                                 if (numWool <= woolLeft) {
                                     System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " wool.");
-                                    for(int i = 0; i < numWool; i++){
-                                        trade.add("wool");
+                                    for (int i = 0; i < numWool; i++) {
+                                        trading.add("wool");
                                     }
                                     //p.repaint();
                                 } else {
@@ -337,114 +335,120 @@ public class MainPanel extends JPanel implements MouseListener {
                                     }
                                 }
                             }
-
-                            p.repaint();
-
-                            tradeMessage.setText("");
-                            JLabel tradeMessageTwo = new JLabel("");
-                            tradeMessageTwo.setFont(new Font("Serif", 1, 15));
-                            tradeMessageTwo.setBounds(0, -20, 400, 80);
-                            tradeMessageTwo.setText("<html>Please type in how many of each resource<br>you wish to trade for.");
-                            p.add(tradeMessageTwo);
-
-                            JLabel oreTwo = new JLabel("Ore");
-                            oreTwo.setFont(new Font("Serif", 1, 15));
-                            oreTwo.setBounds(10, 50, 30, 30);
-                            oreTwo.requestFocus();
-                            oreTwo.setVisible(true);
-                            JTextField oreTextTwo = new JTextField(10);
-                            oreTextTwo.setBounds(70, 55, 30, 25);
-                            oreTextTwo.setBackground(new Color(255, 220, 100));
-                            oreTextTwo.setVisible(true);
-                            String oText = oreTextTwo.getText();
-                            int numO = Integer.parseInt(oText);
-                            if(!trade.contains("ore")) {
-                                System.out.println("BRO");
-                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numO + " ore.");
-                            }
-                            else{
-                                while(trade.contains("ore")){
-                                    JOptionPane.showInputDialog("You cannot trade the same resource.");
-                                }
-                            }
-                            p.add(oreTextTwo);
-                            p.add(oreTwo);
-
-                            JLabel grainTwo = new JLabel("Grain");
-                            grainTwo.setFont(new Font("Serif", 1, 15));
-                            grainTwo.setBounds(10, 90, 30, 30);
-                            grainTwo.requestFocus();
-                            grainTwo.setVisible(true);
-                            JTextField grainTextTwo = new JTextField(10);
-                            grainTextTwo.setBounds(70, 95, 30, 25);
-                            grainTextTwo.setBackground(new Color(255, 220, 100));
-                            String gText = grainTextTwo.getText();
-                            int numG = Integer.parseInt(gText);
-                            System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numG + " grain.");
-                            p.add(grainTextTwo);
-                            p.add(grain);
-
-                            JLabel lumberTwo = new JLabel("Lumber");
-                            lumberTwo.setFont(new Font("Serif", 1, 15));
-                            lumberTwo.setBounds(10, 130, 30, 30);
-                            lumberTwo.requestFocus();
-                            lumberTwo.setVisible(true);
-                            JTextField lumberTextTwo = new JTextField(10);
-                            lumberTextTwo.setBounds(70, 135, 30, 25);
-                            lumberTextTwo.setBackground(new Color(255, 220, 100));
-                            String lText = lumberTextTwo.getText();
-                            int numL = Integer.parseInt(lText);
-                            System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numL + " lumber.");
-                            p.add(lumberTextTwo);
-                            p.add(lumber);
-
-                            JLabel brickTwo = new JLabel("Brick");
-                            brickTwo.setFont(new Font("Serif", 1, 15));
-                            brickTwo.setBounds(10, 170, 30, 30);
-                            brickTwo.requestFocus();
-                            brickTwo.setVisible(true);
-                            JTextField brickTextTwo = new JTextField(10);
-                            brickTextTwo.setBounds(70, 175, 30, 25);
-                            brickTextTwo.setBackground(new Color(255, 220, 100));
-                            String bText = brickTextTwo.getText();
-                            int numB = Integer.parseInt(bText);
-                            System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numB + " brick.");
-                            p.add(brickTextTwo);
-                            p.add(brick);
-
-                            JLabel woolTwo = new JLabel("Wool");
-                            woolTwo.setFont(new Font("Serif", 1, 15));
-                            woolTwo.setBounds(10, 210, 30, 30);
-                            woolTwo.requestFocus();
-                            woolTwo.setVisible(true);
-                            JTextField woolTextTwo = new JTextField(10);
-                            woolTextTwo.setBounds(70, 215, 30, 25);
-                            woolTextTwo.setBackground(new Color(255, 220, 100));
-                            String wText = woolTextTwo.getText();
-                            int numW = Integer.parseInt(wText);
-                            System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numW + " wool.");
-                            p.add(woolTextTwo);
-                            p.add(wool);
-
-                            p.repaint();
-                            if(GameState.currentPlayer.toString().equals("Blue Player")){
-                                JLabel white = new JLabel("White Player");
-                                white.setFont(new Font("Serif", 1, 15));
-                                white.setBounds(10, 50, 30, 30);
-                                white.requestFocus();
-                                white.setVisible(true);
-                                JTextField whiteTwo = new JTextField(10);
-                                whiteTwo.setBackground(new Color(255, 220, 100));
-                                String whiteText = whiteTwo.getText();
-                                if(whiteText.equals("A")){
-                                    System.out.println(GameState.currentPlayer.toString() + " has traded with White Player.");
-                                }
-                                else{
-                                    System.out.println("White Player has declined " + GameState.currentPlayer.toString() + "'s trade.");
-                                }
-                            }
                         }
+                        });
 
+                            JButton done2 = new JButton("Done");
+                            done2.setFont(new Font("Serif", 1, 15));
+                            done2.setBackground(new Color(255, 220, 100));
+                            done2.setBounds(115, 400, 75, 25);
+                            done2.addActionListener(new ActionListener() {
+                                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                    ArrayList<String> tradingTwo = new ArrayList<String>();
+                                    JPanel p2 = new JPanel();
+                                    JLabel tradeMessageTwo = new JLabel("");
+                                    tradeMessageTwo.setFont(new Font("Serif", 1, 15));
+                                    tradeMessageTwo.setBounds(0, -20, 400, 80);
+                                    tradeMessageTwo.setText("<html>Please type in how many of each resource<br>you wish to trade for.");
+                                    p2.add(tradeMessageTwo);
+
+                                    JLabel oreTwo = new JLabel("Ore");
+                                    oreTwo.setFont(new Font("Serif", 1, 15));
+                                    oreTwo.setBounds(10, 50, 30, 30);
+                                    oreTwo.requestFocus();
+                                    oreTwo.setVisible(true);
+                                    JTextField oreTextTwo = new JTextField(10);
+                                    oreTextTwo.setBounds(70, 55, 30, 25);
+                                    oreTextTwo.setBackground(new Color(255, 220, 100));
+                                    oreTextTwo.setVisible(true);
+                                    String oText = oreTextTwo.getText();
+                                    int numO = Integer.parseInt(oText);
+                                    if(!tradingTwo.contains("ore")) {
+                                        System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numO + " ore.");
+                                    }
+                                    else{
+                                        while(tradingTwo.contains("ore")){
+                                            JOptionPane.showInputDialog("You cannot trade the same resource.");
+                                        }
+                                    }
+                                    p2.add(oreTextTwo);
+                                    p2.add(oreTwo);
+
+                                    JLabel grainTwo = new JLabel("Grain");
+                                    grainTwo.setFont(new Font("Serif", 1, 15));
+                                    grainTwo.setBounds(10, 90, 30, 30);
+                                    grainTwo.requestFocus();
+                                    grainTwo.setVisible(true);
+                                    JTextField grainTextTwo = new JTextField(10);
+                                    grainTextTwo.setBounds(70, 95, 30, 25);
+                                    grainTextTwo.setBackground(new Color(255, 220, 100));
+                                    String gText = grainTextTwo.getText();
+                                    int numG = Integer.parseInt(gText);
+                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numG + " grain.");
+                                    p2.add(grainTextTwo);
+                                    p2.add(grain);
+
+                                    JLabel lumberTwo = new JLabel("Lumber");
+                                    lumberTwo.setFont(new Font("Serif", 1, 15));
+                                    lumberTwo.setBounds(10, 130, 30, 30);
+                                    lumberTwo.requestFocus();
+                                    lumberTwo.setVisible(true);
+                                    JTextField lumberTextTwo = new JTextField(10);
+                                    lumberTextTwo.setBounds(70, 135, 30, 25);
+                                    lumberTextTwo.setBackground(new Color(255, 220, 100));
+                                    String lText = lumberTextTwo.getText();
+                                    int numL = Integer.parseInt(lText);
+                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numL + " lumber.");
+                                    p2.add(lumberTextTwo);
+                                    p2.add(lumber);
+
+                                    JLabel brickTwo = new JLabel("Brick");
+                                    brickTwo.setFont(new Font("Serif", 1, 15));
+                                    brickTwo.setBounds(10, 170, 30, 30);
+                                    brickTwo.requestFocus();
+                                    brickTwo.setVisible(true);
+                                    JTextField brickTextTwo = new JTextField(10);
+                                    brickTextTwo.setBounds(70, 175, 30, 25);
+                                    brickTextTwo.setBackground(new Color(255, 220, 100));
+                                    String bText = brickTextTwo.getText();
+                                    int numB = Integer.parseInt(bText);
+                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numB + " brick.");
+                                    p2.add(brickTextTwo);
+                                    p2.add(brick);
+
+                                    JLabel woolTwo = new JLabel("Wool");
+                                    woolTwo.setFont(new Font("Serif", 1, 15));
+                                    woolTwo.setBounds(10, 210, 30, 30);
+                                    woolTwo.requestFocus();
+                                    woolTwo.setVisible(true);
+                                    JTextField woolTextTwo = new JTextField(10);
+                                    woolTextTwo.setBounds(70, 215, 30, 25);
+                                    woolTextTwo.setBackground(new Color(255, 220, 100));
+                                    String wText = woolTextTwo.getText();
+                                    int numW = Integer.parseInt(wText);
+                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numW + " wool.");
+                                    p2.add(woolTextTwo);
+                                    p2.add(wool);
+
+                                    p.repaint();
+                                    if(GameState.currentPlayer.toString().equals("Blue Player")){
+                                        JLabel white = new JLabel("White Player");
+                                        white.setFont(new Font("Serif", 1, 15));
+                                        white.setBounds(10, 50, 30, 30);
+                                        white.requestFocus();
+                                        white.setVisible(true);
+                                        JTextField whiteTwo = new JTextField(10);
+                                        whiteTwo.setBackground(new Color(255, 220, 100));
+                                        String whiteText = whiteTwo.getText();
+                                        if(whiteText.equals("A")){
+                                            System.out.println(GameState.currentPlayer.toString() + " has traded with White Player.");
+                                        }
+                                        else{
+                                            System.out.println("White Player has declined " + GameState.currentPlayer.toString() + "'s trade.");
+                                        }
+                                    }
+                                    p2.add(done2);
+                                }
                         //make sure they are not trading the same thing
                         //allow each player to accept or decline
                         //display whether player accepted or declined on action log
@@ -454,7 +458,302 @@ public class MainPanel extends JPanel implements MouseListener {
                 }
                 if (response == 1) {
                     //maritime
-                    System.out.println(GameState.currentPlayer.toString() + " has performed a maritime trade at a harbor."); //NOT DONE; need to specify kind of harbor
+                    String[] ops = new String[]{"Bank", "Harbor"};
+                    int res = JOptionPane.showOptionDialog(null, "Choose what type of maritime trade you wish to perform.", "Maritime Trade",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                            null, ops, ops[0]);
+                    if(res == 0){
+                        //bank
+                        String[] bankOps = new String[]{"Brick", "Grain", "Lumber", "Ore", "Wool"};
+                        int bankRes = JOptionPane.showOptionDialog(null, "Choose what resource you want to trade with.", "Bank Trade",
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                null, bankOps, bankOps[0]);
+                        if(bankRes == 0){
+                            //brick
+                            int numBrick = 0;
+                            for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                                if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Brick")){
+                                    numBrick++;
+                                }
+                            }
+                            if(numBrick >= 4){
+                                String[] brickOps = new String[]{"Grain", "Lumber", "Ore", "Wool"};
+                                int brickRes = JOptionPane.showOptionDialog(null, "Choose what resource you want to trade for.", "Brick Trade",
+                                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                        null, options, options[0]);
+                                for(int i = 0; i < 4; i++){
+                                    if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Brick")){
+                                        GameState.currentPlayer.remove("Brick");
+                                        ResourceDeck.brickDeck.add(0, new ResourceCard("Brick", brick));
+                                    }
+                                }
+                                if(brickRes == 0){//grain
+                                    if(ResourceDeck.grainDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Grain", grain);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough grains in the bank to perform this trade.");
+                                    }
+                                }
+                                else if(brickRes == 1){
+                                    if(ResourceDeck.lumberDeck.size() >=1){
+                                        ResourceCard rc = new ResourceCard("Lumber", lumber);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough lumbers in the bank to perform this trade.");
+                                    }
+                                }
+                                else if(brickRes == 2){
+                                    if(ResourceDeck.oreDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Ore", ore);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough ores in the bank to perform this trade.");
+                                    }
+                                }
+                                else{ //wool
+                                    if(ResourceDeck.woolDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Wool", wool);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough wools in the bank to perform this trade.");
+                                    }
+                                }
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough brick to perform this trade.");
+                            }
+                        }
+
+                        else if(bankRes == 1){
+                            //grain
+                            int numGrain = 0;
+                            for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                                if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Grain")){
+                                    numGrain++;
+                                }
+                            }
+                            if(numGrain >= 4){
+                                String[] grainOps = new String[]{"Brick", "Lumber", "Ore", "Wool"};
+                                int grainRes = JOptionPane.showOptionDialog(null, "Choose what resource you want to trade for.", "Grain Trade",
+                                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                        null, grainOps, grainOps[0]);
+                                if(grainRes == 0){ //brick
+                                    if(ResourceDeck.brickDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Brick", brick);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough bricks in the bank to perform this trade.");
+                                    }
+                                }
+                                else if(grainRes == 1){//lumber
+                                    if(ResourceDeck.lumberDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Lumber", lumber);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough lumbers in the bank to perform this trade.");
+                                    }
+                                }
+                                else if(grainRes == 2){
+                                    if(ResourceDeck.oreDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Ore", ore);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough ores in the bank to perform this trade.");
+                                    }
+                                }
+                                else{ //wool
+                                    if(ResourceDeck.woolDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Wool", wool);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough wools in the bank to perform this trade.");
+                                    }
+                                }
+                            }
+                        }
+                        else if(bankRes == 2){
+                            //lumber
+                            int numLumber = 0;
+                            for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                                if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Lumber")){
+                                    numLumber++;
+                                }
+                            }
+                            if(numLumber >= 4){
+                                String[] lumberOps = new String[]{"Brick, Grain, Ore, Wool"};
+                                int lumberRes = JOptionPane.showOptionDialog(null, "Choose what resource you want to trade for.", "Lumber Trade", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, lumberOps, lumberOps[0]);
+                                for(int i = 0; i < 4; i++){
+                                    if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Lumber")){
+                                        GameState.currentPlayer.remove("Lumber");
+                                        ResourceDeck.lumberDeck.add(0, new ResourceCard("Lumber", lumber));
+                                    }
+                                }
+                                if(lumberRes == 0){//brick
+                                  if(ResourceDeck.brickDeck.size() >= 1){
+                                      ResourceCard rc = new ResourceCard("Brick", brick);
+                                      GameState.currentPlayer.add(rc);
+                                  }
+                                  else{
+                                      JOptionPane.showMessageDialog(null, "There are not enough bricks in the bank to perform this trade.");
+                                  }
+                                }
+
+                                else if(lumberRes == 1){//grain
+                                    if(ResourceDeck.lumberDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Grain", grain);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null,"There are not enough grains in the bank to perform this trade.");
+                                    }
+                                }
+                                else if(lumberRes == 2){//ore
+                                    if(ResourceDeck.oreDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Ore", ore);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough ores in the bank to perform this trade.");
+                                    }
+                                }
+                                else{//wool
+                                    if(ResourceDeck.woolDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Wool", wool);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough wools in the bank to perform this trade.");
+                                    }
+                                }
+                            }
+                        }
+                        else if(bankRes == 3){
+                            //ore
+                            int numOre = 0;
+                            for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                                if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Ore")){
+                                    numOre++;
+                                }
+                            }
+                            if(numOre >= 4) {
+                                String[] oreOps = new String[]{"Brick", "Grain", "Lumber", "Wool"};
+                                int oreRes = JOptionPane.showOptionDialog(null, "Choose what resource you wish to trade for.", "Ore Trade", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, oreOps, oreOps[0]);
+                                for(int i = 0; i < 4; i++){
+                                    if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Ore")){
+                                        GameState.currentPlayer.remove("Ore");
+                                        ResourceDeck.oreDeck.add(0, new ResourceCard("Ore", ore));
+                                    }
+                                }
+                                if(oreRes == 0){//brick
+                                    if(ResourceDeck.brickDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Brick", brick);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough bricks in the bank to perform this trade.");
+                                    }
+                                }
+                                else if(oreRes == 1){//grain
+                                    if(ResourceDeck.grainDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Grain", grain);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough grains in the bank to perform this trade.");
+                                    }
+                                }
+                                else if(oreRes == 2){//lumber
+                                    if(ResourceDeck.lumberDeck.size()>=1){
+                                        ResourceCard rc = new ResourceCard("Lumber", lumber);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough lumbers in the bank to perform this trade.");
+                                    }
+                                }
+
+                                else{//wool
+                                    if(ResourceDeck.woolDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Wool", wool);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "THere are not enough wools in the bank to perform this trade.");
+                                    }
+                                }
+                            }
+                        }
+                        else{
+                            //wool
+                            int numWool = 0;
+                            for(int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++){
+                                if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Wool")){
+                                    numWool++;
+                                }
+                            }
+                            if(numWool >= 4){
+                                String [] woolOps = new String[]{"Brick", "Grain", "Lumber", "Ore"};
+                                int woolRes = JOptionPane.showOptionDialog(null, "Choose what resource you want to trade for.", "Wool Trade", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, woolOps, woolOps[0]);
+                                for(int i = 0; i < 4; i++){
+                                    if(GameState.currentPlayer.getResourceCards().get(i).getType().equals("Wool")){
+                                        GameState.currentPlayer.remove("Wool");
+                                        ResourceDeck.woolDeck.add(0, new ResourceCard("Brick", brick));
+                                    }
+                                }
+                                if(woolRes == 0){//brick
+                                    if(ResourceDeck.woolDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Brick", brick);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough bricks in the bank to perform this trade.");
+                                    }
+                                }
+
+                                if(woolRes == 1){//grain
+                                    if(ResourceDeck.grainDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Grain", grain);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough grains in the bank to perform this trade.");
+                                    }
+                                }
+
+                                if(woolRes == 2){//lumber
+                                    if(ResourceDeck.lumberDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Lumber", lumber);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough lumbers in the bank to perform this trade.");
+                                    }
+                                }
+
+                                else{//ore
+                                    if(ResourceDeck.oreDeck.size() >= 1){
+                                        ResourceCard rc = new ResourceCard("Ore", ore);
+                                        GameState.currentPlayer.add(rc);
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "There are not enough ores in the bank to perform this trade.");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        //harbor
+                    }
                 }
                 repaint();
             }
@@ -463,8 +762,23 @@ public class MainPanel extends JPanel implements MouseListener {
 //      build = new JButton("Build/Buy");
         build.setBounds(140, 520, 100, 50);
         build.setBackground(new Color(255, 200, 100));
+        cancel.setBounds(400,670,100,50);
+        cancel.setBackground(new Color(255, 200, 100));
+        cancel.setEnabled(false);
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int a = JOptionPane.showInternalConfirmDialog(null, "Are you sure you want to cancel? You will not be refunded any resources spent.", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (a == JOptionPane.YES_OPTION) {
+                    state = 100;
+                    action = "";
+                    ActionLogPanel.cancel();
+                }
+            }
+        });
         build.addActionListener(new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JOptionPane.showMessageDialog(null,"If you have questions about build/buy, please go to page 14 of the Help Menu.");
                 String[] options = new String[]{"Road", "Settlement", "City", "Development Card"};
                 int response = JOptionPane.showOptionDialog(null, "Choose what you want to build/buy.", "Build/Buy",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
@@ -474,7 +788,6 @@ public class MainPanel extends JPanel implements MouseListener {
                     brickLoc=-1; lumberLoc=-1;
                     for (int i=0; i<GameState.currentPlayer.getResourceCards().size(); i++) {
                         ResourceCard rc=GameState.currentPlayer.getResourceCards().get(i);
-                        //System.out.print(rc.getType() + " ");
                         if (rc.getType().equals("Brick")) {
                             containsBrick = true;
                             brickLoc=i;
@@ -484,15 +797,13 @@ public class MainPanel extends JPanel implements MouseListener {
                             lumberLoc=i;
                         }
                     }
-//                    System.out.println();
                     if (containsBrick && containsLumber) {
 
-                        //let them select where they want to place road, check if they can
-//                        Edge road = GameState.getEdge(x, y);
-//                        if (road != null && road.canPlace(GameState.currentPlayer))
-//                            road.setOwner(GameState.currentPlayer);
-//                        System.out.println(GameState.currentPlayer.toString() + " has built a road.");
                         action="Road";
+                        GameState.currentPlayer.remove("Brick");
+                        GameState.currentPlayer.remove("Lumber");
+                        ResourceDeck.add("Brick");
+                        ResourceDeck.add("Lumber");
                         trade.setEnabled(false);
                     }
                     else {
@@ -504,7 +815,6 @@ public class MainPanel extends JPanel implements MouseListener {
                     brickLoc=-1; lumberLoc=-1; woolLoc=-1; grainLoc=-1;
                     for (int i=0; i<GameState.currentPlayer.getResourceCards().size(); i++) {
                         ResourceCard rc=GameState.currentPlayer.getResourceCards().get(i);
-                        //System.out.print(rc.getType() + " ");
                         if (rc.getType().equals("Brick")) {
                             containsBrick = true;
                             brickLoc=i;
@@ -523,12 +833,15 @@ public class MainPanel extends JPanel implements MouseListener {
                         }
                     }
                     if (containsBrick && containsLumber && containsWool && containsGrain) {
-//                        //let them select where they want to place settlement, check if they can
-//                        Intersection stlmt = GameState.getIntersection(x, y);
-//                        if (stlmt != null && stlmt.canPlace(GameState.currentPlayer))
-//                            stlmt.setOwner(GameState.currentPlayer);
-//                        System.out.println(GameState.currentPlayer.toString() + " has built a settlement.");
                         action="Settlement";
+                        GameState.currentPlayer.remove("Brick");
+                        GameState.currentPlayer.remove("Lumber");
+                        GameState.currentPlayer.remove("Wool");
+                        GameState.currentPlayer.remove("Grain");
+                        ResourceDeck.add("Brick");
+                        ResourceDeck.add("Lumber");
+                        ResourceDeck.add("Wool");
+                        ResourceDeck.add("Grain");
                         trade.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
@@ -547,6 +860,16 @@ public class MainPanel extends JPanel implements MouseListener {
                     }
                     if (ore >= 3 && grain >= 2) {
                         action="City";
+                        GameState.currentPlayer.remove("Ore");
+                        GameState.currentPlayer.remove("Ore");
+                        GameState.currentPlayer.remove("Ore");
+                        GameState.currentPlayer.remove("Grain");
+                        GameState.currentPlayer.remove("Grain");
+                        ResourceDeck.add("Ore");
+                        ResourceDeck.add("Ore");
+                        ResourceDeck.add("Ore");
+                        ResourceDeck.add("Grain");
+                        ResourceDeck.add("Grain");
                         trade.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a city.");
@@ -557,7 +880,6 @@ public class MainPanel extends JPanel implements MouseListener {
                     boolean containsOre=false, containsWool=false, containsGrain=false;
                     for (int i=0; i<GameState.currentPlayer.getResourceCards().size(); i++) {
                         ResourceCard rc=GameState.currentPlayer.getResourceCards().get(i);
-                        //System.out.print(rc.getType() + " ");
                         if (rc.getType().equals("Ore")) {
                             containsOre = true;
                         }
@@ -568,7 +890,7 @@ public class MainPanel extends JPanel implements MouseListener {
                             containsGrain = true;
                         }
                     }
-                        //take it from development card deck and display it visually
+                    //take it from development card deck and display it visually
                     if (containsGrain && containsOre && containsWool && !DevelopmentCardDeck.deck.isEmpty()) {
                         GameState.currentPlayer.remove("Grain");
                         GameState.currentPlayer.remove("Ore");
@@ -579,41 +901,34 @@ public class MainPanel extends JPanel implements MouseListener {
                         GameState.currentPlayer.addDev(DevelopmentCardDeck.draw());
                         devCardPanel.removeAll();
                         for (DevelopmentCard dc : GameState.currentPlayer.getDevCards()) {
-                            int x = 0;
-                            int y = 0;
-                            JButton b = new JButton(new ImageIcon(resize(dc.getImage(), 25, 75)));
+                            JButton b = new JButton(dc.getType());
                             b.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent e) {
-                                    if (!devCardPlayed) {
-                                        // use to be implemented
+                                    if (!devCardPlayed && dc.use()) {
                                         devCardPlayed = true;
                                         GameState.currentPlayer.removeDev(dc);
                                         devCardPanel.remove(b);
                                         devCardPanel.revalidate();
+                                        devCardPanel.repaint();
                                     }
                                 }
                             });
                             devCardPanel.add(b);
-                            b.setBounds(x, y, 25, 75);
-                            x+= 20;
                             devCards.revalidate();
                             revalidate();
-                            repaint();
                         }
                         System.out.println(GameState.currentPlayer.toString() + " has bought a development card.");
                         trade.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to buy a development card.");
-                    }
+                     }
                 }
             }
-            //JOptionPane optionPane = new JOptionPane("Choose what you want to build/buy.", JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION); //not done
-            //JDialog dialog = optionPane.createDialog("Dialog");
-            //dialog.setVisible(true);
         });
 
-//      rollDice = new JButton("Roll Dice");
         endTurn.setEnabled(false);
+        build.setEnabled(false);
+        trade.setEnabled(false);
         rollDice.setBounds(920, 30, 100, 50);
         rollDice.setBackground(new Color(255, 200, 100));
         rollDice.addActionListener(new ActionListener() {
@@ -626,27 +941,27 @@ public class MainPanel extends JPanel implements MouseListener {
                     for (Player p:GameState.getPlayers()) {
                         if (p.size() > 7) {
                             int disc = p.size() / 2;
-                            while (disc < p.size()) {
+                            for (int i = 0; i < disc; i++) {
                                 int response = JOptionPane.showOptionDialog(null, "Choose card to discard", p.toString() + " Discard Phase", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, p.getResourceCards().toArray(), p.getResourceCards().toArray()[0]);
-                                p.remove(response);
+                                ResourceDeck.add(p.remove(response));
                                 repaint();
                             }
                         }
                     }
                     JOptionPane.showMessageDialog(null,"Please select where you'd like to move the robber.");
-                    state = 20;
+                    action = "Robber";
                     ActionLogPanel.robber7();
                 }
                 endTurn.setEnabled(true);
                 trade.setEnabled(true);
                 build.setEnabled(true);
                 rollDice.setEnabled(false);
+                cancel.setEnabled(true);
                 repaint();
             }
         });
         add(rollDice);
 
-//      endTurn = new JButton("End Turn");
         endTurn.setBounds(265, 520, 100, 50);
         endTurn.setBackground(new Color(255, 200, 100));
         endTurn.addActionListener(new ActionListener() {
@@ -661,15 +976,43 @@ public class MainPanel extends JPanel implements MouseListener {
                 rollDice.setEnabled(true);
                 trade.setEnabled(false);
                 build.setEnabled(false);
+                devCardPanel.removeAll();
+                for (DevelopmentCard dc : GameState.currentPlayer.getDevCards()) {
+                    JButton b = new JButton(dc.getType());
+                    b.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            if (!devCardPlayed && dc.use()) {
+                                devCardPlayed = true;
+                                GameState.currentPlayer.removeDev(dc);
+                                devCardPanel.remove(b);
+                                devCardPanel.revalidate();
+                            }
+                        }
+                    });
+                    devCardPanel.add(b);
+                    devCards.revalidate();
+                    revalidate();
+                }
+                devCardPanel.revalidate();
+                devCardPanel.repaint();
+                devCardPlayed = false;
                 endTurn.setEnabled(false);
                 repaint();
             }
         });
 
+        help.setBounds(400, 615, 100, 50);
+        help.setBackground(new Color(255, 200, 100));
+        help.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame3 = new HelpFrame("Help");
+            }
+        });
+        add(help);
         add(endTurn);
         add(build);
         add(trade);
-        //GameState.setUpPhase();
+        add(cancel);
     }
 
     public void paintComponent(Graphics g) {
@@ -685,6 +1028,8 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.currentPlayer.toString(), 20, 75);
         g.setFont(tradeFont);
         g.drawString(GameState.currentPlayer.toString() + " Stats", 13, 650);
+
+        g.drawImage(HelpButton,1575,25,40,40,null);
 
 
         Font victoryTitleFont = new Font("Serif", Font.BOLD, 20);
@@ -725,8 +1070,8 @@ public class MainPanel extends JPanel implements MouseListener {
         g2.setStroke(new BasicStroke(4));
         g2.drawLine(7, 152, 380, 152);
         g2.drawLine(7, 152, 7, 300);
-        //harbors
 
+        //harbors
         g.drawImage(harbors.get(0), 437, 313, 50, 50, null);
         g.drawImage(harbors.get(1), 538, 107, 50, 50, null);
         g.drawImage(harbors.get(2), 755, 110, 50, 50, null);
@@ -737,6 +1082,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(harbors.get(7), 750, 700, 50, 50, null);
         g.drawImage(harbors.get(8), 450, 510, 50, 50, null);
 
+        //img:trophy stat:victorypoints
         g.drawString("Blue: ", 11, 180);
         g.drawString("Orange: ", 11, 220);
         g.drawString("Red: ", 11, 260);
@@ -749,7 +1095,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(trophy, 90, 238, 30, 30, null);
         g.drawString(GameState.players[3].getPublicScore() + "", 130, 300);
         g.drawImage(trophy, 90, 278, 30, 30, null);
-
+        //img:resource stat:resourcecards
         g.drawString(GameState.players[0].getResourceCards().size() + "", 190, 180);
         g.drawImage(resource, 150, 158, 30, 30, null);
         g.drawString(GameState.players[1].getResourceCards().size() + "", 190, 220);
@@ -758,8 +1104,8 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(resource, 150, 238, 30, 30, null);
         g.drawString(GameState.players[3].getResourceCards().size() + "", 190, 300);
         g.drawImage(resource, 150, 278, 30, 30, null);
-
-        g.drawString(GameState.players[0].getRoadsLeft() + "", 250, 180);
+        //img:road stat:roadsbuilt
+        g.drawString((15 - GameState.players[0].getRoadsLeft()) + "", 250, 180);
         g.drawImage(road, 210, 158, 30, 30, null);
         g.drawString(GameState.players[1].getRoadsLeft() + "", 250, 220);
         g.drawImage(road, 210, 198, 30, 30, null);
@@ -767,8 +1113,8 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(road, 210, 238, 30, 30, null);
         g.drawString(GameState.players[3].getRoadsLeft() + "", 250, 300);
         g.drawImage(road, 210, 278, 30, 30, null);
-
-        g.drawString(GameState.players[0].getStlmtsLeft() + "", 315, 180);
+        //img:settlement stat:settlementsbuilt
+        g.drawString((5 - GameState.players[0].getStlmtsLeft()) + "", 315, 180);
         g.drawImage(settlement, 280, 158, 30, 30, null);
         g.drawString(GameState.players[1].getStlmtsLeft() + "", 315, 220);
         g.drawImage(settlement, 280, 198, 30, 30, null);
@@ -776,8 +1122,8 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(settlement, 280, 238, 30, 30, null);
         g.drawString(GameState.players[3].getStlmtsLeft() + "", 315, 300);
         g.drawImage(settlement, 280, 278, 30, 30, null);
-
-        g.drawString(GameState.players[0].getCitiesLeft() + "", 375, 180);
+        //img:city stat:citiesbuilt
+        g.drawString((4 - GameState.players[0].getCitiesLeft()) + "", 375, 180);
         g.drawImage(city, 340, 158, 30, 30, null);
         g.drawString(GameState.players[1].getCitiesLeft() + "", 375, 220);
         g.drawImage(city, 340, 198, 30, 30, null);
@@ -785,6 +1131,15 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawImage(city, 340, 238, 30, 30, null);
         g.drawString(GameState.players[3].getCitiesLeft() + "", 375, 300);
         g.drawImage(city, 340, 278, 30, 30, null);
+        //imgs:sword+road stats:largestArmy+longestRoad
+        for (int i = 0; i < GameState.players.length; i++) {
+            if (GameState.players[i].getHasLargestArmy()) {
+                g.drawImage(sword, 400, 158 + (40 * i), 30, 30, null);
+            }
+            if (GameState.players[i].getHasLongestRoad()) {
+                g.drawImage(sword, 460, 158 + (40 * i), 30, 30, null);
+            }
+        }
 
         g.setFont(victoryTitleFont);
         g.drawString("DEVELOPMENT CARDS", 5, 373);
@@ -888,24 +1243,18 @@ public class MainPanel extends JPanel implements MouseListener {
         GameState.board.fillEdges();
         //drawing edges
         for (Edge e : GameState.board.getEdges()) {
-            //e.setOwner(GameState.currentPlayer);
             if (e.getOwner() != null) {
                 if (e.getOwner().getColor().equals("Blue")) {
                     g.setColor(blue);
-//                    System.out.println("color has been set");
                 } else if (e.getOwner().getColor().equals("Orange")) {
                     g.setColor(orange);
-//                    System.out.println("color has been set");
                 } else if (e.getOwner().getColor().equals("White")) {
                     g.setColor(white);
-//                    System.out.println("color has been set");
                 } else {
                     g.setColor(red);
-//                    System.out.println("color has been set");
                 }
                 g.drawLine(e.getPoint1()[0], e.getPoint1()[1], e.getPoint2()[0], e.getPoint2()[1]);
             }
-            //System.out.println(e.getPoint1()[0]+" "+e.getPoint1()[1]+"; "+e.getPoint2()[0]+" "+e.getPoint2()[1]);
         }
         //drawing stlmts and cities
         for (Intersection i : GameState.board.getIntersections()) {
@@ -917,88 +1266,15 @@ public class MainPanel extends JPanel implements MouseListener {
         g.setColor(Color.GRAY);
         for (Tile[] tiles:GameState.board.getTiles()) {
             for (Tile t:tiles) {
-                if (t.getHasRobber()) g.fillOval(t.getxPixel()+35, t.getyPixel()+53, 40, 40);
+                if (t.getHasRobber()) g.fillOval(t.getXPixel()+35, t.getYPixel()+53, 40, 40);
             }
         }
-//        ArrayList<BufferedImage> harbors = new ArrayList<BufferedImage>();
-//        for(int i = 0; i < 4; i++){
-//            harbors.add(genericHarbor);
-//        }
-//        harbors.add(oreHarbor);
-//        harbors.add(grainHarbor);
-//        harbors.add(lumberHarbor);
-//        harbors.add(woolHarbor);
-//        harbors.add(brickHarbor);
-//        Collections.shuffle(harbors);
-//        g.drawImage(harbors.get(0), 437, 313, 50, 50, null);
-//        g.drawImage(harbors.get(1), 538, 107, 50, 50, null);
-//        g.drawImage(harbors.get(2), 755, 110, 50, 50, null);
-//        g.drawImage(harbors.get(3), 905, 205, 50, 50, null);
-//        g.drawImage(harbors.get(4), 1010, 400, 50, 50, null);
-//        g.drawImage(harbors.get(5), 895, 610, 50, 50, null);
-//        g.drawImage(harbors.get(6), 540, 706, 50, 50, null);
-//        g.drawImage(harbors.get(7), 750, 700, 50, 50, null);
-//        g.drawImage(harbors.get(8), 450, 510, 50, 50, null);
-
-        //temporary section for checking intersection locations
-//        int count=1;
-//        for (Tile[] tiles: GameState.board.getTiles()) {
-//            for (Tile tile:tiles) {
-////                for (Intersection i:tile.getIntersections()) {
-////                    g.fillRect(i.getLocation()[0], i.getLocation()[1], 10, 10);
-////                }
-////                Edge[] e=tile.getEdges();
-//
-//                g.setColor(Color.BLACK);
-//                g.fillRect(tile.getIntersections()[0].getX(), tile.getIntersections()[0].getY(), 10, 10);
-//                Edge[] e=tile.getIntersections()[0].getEdges();
-//                g.drawLine(e[0].getPoint1()[0], e[0].getPoint1()[1], e[0].getPoint2()[0], e[0].getPoint2()[1]);
-//                g.drawLine(e[1].getPoint1()[0], e[1].getPoint1()[1], e[1].getPoint2()[0], e[1].getPoint2()[1]);
-//                g.drawLine(e[2].getPoint1()[0], e[2].getPoint1()[1], e[2].getPoint2()[0], e[2].getPoint2()[1]);
-////                g.setColor(Color.RED);
-////                g.fillRect(tile.getIntersections()[1].getX(), tile.getIntersections()[1].getY(), 10, 10);
-//////                if (tile.getIntersections()[1]!=null) {
-//////                    //System.out.println("intersections 1 are not null "+count);
-//////                    count++;
-//////                }
-//////                System.out.println(e[1].getPoint1()[0]+", "+e[1].getPoint1()[1]+"; "+e[1].getPoint2()[0]+", "+e[1].getPoint2()[1]+"; "+count);
-////                count++;
-////                g.drawLine(e[1].getPoint1()[0], e[1].getPoint1()[1], e[1].getPoint2()[0], e[1].getPoint2()[1]);
-////
-////                g.setColor(Color.ORANGE);
-////                g.fillRect(tile.getIntersections()[2].getX(), tile.getIntersections()[2].getY(), 10, 10);
-////                g.drawLine(e[2].getPoint1()[0], e[2].getPoint1()[1], e[2].getPoint2()[0], e[2].getPoint2()[1]);
-////
-////                g.setColor(Color.YELLOW);
-////                g.fillRect(tile.getIntersections()[3].getX(), tile.getIntersections()[3].getY(), 10, 10);
-////                g.drawLine(e[3].getPoint1()[0], e[3].getPoint1()[1], e[3].getPoint2()[0], e[3].getPoint2()[1]);
-////
-////                g.setColor(Color.GREEN);
-////                g.fillRect(tile.getIntersections()[4].getX(), tile.getIntersections()[4].getY(), 10, 10);
-////                g.drawLine(e[4].getPoint1()[0], e[4].getPoint1()[1], e[4].getPoint2()[0], e[4].getPoint2()[1]);
-////
-////                g.setColor(Color.BLUE);
-////                g.fillRect(tile.getIntersections()[5].getX(), tile.getIntersections()[5].getY(), 10, 10);
-////                g.drawLine(e[5].getPoint1()[0], e[5].getPoint1()[1], e[5].getPoint2()[0], e[5].getPoint2()[1]);
-//            }
-//        }
-    }
-
-
-    public BufferedImage resize(BufferedImage img, int w, int h) {
-        BufferedImage resizedImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(img, 0, 0, w, h, null);
-        g.dispose();
-
-        return resizedImage;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         x = e.getX();
         y = e.getY();
-//        if (x>=450 && x<=1000 && y>=140  && y<=720) {
         switch (state) {
             case 0: {
                 GameState.initBuildSettlement();
@@ -1080,14 +1356,15 @@ public class MainPanel extends JPanel implements MouseListener {
                 repaint();
                 break;
             }
-            case 20: {
-                GameState.moveRobber();
-                repaint();
-                break;
-            }
         }
         switch(action) {
             case "Road": {
+                GameState.buildRoad();
+                repaint();
+                break;
+            }
+            case "RoadBuilding": {
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your two roads by clicking on the respective locations.");
                 GameState.buildRoad();
                 repaint();
                 break;
@@ -1102,8 +1379,12 @@ public class MainPanel extends JPanel implements MouseListener {
                 repaint();
                 break;
             }
+            case "Robber": {
+                GameState.moveRobber();
+                repaint();
+                break;
+            }
         }
-        //}
     }
 
     @Override
