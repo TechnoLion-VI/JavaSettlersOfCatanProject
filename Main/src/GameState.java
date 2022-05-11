@@ -118,14 +118,14 @@ public class GameState {
             if (i.getOwner() != null && i.getOwner() != currentPlayer && !options.contains(i.getOwner())) options.add(i.getOwner()); //keep player duplicates, trust me
         }
         if (options.isEmpty()) {
-            MainPanel.state++;
+            MainPanel.action = "";
             return;
         }
         int response = JOptionPane.showOptionDialog(null, "Choose player", "Robber Phase", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options.toArray(), options.toArray()[0]);
         Player p = options.get(response);
         //player who moves robber can steal one random card from a player of their choice (adjacent to new hex)
         currentPlayer.add(p.remove((int)(Math.random()*p.size())));
-        MainPanel.state++;
+        MainPanel.action = "";
     }
 
     public void checkLargestArmyPlayer() {

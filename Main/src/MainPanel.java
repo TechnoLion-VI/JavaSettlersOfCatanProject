@@ -906,6 +906,8 @@ public class MainPanel extends JPanel implements MouseListener {
         });
 
         endTurn.setEnabled(false);
+        build.setEnabled(false);
+        trade.setEnabled(false);
         rollDice.setBounds(920, 30, 100, 50);
         rollDice.setBackground(new Color(255, 200, 100));
         rollDice.addActionListener(new ActionListener() {
@@ -926,7 +928,7 @@ public class MainPanel extends JPanel implements MouseListener {
                         }
                     }
                     JOptionPane.showMessageDialog(null,"Please select where you'd like to move the robber.");
-                    state = 20;
+                    action = "Robber";
                     ActionLogPanel.robber7();
                 }
                 endTurn.setEnabled(true);
@@ -1400,11 +1402,6 @@ public class MainPanel extends JPanel implements MouseListener {
                 repaint();
                 break;
             }
-            case 20: {
-                GameState.moveRobber();
-                repaint();
-                break;
-            }
         }
         switch(action) {
             case "Road": {
@@ -1419,6 +1416,11 @@ public class MainPanel extends JPanel implements MouseListener {
             }
             case "City": {
                 GameState.buildCity();
+                repaint();
+                break;
+            }
+            case "Robber": {
+                GameState.moveRobber();
                 repaint();
                 break;
             }
