@@ -1,7 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.font.GlyphMetrics;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
 import java.io.PrintStream;
@@ -80,7 +79,6 @@ public class MainPanel extends JPanel implements MouseListener {
         devCardPlayed = false;
         initComponents();
         addMouseListener(this);
-        //GameState.rollDice();
     }
 
 
@@ -127,7 +125,7 @@ public class MainPanel extends JPanel implements MouseListener {
         log.setLineWrap(true);
         PrintStream printStream = new PrintStream(new ActionLogPanel(log));
         System.setOut(printStream);
-//        JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//      JScrollPane logPanel = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         logPanel.setBounds(1100, 10, 400, 200);
         add(logPanel);
         /* DEVELOPMENT CARDS PANEL */
@@ -278,7 +276,6 @@ public class MainPanel extends JPanel implements MouseListener {
                                     }
                                     //p.repaint();
                                 } else {
-                                    //JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough brick to carry out this trade.");
                                     while (numBrick > brickLeft) {
                                         JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough brick to carry out this trade.");
                                         String n = JOptionPane.showInputDialog("How many brick does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + brickLeft + ")");
@@ -791,7 +788,6 @@ public class MainPanel extends JPanel implements MouseListener {
                     brickLoc=-1; lumberLoc=-1;
                     for (int i=0; i<GameState.currentPlayer.getResourceCards().size(); i++) {
                         ResourceCard rc=GameState.currentPlayer.getResourceCards().get(i);
-                        //System.out.print(rc.getType() + " ");
                         if (rc.getType().equals("Brick")) {
                             containsBrick = true;
                             brickLoc=i;
@@ -801,14 +797,8 @@ public class MainPanel extends JPanel implements MouseListener {
                             lumberLoc=i;
                         }
                     }
-//                    System.out.println();
                     if (containsBrick && containsLumber) {
 
-                        //let them select where they want to place road, check if they can
-//                        Edge road = GameState.getEdge(x, y);
-//                        if (road != null && road.canPlace(GameState.currentPlayer))
-//                            road.setOwner(GameState.currentPlayer);
-//                        System.out.println(GameState.currentPlayer.toString() + " has built a road.");
                         action="Road";
                         GameState.currentPlayer.remove("Brick");
                         GameState.currentPlayer.remove("Lumber");
@@ -825,7 +815,6 @@ public class MainPanel extends JPanel implements MouseListener {
                     brickLoc=-1; lumberLoc=-1; woolLoc=-1; grainLoc=-1;
                     for (int i=0; i<GameState.currentPlayer.getResourceCards().size(); i++) {
                         ResourceCard rc=GameState.currentPlayer.getResourceCards().get(i);
-                        //System.out.print(rc.getType() + " ");
                         if (rc.getType().equals("Brick")) {
                             containsBrick = true;
                             brickLoc=i;
@@ -844,11 +833,6 @@ public class MainPanel extends JPanel implements MouseListener {
                         }
                     }
                     if (containsBrick && containsLumber && containsWool && containsGrain) {
-//                        //let them select where they want to place settlement, check if they can
-//                        Intersection stlmt = GameState.getIntersection(x, y);
-//                        if (stlmt != null && stlmt.canPlace(GameState.currentPlayer))
-//                            stlmt.setOwner(GameState.currentPlayer);
-//                        System.out.println(GameState.currentPlayer.toString() + " has built a settlement.");
                         action="Settlement";
                         GameState.currentPlayer.remove("Brick");
                         GameState.currentPlayer.remove("Lumber");
@@ -896,7 +880,6 @@ public class MainPanel extends JPanel implements MouseListener {
                     boolean containsOre=false, containsWool=false, containsGrain=false;
                     for (int i=0; i<GameState.currentPlayer.getResourceCards().size(); i++) {
                         ResourceCard rc=GameState.currentPlayer.getResourceCards().get(i);
-                        //System.out.print(rc.getType() + " ");
                         if (rc.getType().equals("Ore")) {
                             containsOre = true;
                         }
@@ -1249,24 +1232,18 @@ public class MainPanel extends JPanel implements MouseListener {
         GameState.board.fillEdges();
         //drawing edges
         for (Edge e : GameState.board.getEdges()) {
-            //e.setOwner(GameState.currentPlayer);
             if (e.getOwner() != null) {
                 if (e.getOwner().getColor().equals("Blue")) {
                     g.setColor(blue);
-//                    System.out.println("color has been set");
                 } else if (e.getOwner().getColor().equals("Orange")) {
                     g.setColor(orange);
-//                    System.out.println("color has been set");
                 } else if (e.getOwner().getColor().equals("White")) {
                     g.setColor(white);
-//                    System.out.println("color has been set");
                 } else {
                     g.setColor(red);
-//                    System.out.println("color has been set");
                 }
                 g.drawLine(e.getPoint1()[0], e.getPoint1()[1], e.getPoint2()[0], e.getPoint2()[1]);
             }
-            //System.out.println(e.getPoint1()[0]+" "+e.getPoint1()[1]+"; "+e.getPoint2()[0]+" "+e.getPoint2()[1]);
         }
         //drawing stlmts and cities
         for (Intersection i : GameState.board.getIntersections()) {
@@ -1281,84 +1258,12 @@ public class MainPanel extends JPanel implements MouseListener {
                 if (t.getHasRobber()) g.fillOval(t.getXPixel()+35, t.getYPixel()+53, 40, 40);
             }
         }
-//        ArrayList<BufferedImage> harbors = new ArrayList<BufferedImage>();
-//        for(int i = 0; i < 4; i++){
-//            harbors.add(genericHarbor);
-//        }
-//        harbors.add(oreHarbor);
-//        harbors.add(grainHarbor);
-//        harbors.add(lumberHarbor);
-//        harbors.add(woolHarbor);
-//        harbors.add(brickHarbor);
-//        Collections.shuffle(harbors);
-//        g.drawImage(harbors.get(0), 437, 313, 50, 50, null);
-//        g.drawImage(harbors.get(1), 538, 107, 50, 50, null);
-//        g.drawImage(harbors.get(2), 755, 110, 50, 50, null);
-//        g.drawImage(harbors.get(3), 905, 205, 50, 50, null);
-//        g.drawImage(harbors.get(4), 1010, 400, 50, 50, null);
-//        g.drawImage(harbors.get(5), 895, 610, 50, 50, null);
-//        g.drawImage(harbors.get(6), 540, 706, 50, 50, null);
-//        g.drawImage(harbors.get(7), 750, 700, 50, 50, null);
-//        g.drawImage(harbors.get(8), 450, 510, 50, 50, null);
-
-        //temporary section for checking intersection locations
-//        int count=1;
-//        for (Tile[] tiles: GameState.board.getTiles()) {
-//            for (Tile tile:tiles) {
-////                for (Intersection i:tile.getIntersections()) {
-////                    g.fillRect(i.getLocation()[0], i.getLocation()[1], 10, 10);
-////                }
-////                Edge[] e=tile.getEdges();
-//
-//                g.setColor(Color.BLACK);
-//                g.fillRect(tile.getIntersections()[0].getX(), tile.getIntersections()[0].getY(), 10, 10);
-//                Edge[] e=tile.getIntersections()[0].getEdges();
-//                g.drawLine(e[0].getPoint1()[0], e[0].getPoint1()[1], e[0].getPoint2()[0], e[0].getPoint2()[1]);
-//                g.drawLine(e[1].getPoint1()[0], e[1].getPoint1()[1], e[1].getPoint2()[0], e[1].getPoint2()[1]);
-//                g.drawLine(e[2].getPoint1()[0], e[2].getPoint1()[1], e[2].getPoint2()[0], e[2].getPoint2()[1]);
-////                g.setColor(Color.RED);
-////                g.fillRect(tile.getIntersections()[1].getX(), tile.getIntersections()[1].getY(), 10, 10);
-//////                if (tile.getIntersections()[1]!=null) {
-//////                    //System.out.println("intersections 1 are not null "+count);
-//////                    count++;
-//////                }
-//////                System.out.println(e[1].getPoint1()[0]+", "+e[1].getPoint1()[1]+"; "+e[1].getPoint2()[0]+", "+e[1].getPoint2()[1]+"; "+count);
-////                count++;
-////                g.drawLine(e[1].getPoint1()[0], e[1].getPoint1()[1], e[1].getPoint2()[0], e[1].getPoint2()[1]);
-////
-////                g.setColor(Color.ORANGE);
-////                g.fillRect(tile.getIntersections()[2].getX(), tile.getIntersections()[2].getY(), 10, 10);
-////                g.drawLine(e[2].getPoint1()[0], e[2].getPoint1()[1], e[2].getPoint2()[0], e[2].getPoint2()[1]);
-////
-////                g.setColor(Color.YELLOW);
-////                g.fillRect(tile.getIntersections()[3].getX(), tile.getIntersections()[3].getY(), 10, 10);
-////                g.drawLine(e[3].getPoint1()[0], e[3].getPoint1()[1], e[3].getPoint2()[0], e[3].getPoint2()[1]);
-////
-////                g.setColor(Color.GREEN);
-////                g.fillRect(tile.getIntersections()[4].getX(), tile.getIntersections()[4].getY(), 10, 10);
-////                g.drawLine(e[4].getPoint1()[0], e[4].getPoint1()[1], e[4].getPoint2()[0], e[4].getPoint2()[1]);
-////
-////                g.setColor(Color.BLUE);
-////                g.fillRect(tile.getIntersections()[5].getX(), tile.getIntersections()[5].getY(), 10, 10);
-////                g.drawLine(e[5].getPoint1()[0], e[5].getPoint1()[1], e[5].getPoint2()[0], e[5].getPoint2()[1]);
-//            }
-//        }
-    }
-
-    public BufferedImage resize(BufferedImage img, int w, int h) {
-        BufferedImage resizedImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(img, 0, 0, w, h, null);
-        g.dispose();
-
-        return resizedImage;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         x = e.getX();
         y = e.getY();
-//        if (x>=450 && x<=1000 && y>=140  && y<=720) {
         switch (state) {
             case 0: {
                 GameState.initBuildSettlement();
@@ -1470,7 +1375,6 @@ public class MainPanel extends JPanel implements MouseListener {
             }
             default: ActionLogPanel.println("Action Error");
         }
-        //}
     }
 
     @Override

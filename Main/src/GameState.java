@@ -1,17 +1,14 @@
-
 import com.sun.tools.javac.Main;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class GameState {
     public static Player currentPlayer, largestArmyPlayer;
     public static Board board = new Board();
     public static int diceNum, diceOne, diceTwo;
     public static Player[] players = new Player[]{new Player("Blue"), new Player("Orange"), new Player("Red"), new Player("White")};
-    private HashMap<Integer, ArrayList<Tile>> resourceDist;
-    private int currentLargestArmySize;
+    private static int currentLargestArmySize;
 
     static {
         currentPlayer=players[0];   //temporary
@@ -20,7 +17,6 @@ public class GameState {
     public static Intersection getIntersection(int x, int y){
         double minDist = Double.MAX_VALUE;
         double dist;
-        int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
         Intersection min = null;
         for (Tile[] tiles:board.getTiles()) {
             for (Tile tile:tiles) {
@@ -37,31 +33,22 @@ public class GameState {
     }
 
     public static Edge getEdge(int x, int y){
-        double minDist = 99999;
+        double minDist = Double.MAX_VALUE;
         double dist;
-        int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
         Edge min = null;
-//        for (Tile[] tiles:board.getTiles()) {
-//            for (Tile tile : tiles) {
-        int count=0, temp=0;
-                for (Edge e : board.getEdges()) {
-                    dist = Math.sqrt(Math.pow(Math.abs(x - e.getMidpoint()[0]), 2) + Math.pow(Math.abs(y - e.getMidpoint()[1]), 2));
-                    if (dist < minDist) {
-                        minDist = dist;
-                        min = e;temp=count;
-                    }
-                    count++;
-                }
-//            }
-//        }
-//        System.out.println(temp);
+        for (Edge e : board.getEdges()) {
+            dist = Math.sqrt(Math.pow(Math.abs(x - e.getMidpoint()[0]), 2) + Math.pow(Math.abs(y - e.getMidpoint()[1]), 2));
+            if (dist < minDist) {
+                minDist = dist;
+                min = e;
+            }
+        }
         return min;
     }
 
     public static Tile getTile(int x, int y){
         double minDist = Double.MAX_VALUE;
         double dist;
-        int minX=Integer.MAX_VALUE, minY=Integer.MAX_VALUE;
         Tile min = null;
         for (Tile[] tiles:board.getTiles()) {
             for (Tile tile:tiles) {
@@ -72,12 +59,6 @@ public class GameState {
                     minDist = dist;
                     min = tile;
                 }
-
-//                if (Math.abs(centerX-x)<minX && Math.abs(centerY-y)<minY) {
-//                    minX=Math.abs(centerX-x);
-//                    minY=Math.abs(centerY-y);
-//                    min=tile;
-//                }
             }
         }
         return min;
@@ -128,7 +109,7 @@ public class GameState {
         MainPanel.action = "";
     }
 
-    public void checkLargestArmyPlayer() {
+    public static void checkLargestArmyPlayer() {
         int playerindex=-1, size=3;
         for (int i=0; i<players.length; i++) {
             if (players[i].getPlayedKnightCards()>=size) {
@@ -203,7 +184,6 @@ public class GameState {
         if (e.canPlace(currentPlayer)) {
             e.setOwner(currentPlayer);
             currentPlayer.decrementRoadsLeft();
-            //board.setLongestRoad();
             ActionLogPanel.builtRoad();
             MainPanel.state++;
             if (MainPanel.state==2 ) {
