@@ -57,6 +57,8 @@ public class ActionLogPanel extends OutputStream{
         System.out.println(GameState.currentPlayer.toString() + " claimed win.");
     }
 
-    public static void print(String s) { System.out.println(s); }
+    public static void cancel() { System.out.println(GameState.currentPlayer.toString() + " cancelled their action."); }
+
+    public static void println(String s) { System.out.println(s); } //for testing
 
 }

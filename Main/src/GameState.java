@@ -234,16 +234,8 @@ public class GameState {
                 currentPlayer = players[0];
                 JOptionPane.showMessageDialog(null, currentPlayer.toString() + ", please build your second settlement and road by clicking on the respective locations.");
             }
-            if (MainPanel.state>=17) {
-                GameState.currentPlayer.remove("Brick");
-                GameState.currentPlayer.remove("Lumber");
-                ResourceDeck.add("Brick");
-                ResourceDeck.add("Lumber");
-//                for (int i=0; i<GameState.currentPlayer.getResourceCards().size(); i++) {
-//                    ResourceCard rc = GameState.currentPlayer.getResourceCards().get(i);
-//                    System.out.print(rc.getType() + " ");
-//                }
-            }
+            if (MainPanel.action.equals("RoadBuilding")) MainPanel.action = "Road";
+
             MainPanel.action="";
         }
         else System.out.println(currentPlayer.toString() + " was unable to build a road.");
@@ -253,14 +245,6 @@ public class GameState {
         if (i.canPlace(currentPlayer)) {
             i.setOwner(currentPlayer);
             i.setIsStlmt(true);
-            GameState.currentPlayer.remove("Brick");
-            GameState.currentPlayer.remove("Lumber");
-            GameState.currentPlayer.remove("Wool");
-            GameState.currentPlayer.remove("Grain");
-            ResourceDeck.add("Brick");
-            ResourceDeck.add("Lumber");
-            ResourceDeck.add("Wool");
-            ResourceDeck.add("Grain");
             ActionLogPanel.builtSettlement();
             MainPanel.action="";
         }
@@ -270,16 +254,6 @@ public class GameState {
         Intersection i=getIntersection(MainPanel.x, MainPanel.y);
         if (i!=null && i.getOwner()!=null && i.getOwner().equals(currentPlayer) && i.isStlmt()) {
             i.setIsCity();
-            GameState.currentPlayer.remove("Ore");
-            GameState.currentPlayer.remove("Ore");
-            GameState.currentPlayer.remove("Ore");
-            GameState.currentPlayer.remove("Grain");
-            GameState.currentPlayer.remove("Grain");
-            ResourceDeck.add("Ore");
-            ResourceDeck.add("Ore");
-            ResourceDeck.add("Ore");
-            ResourceDeck.add("Grain");
-            ResourceDeck.add("Grain");
             ActionLogPanel.builtCity();
             MainPanel.action="";
         }

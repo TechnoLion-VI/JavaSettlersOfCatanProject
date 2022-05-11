@@ -16,6 +16,7 @@ public class Knight extends DevelopmentCard{
         setImg(card);
     }
     public boolean use(){
+        MainPanel.cancel.setEnabled(true);
         MainPanel.action = "Robber";
         GameState.currentPlayer.addToPlayedKnightCards();
         ActionLogPanel.robberK();

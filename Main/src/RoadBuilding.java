@@ -15,7 +15,7 @@ public class RoadBuilding extends DevelopmentCard{
         setImg(card);
     }
     public boolean use() {
-        MainPanel.action = "Road";
+        MainPanel.action = "RoadBuilding";
         return true;
     }
 }

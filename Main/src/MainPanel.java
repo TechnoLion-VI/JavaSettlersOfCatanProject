@@ -17,7 +17,8 @@ public class MainPanel extends JPanel implements MouseListener {
     private BufferedImage genericHarbor, brickHarbor, grainHarbor, lumberHarbor, oreHarbor, woolHarbor;
     private BufferedImage settlement, city, road;
     private BufferedImage one, two, three, four, five, six, HelpButton;
-    private JButton endTurn, build, trade, rollDice,helppls;
+    private JButton endTurn, build, trade, rollDice, help;
+    public static JButton cancel;
     private JPanel devCardPanel;
     private JScrollPane devCards;
     private boolean devCardPlayed;
@@ -96,7 +97,8 @@ public class MainPanel extends JPanel implements MouseListener {
         build = new JButton("Build/Buy");
         rollDice = new JButton("Roll Dice");
         endTurn = new JButton("End Turn");
-        helppls = new JButton("Help");
+        help = new JButton("Help");
+        cancel = new JButton("Cancel");
 
         //harbors
         harbors = new ArrayList<BufferedImage>();
@@ -764,6 +766,18 @@ public class MainPanel extends JPanel implements MouseListener {
 //      build = new JButton("Build/Buy");
         build.setBounds(140, 520, 100, 50);
         build.setBackground(new Color(255, 200, 100));
+        cancel.setBounds(400,670,100,50);
+        cancel.setBackground(new Color(255, 200, 100));
+        cancel.setEnabled(false);
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                state = 100;
+                action = "";
+                ActionLogPanel.cancel();
+                cancel.setEnabled(false);
+            }
+        });
         build.addActionListener(new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JOptionPane.showMessageDialog(null,"If you have questions about build/buy, please go to page 14 of the Help Menu.");
@@ -795,7 +809,12 @@ public class MainPanel extends JPanel implements MouseListener {
 //                            road.setOwner(GameState.currentPlayer);
 //                        System.out.println(GameState.currentPlayer.toString() + " has built a road.");
                         action="Road";
+                        GameState.currentPlayer.remove("Brick");
+                        GameState.currentPlayer.remove("Lumber");
+                        ResourceDeck.add("Brick");
+                        ResourceDeck.add("Lumber");
                         trade.setEnabled(false);
+                        cancel.setEnabled(false);
                     }
                     else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a road.");
@@ -831,7 +850,16 @@ public class MainPanel extends JPanel implements MouseListener {
 //                            stlmt.setOwner(GameState.currentPlayer);
 //                        System.out.println(GameState.currentPlayer.toString() + " has built a settlement.");
                         action="Settlement";
+                        GameState.currentPlayer.remove("Brick");
+                        GameState.currentPlayer.remove("Lumber");
+                        GameState.currentPlayer.remove("Wool");
+                        GameState.currentPlayer.remove("Grain");
+                        ResourceDeck.add("Brick");
+                        ResourceDeck.add("Lumber");
+                        ResourceDeck.add("Wool");
+                        ResourceDeck.add("Grain");
                         trade.setEnabled(false);
+                        cancel.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
                     }
@@ -849,7 +877,18 @@ public class MainPanel extends JPanel implements MouseListener {
                     }
                     if (ore >= 3 && grain >= 2) {
                         action="City";
+                        GameState.currentPlayer.remove("Ore");
+                        GameState.currentPlayer.remove("Ore");
+                        GameState.currentPlayer.remove("Ore");
+                        GameState.currentPlayer.remove("Grain");
+                        GameState.currentPlayer.remove("Grain");
+                        ResourceDeck.add("Ore");
+                        ResourceDeck.add("Ore");
+                        ResourceDeck.add("Ore");
+                        ResourceDeck.add("Grain");
+                        ResourceDeck.add("Grain");
                         trade.setEnabled(false);
+                        cancel.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a city.");
                     }
@@ -898,6 +937,7 @@ public class MainPanel extends JPanel implements MouseListener {
                         }
                         System.out.println(GameState.currentPlayer.toString() + " has bought a development card.");
                         trade.setEnabled(false);
+                        cancel.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to buy a development card.");
                      }
@@ -979,18 +1019,18 @@ public class MainPanel extends JPanel implements MouseListener {
             }
         });
 
-        helppls.setBounds(400, 615, 100, 50);
-        helppls.setBackground(new Color(255, 200, 100));
-        helppls.addActionListener(new ActionListener() {
+        help.setBounds(400, 615, 100, 50);
+        help.setBackground(new Color(255, 200, 100));
+        help.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame3 = new HelpFrame("Help");
             }
         });
-        add(helppls);
+        add(help);
         add(endTurn);
         add(build);
         add(trade);
-
+        add(cancel);
     }
 
     public void paintComponent(Graphics g) {
@@ -1405,16 +1445,26 @@ public class MainPanel extends JPanel implements MouseListener {
         }
         switch(action) {
             case "Road": {
+                cancel.setEnabled(true);
+                GameState.buildRoad();
+                repaint();
+                break;
+            }
+            case "RoadBuilding": {
+                JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your two roads by clicking on the respective locations.");
+                cancel.setEnabled(true);
                 GameState.buildRoad();
                 repaint();
                 break;
             }
             case "Settlement": {
+                cancel.setEnabled(true);
                 GameState.buildSettlement();
                 repaint();
                 break;
             }
             case "City": {
+                cancel.setEnabled(true);
                 GameState.buildCity();
                 repaint();
                 break;
@@ -1424,6 +1474,7 @@ public class MainPanel extends JPanel implements MouseListener {
                 repaint();
                 break;
             }
+            default: ActionLogPanel.println("Action Error");
         }
         //}
     }
