@@ -17,8 +17,7 @@ public class MainPanel extends JPanel implements MouseListener {
     private BufferedImage genericHarbor, brickHarbor, grainHarbor, lumberHarbor, oreHarbor, woolHarbor;
     private BufferedImage settlement, city, road;
     private BufferedImage one, two, three, four, five, six, HelpButton;
-    private JButton endTurn, build, trade, rollDice, help;
-    public static JButton cancel;
+    private JButton endTurn, build, trade, rollDice, help, cancel;
     private JPanel devCardPanel;
     private JScrollPane devCards;
     private boolean devCardPlayed;
@@ -772,10 +771,12 @@ public class MainPanel extends JPanel implements MouseListener {
         cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                state = 100;
-                action = "";
-                ActionLogPanel.cancel();
-                cancel.setEnabled(false);
+                int a = JOptionPane.showInternalConfirmDialog(null, "Are you sure you want to cancel? You will not be refunded any resources spent.", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (a == JOptionPane.YES_OPTION) {
+                    state = 100;
+                    action = "";
+                    ActionLogPanel.cancel();
+                }
             }
         });
         build.addActionListener(new ActionListener() {
@@ -814,7 +815,6 @@ public class MainPanel extends JPanel implements MouseListener {
                         ResourceDeck.add("Brick");
                         ResourceDeck.add("Lumber");
                         trade.setEnabled(false);
-                        cancel.setEnabled(false);
                     }
                     else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a road.");
@@ -859,7 +859,6 @@ public class MainPanel extends JPanel implements MouseListener {
                         ResourceDeck.add("Wool");
                         ResourceDeck.add("Grain");
                         trade.setEnabled(false);
-                        cancel.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a settlement.");
                     }
@@ -888,7 +887,6 @@ public class MainPanel extends JPanel implements MouseListener {
                         ResourceDeck.add("Grain");
                         ResourceDeck.add("Grain");
                         trade.setEnabled(false);
-                        cancel.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to build a city.");
                     }
@@ -937,7 +935,6 @@ public class MainPanel extends JPanel implements MouseListener {
                         }
                         System.out.println(GameState.currentPlayer.toString() + " has bought a development card.");
                         trade.setEnabled(false);
-                        cancel.setEnabled(false);
                     } else {
                         System.out.println(GameState.currentPlayer.toString() + " was unable to buy a development card.");
                      }
@@ -975,6 +972,7 @@ public class MainPanel extends JPanel implements MouseListener {
                 trade.setEnabled(true);
                 build.setEnabled(true);
                 rollDice.setEnabled(false);
+                cancel.setEnabled(true);
                 repaint();
             }
         });
@@ -1445,26 +1443,22 @@ public class MainPanel extends JPanel implements MouseListener {
         }
         switch(action) {
             case "Road": {
-                cancel.setEnabled(true);
                 GameState.buildRoad();
                 repaint();
                 break;
             }
             case "RoadBuilding": {
                 JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + ", please build your two roads by clicking on the respective locations.");
-                cancel.setEnabled(true);
                 GameState.buildRoad();
                 repaint();
                 break;
             }
             case "Settlement": {
-                cancel.setEnabled(true);
                 GameState.buildSettlement();
                 repaint();
                 break;
             }
             case "City": {
-                cancel.setEnabled(true);
                 GameState.buildCity();
                 repaint();
                 break;
