@@ -909,6 +909,7 @@ public class MainPanel extends JPanel implements MouseListener {
                                         GameState.currentPlayer.removeDev(dc);
                                         devCardPanel.remove(b);
                                         devCardPanel.revalidate();
+                                        devCardPanel.repaint();
                                     }
                                 }
                             });
@@ -1383,7 +1384,6 @@ public class MainPanel extends JPanel implements MouseListener {
                 repaint();
                 break;
             }
-            default: ActionLogPanel.println("Action Error");
         }
     }
 
