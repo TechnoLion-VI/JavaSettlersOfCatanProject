@@ -19,30 +19,16 @@ public class Monopoly extends DevelopmentCard{
     public boolean use() {
         //check if card can be played
         String[] options = new String[]{"Brick", "Lumber", "Grain", "Ore", "Wool"};
-        int response = JOptionPane.showOptionDialog(null, "Choose resource", "Monopoly", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+        int response = JOptionPane.showOptionDialog(null, "Choose resource you want to monopolize.", "Monopoly", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
         String rc = options[response];
         //take cards of type rc from all players and add it to player's hand
-        Player[] p = GameState.getPlayers();
         ArrayList<ResourceCard> cards = new ArrayList<>();
-        //put resource cards of type rc in cards ArrayList
-        for (int i = p[0].size() - 1; i >= 0; i--) {
-            if (p[0].get(i).getType().equals(rc))
-                cards.add(p[0].remove(i));
-        }
-
-        for (int i = p[1].size() - 1; i >= 0; i--) {
-            if (p[1].get(i).getType().equals(rc))
-                cards.add(p[1].remove(i));
-        }
-
-        for (int i = p[2].size() - 1; i >= 0; i--) {
-            if (p[2].get(i).getType().equals(rc))
-                cards.add(p[2].remove(i));
-        }
-
-        for (int i = p[3].size() - 1; i >= 0; i--) {
-            if (p[3].get(i).getType().equals(rc))
-                cards.add(p[3].remove(i));
+        for (Player p:GameState.getPlayers()) {
+            for (int i = 0; i < p.size(); i++) {
+                if (p.get(i).getType().equals(rc)) {
+                    cards.add(p.remove(i));
+                }
+            }
         }
 
         GameState.currentPlayer.addToHand(cards);

@@ -18,7 +18,7 @@ public class Knight extends DevelopmentCard{
     }
     //push commit
     public boolean use(){
-        JOptionPane.showMessageDialog(null,"Please select where you'd like to move the robber.");
+        JOptionPane.showMessageDialog(null,"Please select where you would like to move the robber.");
         MainPanel.action = "Robber";
         GameState.currentPlayer.addToPlayedKnightCards();
         GameState.checkLargestArmyPlayer();

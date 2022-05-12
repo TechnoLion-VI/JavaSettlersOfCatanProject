@@ -17,9 +17,9 @@ public class YearOfPlenty extends DevelopmentCard {
     }
     public boolean use() {
         String[] options = new String[]{"Brick", "Lumber", "Grain", "Ore", "Wool"};
-        int response1 = JOptionPane.showOptionDialog(null, "Choose resource", "Year of Plenty", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+        int response1 = JOptionPane.showOptionDialog(null, "Choose resource to obtain", "Year of Plenty", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
         String type1 = options[response1];
-        int response2 = JOptionPane.showOptionDialog(null, "Choose resource", "Year of Plenty", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+        int response2 = JOptionPane.showOptionDialog(null, "Choose resource to obtain", "Year of Plenty", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
         String type2 = options[response2];
         if (ResourceDeck.getNumLeft(type1)<=0||ResourceDeck.getNumLeft(type2)<=0)   //checks deck has enough
             return false;

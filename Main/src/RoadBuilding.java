@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 
 public class RoadBuilding extends DevelopmentCard{
@@ -15,6 +16,7 @@ public class RoadBuilding extends DevelopmentCard{
         setImg(card);
     }
     public boolean use() {
+        JOptionPane.showMessageDialog(null, "Build two roads.");
         MainPanel.action = "RoadBuilding";
         return true;
     }
