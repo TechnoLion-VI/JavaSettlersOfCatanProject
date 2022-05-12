@@ -524,6 +524,7 @@ public class MainPanel extends JPanel implements MouseListener {
                         //allow each player to accept or decline
                         //display whether player accepted or declined on action log
                         //give cards
+                        //push comment
                     });
                     p.add(done);
                     p2.add(done2);
