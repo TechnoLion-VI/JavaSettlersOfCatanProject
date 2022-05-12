@@ -209,20 +209,25 @@ public class MainPanel extends JPanel implements MouseListener {
                     done.setBounds(115, 400, 75, 25);
                     done.addActionListener(new ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            ArrayList<String> trading = new ArrayList<String>();
+                            ArrayList<String> trading = new ArrayList<>();
                             if (oreText.isValid()) {
                                 String text = oreText.getText();
-                                int numOre = Integer.parseInt(text);
+                                int numOre;
+                                try {
+                                    numOre = Integer.parseInt(text);
+                                } catch (NumberFormatException E) {
+                                    numOre = 0;
+                                }
                                 int oreLeft = 0;
-                                for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
-                                    if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Ore")) {
+                                for (ResourceCard rc:GameState.currentPlayer.getResourceCards()) {
+                                    if (rc.getType().equals("Ore")) {
                                         oreLeft++;
                                     }
                                 }
                                 if (numOre <= oreLeft) {
-                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " ore.");
+                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numOre + " ore.");
                                     for (int i = 0; i < numOre; i++) {
-                                        trading.add("ore");
+                                        trading.add("Ore");
                                     }
                                     //p.repaint();
                                 } else {
@@ -237,15 +242,20 @@ public class MainPanel extends JPanel implements MouseListener {
 
                             if (grainText.isValid()) {
                                 String text = grainText.getText();
-                                int numGrain = Integer.parseInt(text);
+                                int numGrain;
+                                try {
+                                    numGrain = Integer.parseInt(text);
+                                } catch (NumberFormatException E) {
+                                    numGrain = 0;
+                                }
                                 int grainLeft = 0;
-                                for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
-                                    if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Grain")) {
+                                for (ResourceCard rc:GameState.currentPlayer.getResourceCards()) {
+                                    if (rc.getType().equals("Grain")) {
                                         grainLeft++;
                                     }
                                 }
                                 if (numGrain <= grainLeft) {
-                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " grain.");
+                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numGrain + " grain.");
                                     for (int i = 0; i < numGrain; i++) {
                                         trading.add("grain");
                                     }
@@ -262,15 +272,20 @@ public class MainPanel extends JPanel implements MouseListener {
 
                             if (brickText.isValid()) {
                                 String text = brickText.getText();
-                                int numBrick = Integer.parseInt(text);
+                                int numBrick;
+                                try {
+                                    numBrick = Integer.parseInt(text);
+                                } catch (NumberFormatException E) {
+                                    numBrick = 0;
+                                }
                                 int brickLeft = 0;
-                                for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
-                                    if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Brick")) {
+                                for (ResourceCard rc:GameState.currentPlayer.getResourceCards()) {
+                                    if (rc.getType().equals("Brick")) {
                                         brickLeft++;
                                     }
                                 }
                                 if (numBrick <= brickLeft) {
-                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " brick.");
+                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numBrick + " brick.");
                                     for (int i = 0; i < numBrick; i++) {
                                         trading.add("brick");
                                     }
@@ -287,15 +302,20 @@ public class MainPanel extends JPanel implements MouseListener {
 
                             if (lumberText.isValid()) {
                                 String text = lumberText.getText();
-                                int numLumber = Integer.parseInt(text);
+                                int numLumber;
+                                try {
+                                    numLumber = Integer.parseInt(text);
+                                } catch (NumberFormatException E) {
+                                    numLumber = 0;
+                                }
                                 int lumberLeft = 0;
-                                for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
-                                    if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Lumber")) {
+                                for (ResourceCard rc:GameState.currentPlayer.getResourceCards()) {
+                                    if (rc.getType().equals("Lumber")) {
                                         lumberLeft++;
                                     }
                                 }
                                 if (numLumber <= lumberLeft) {
-                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " lumber.");
+                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numLumber + " lumber.");
                                     for (int i = 0; i < numLumber; i++) {
                                         trading.add("lumber");
                                     }
@@ -313,10 +333,15 @@ public class MainPanel extends JPanel implements MouseListener {
 
                             if (woolText.isValid()) {
                                 String text = woolText.getText();
-                                int numWool = Integer.parseInt(text);
+                                int numWool;
+                                try {
+                                    numWool = Integer.parseInt(text);
+                                } catch (NumberFormatException E) {
+                                    numWool = 0;
+                                }
                                 int woolLeft = 0;
-                                for (int i = 0; i < GameState.currentPlayer.getResourceCards().size(); i++) {
-                                    if (GameState.currentPlayer.getResourceCards().get(i).getType().equals("Wool")) {
+                                for (ResourceCard rc:GameState.currentPlayer.getResourceCards()) {
+                                    if (rc.getType().equals("Wool")) {
                                         woolLeft++;
                                     }
                                 }
