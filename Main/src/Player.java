@@ -121,14 +121,21 @@ public class Player {
         if (resourceCards.remove(rc)) return rc;
         return null;
     }
-    public void remove(String type) {
+    public ResourceCard remove(String type) {
         for (int i=0; i<resourceCards.size(); i++) {
             ResourceCard rc=resourceCards.get(i);
             if (rc.getType().equals(type)) {
-                resourceCards.remove(i);
-                break;
+                return resourceCards.remove(i);
             }
         }
+        return null;
+    }
+    public int numCards(String type) {
+        int cnt = 0;
+        for (ResourceCard rc: resourceCards) {
+            if (rc.getType().equals(type)) cnt++;
+        }
+        return cnt;
     }
     public ResourceCard get(int index) {return resourceCards.get(index);}
     public int size() {return resourceCards.size();}

@@ -215,154 +215,101 @@ public class MainPanel extends JPanel implements MouseListener {
                     done.setBounds(115, 400, 75, 25);
                     done.addActionListener(new ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            int numOre = 0;
                             if (oreText.isValid()) {
                                 String text = oreText.getText();
-                                int numOre;
                                 try {
                                     numOre = Integer.parseInt(text);
                                 } catch (NumberFormatException E) {
                                     numOre = 0;
                                 }
-                                int oreLeft = 0;
-                                for (ResourceCard rc:GameState.currentPlayer.getResourceCards()) {
-                                    if (rc.getType().equals("Ore")) {
-                                        oreLeft++;
-                                    }
-                                }
-                                if (numOre <= oreLeft) {
-                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numOre + " ore.");
-                                    for (int i = 0; i < numOre; i++) {
-                                        trading.add("ore");
-                                    }
-                                    //p.repaint();
-                                } else {
-                                    while (numOre > oreLeft) {
+                                if (numOre <= GameState.currentPlayer.numCards("Ore")) {
+                                    while (numOre > GameState.currentPlayer.numCards("Ore") || numOre < 0) {
                                         JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough ore to carry out this trade.");
-                                        String n = JOptionPane.showInputDialog("How many ore does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + oreLeft + ")");
+                                        String n = JOptionPane.showInputDialog("How many ore does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + GameState.currentPlayer.numCards("Ore") + ")");
                                         numOre = Integer.parseInt(n);
                                         tradeMessage.setText("Please select what you wish to trade with.");
                                     }
                                 }
+                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numOre + " ore.");
+                                for (int i = 0; i < numOre; i++) {
+                                    trading.add("Ore");
+                                }
                             }
-
+                            int numGrain = 0;
                             if (grainText.isValid()) {
                                 String text = grainText.getText();
-                                int numGrain;
                                 try {
                                     numGrain = Integer.parseInt(text);
                                 } catch (NumberFormatException E) {
                                     numGrain = 0;
                                 }
-                                int grainLeft = 0;
-                                for (ResourceCard rc:GameState.currentPlayer.getResourceCards()) {
-                                    if (rc.getType().equals("Grain")) {
-                                        grainLeft++;
-                                    }
+                                while (numGrain > GameState.currentPlayer.numCards("Grain") || numGrain < 0) {
+                                    JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough grain to carry out this trade.");
+                                    String n = JOptionPane.showInputDialog("How many grain does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + GameState.currentPlayer.numCards("Grain") + ")");
+                                    numGrain = Integer.parseInt(n);
+                                    tradeMessage.setText("Please select what you wish to trade with.");
                                 }
-                                if (numGrain <= grainLeft) {
-                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numGrain + " grain.");
-                                    for (int i = 0; i < numGrain; i++) {
-                                        trading.add("grain");
-                                    }
-                                    //p.repaint();
-                                } else {
-                                    while (numGrain > grainLeft) {
-                                        JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough grain to carry out this trade.");
-                                        String n = JOptionPane.showInputDialog("How many grain does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + grainLeft + ")");
-                                        numGrain = Integer.parseInt(n);
-                                        tradeMessage.setText("Please select what you wish to trade with.");
-                                    }
+                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numGrain + " grain.");
+                                for (int i = 0; i < numGrain; i++) {
+                                    trading.add("Grain");
                                 }
                             }
-
+                            int numBrick = 0;
                             if (brickText.isValid()) {
                                 String text = brickText.getText();
-                                int numBrick;
                                 try {
                                     numBrick = Integer.parseInt(text);
                                 } catch (NumberFormatException E) {
                                     numBrick = 0;
                                 }
-                                int brickLeft = 0;
-                                for (ResourceCard rc:GameState.currentPlayer.getResourceCards()) {
-                                    if (rc.getType().equals("Brick")) {
-                                        brickLeft++;
-                                    }
+                                while (numBrick > GameState.currentPlayer.numCards("Brick") || numBrick < 0) {
+                                    JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough brick to carry out this trade.");
+                                    String n = JOptionPane.showInputDialog("How many brick does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + GameState.currentPlayer.numCards("Brick") + ")");
+                                    numBrick = Integer.parseInt(n);
+                                    tradeMessage.setText("Please select what you wish to trade with.");
                                 }
-                                if (numBrick <= brickLeft) {
-                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numBrick + " brick.");
-                                    for (int i = 0; i < numBrick; i++) {
-                                        trading.add("brick");
-                                    }
-                                    //p.repaint();
-                                } else {
-                                    while (numBrick > brickLeft) {
-                                        JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough brick to carry out this trade.");
-                                        String n = JOptionPane.showInputDialog("How many brick does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + brickLeft + ")");
-                                        numBrick = Integer.parseInt(n);
-                                        tradeMessage.setText("Please select what you wish to trade with.");
-                                    }
+                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numBrick + " brick.");
+                                for (int i = 0; i < numBrick; i++) {
+                                    trading.add("Brick");
                                 }
                             }
-
+                            int numLumber = 0;
                             if (lumberText.isValid()) {
                                 String text = lumberText.getText();
-                                int numLumber;
                                 try {
                                     numLumber = Integer.parseInt(text);
                                 } catch (NumberFormatException E) {
                                     numLumber = 0;
                                 }
-                                int lumberLeft = 0;
-                                for (ResourceCard rc:GameState.currentPlayer.getResourceCards()) {
-                                    if (rc.getType().equals("Lumber")) {
-                                        lumberLeft++;
-                                    }
+                                while (numLumber > GameState.currentPlayer.numCards("Lumber") || numLumber < 0) {
+                                    JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough lumber to carry out this trade.");
+                                    String n = JOptionPane.showInputDialog("How many lumber does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + GameState.currentPlayer.numCards("Lumber") + ")");
+                                    numLumber = Integer.parseInt(n);
+                                    tradeMessage.setText("Please select what you wish to trade with.");
                                 }
-                                if (numLumber <= lumberLeft) {
-                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numLumber + " lumber.");
-                                    for (int i = 0; i < numLumber; i++) {
-                                        trading.add("lumber");
-                                    }
-                                    //p.repaint();
-                                } else {
-                                    while (numLumber > lumberLeft) {
-                                        JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough lumber to carry out this trade.");
-                                        String n = JOptionPane.showInputDialog("How many lumber does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + lumberLeft + ")");
-                                        numLumber = Integer.parseInt(n);
-                                        tradeMessage.setText("Please select what you wish to trade with.");
-                                    }
+                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numLumber + " lumber.");
+                                for (int i = 0; i < numLumber; i++) {
+                                    trading.add("Lumber");
                                 }
                             }
-
-
+                            int numWool = 0;
                             if (woolText.isValid()) {
                                 String text = woolText.getText();
-                                int numWool;
                                 try {
                                     numWool = Integer.parseInt(text);
                                 } catch (NumberFormatException E) {
                                     numWool = 0;
                                 }
-                                int woolLeft = 0;
-                                for (ResourceCard rc:GameState.currentPlayer.getResourceCards()) {
-                                    if (rc.getType().equals("Wool")) {
-                                        woolLeft++;
-                                    }
+                                while (numWool > GameState.currentPlayer.numCards("Wool") || numWool < 0) {
+                                    JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough wool to carry out this trade.");
+                                    String n = JOptionPane.showInputDialog("How many wool does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + GameState.currentPlayer.numCards("Wool") + ")");
+                                    numWool = Integer.parseInt(n);
+                                    tradeMessage.setText("Please select what you wish to trade with.");
                                 }
-                                if (numWool <= woolLeft) {
-                                    System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " wool.");
-                                    for (int i = 0; i < numWool; i++) {
-                                        trading.add("wool");
-                                    }
-                                    //p.repaint();
-                                } else {
-                                    while (numWool > woolLeft) {
-                                        JOptionPane.showMessageDialog(null, GameState.currentPlayer.toString() + " does not have enough wool to carry out this trade.");
-                                        String n = JOptionPane.showInputDialog("How many wool does " + GameState.currentPlayer.toString() + " wish to trade with? (max of " + woolLeft + ")");
-                                        numWool = Integer.parseInt(n);
-                                        tradeMessage.setText("Please select what you wish to trade with.");
-                                    }
+                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " wool.");
+                                for (int i = 0; i < numWool; i++) {
+                                    trading.add("Wool");
                                 }
                             }
                             p.setVisible(false);
@@ -421,15 +368,6 @@ public class MainPanel extends JPanel implements MouseListener {
                     JTextField woolTextTwo = new JTextField(10);
                     woolTextTwo.setBounds(190, 95, 30, 25);
                     woolTextTwo.setBackground(new Color(255, 220, 100));
-                    /*
-                    String oText = oreTextTwo.getText();
-                    int numO = Integer.parseInt(oText);
-                    if(trading.contains("ore") && tradingTwo.contains("ore")) {
-                        JOptionPane.showInputDialog("You cannot trade the same resource.");
-                    } else {
-                        System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numO + " ore.");
-                    }
-                    */
                     p2.add(woolTextTwo);
                     p2.add(woolTwo);
 
@@ -441,60 +379,70 @@ public class MainPanel extends JPanel implements MouseListener {
                     done2.setBounds(115, 400, 75, 25);
                     done2.addActionListener(new ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            int numOreTwo = 0;
                             if (oreTextTwo.isValid()) {
                                 String text = oreTextTwo.getText();
-                                int numOreTwo;
                                 try {
                                     numOreTwo = Integer.parseInt(text);
                                 } catch (NumberFormatException E) {
                                     numOreTwo = 0;
                                 }
                                 System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numOreTwo + " ore.");
+                                for (int i = 0; i < numOreTwo; i++) {
+                                    tradingTwo.add("Ore");
+                                }
                             }
-
+                            int numGrainTwo = 0;
                             if (grainTextTwo.isValid()) {
                                 String text = grainTextTwo.getText();
-                                int numGrainTwo;
                                 try {
                                     numGrainTwo = Integer.parseInt(text);
                                 } catch (NumberFormatException E) {
                                     numGrainTwo = 0;
                                 }
                                 System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numGrainTwo + " grain.");
+                                for (int i = 0; i < numGrainTwo; i++) {
+                                    tradingTwo.add("Grain");
+                                }
                             }
-
+                            int numBrickTwo = 0;
                             if (brickTextTwo.isValid()) {
                                 String text = brickTextTwo.getText();
-                                int numBrickTwo;
                                 try {
                                     numBrickTwo = Integer.parseInt(text);
                                 } catch (NumberFormatException E) {
                                     numBrickTwo = 0;
                                 }
                                 System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numBrickTwo + " brick.");
+                                for (int i = 0; i < numBrickTwo; i++) {
+                                    tradingTwo.add("Brick");
+                                }
                             }
-
+                            int numWoolTwo = 0;
                             if (woolTextTwo.isValid()) {
                                 String text = woolTextTwo.getText();
-                                int numWoolTwo;
                                 try {
                                     numWoolTwo = Integer.parseInt(text);
                                 } catch (NumberFormatException E) {
                                     numWoolTwo = 0;
                                 }
                                 System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numWoolTwo + " wool.");
+                                for (int i = 0; i < numWoolTwo; i++) {
+                                    tradingTwo.add("Wool");
+                                }
                             }
-
-
+                            int numLumberTwo = 0;
                             if (lumberTextTwo.isValid()) {
                                 String text = lumberTextTwo.getText();
-                                int numLumberTwo;
                                 try {
                                     numLumberTwo = Integer.parseInt(text);
                                 } catch (NumberFormatException E) {
                                     numLumberTwo = 0;
                                 }
                                 System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numLumberTwo + " lumber.");
+                                for (int i = 0; i < numLumberTwo; i++) {
+                                    tradingTwo.add("Lumber");
+                                }
                             }
 
                             ArrayList<Player> players = new ArrayList<>();
@@ -502,15 +450,26 @@ public class MainPanel extends JPanel implements MouseListener {
                                 if (player != GameState.currentPlayer) players.add(player);
                             }
                             Player[] options = (Player[])players.toArray();
+                            boolean oreLeft = players.get(response).numCards("Ore") >= numOreTwo;
+                            boolean grainLeft = players.get(response).numCards("Grain") >= numGrainTwo;
+                            boolean brickLeft = players.get(response).numCards("Brick") >= numBrickTwo;
+                            boolean lumberLeft = players.get(response).numCards("Lumber") >= numLumberTwo;
+                            boolean woolLeft = players.get(response).numCards("Wool") >= numWoolTwo;
                             int response = JOptionPane.showOptionDialog(null, "Choose player you want to trade with.", "Trade Phase", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0].toString());
                             JLabel playerLabel = new JLabel(players.get(response).toString());
                             playerLabel.setFont(new Font("Serif", 1, 15));
                             playerLabel.setBounds(10, 50, 30, 30);
                             playerLabel.requestFocus();
                             playerLabel.setVisible(true);
-                            int a = JOptionPane.showInternalConfirmDialog(null, "Do you accept this trade?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                            if (a == JOptionPane.YES_OPTION) {
+                            int a = JOptionPane.showInternalConfirmDialog(null, "Do you accept this trade, " + players.get(response).toString() + "?", "Trade Accept/Decline Phase", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                            if (a == JOptionPane.YES_OPTION && oreLeft && grainLeft && brickLeft && lumberLeft && woolLeft) {
                                 System.out.println(GameState.currentPlayer.toString() + " has traded with White Player.");
+                                for (String rc:trading) {
+                                    players.get(response).add(GameState.currentPlayer.remove(rc));
+                                }
+                                for (String rc:tradingTwo) {
+                                    GameState.currentPlayer.add(players.get(response).remove(rc));
+                                }
                             } else {
                                 System.out.println("White Player is unable to accept " + GameState.currentPlayer.toString() + "'s trade.");
                             }
@@ -524,7 +483,6 @@ public class MainPanel extends JPanel implements MouseListener {
                         //allow each player to accept or decline
                         //display whether player accepted or declined on action log
                         //give cards
-                        //push comment
                     });
                     p.add(done);
                     p2.add(done2);
