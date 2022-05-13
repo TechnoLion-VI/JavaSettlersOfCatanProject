@@ -231,7 +231,7 @@ public class MainPanel extends JPanel implements MouseListener {
                                         tradeMessage.setText("Please select what you wish to trade with.");
                                     }
                                 }
-                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numOre + " ore.");
+                                if (numOre > 0) System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numOre + " ore.");
                                 for (int i = 0; i < numOre; i++) {
                                     trading.add("Ore");
                                 }
@@ -250,7 +250,7 @@ public class MainPanel extends JPanel implements MouseListener {
                                     numGrain = Integer.parseInt(n);
                                     tradeMessage.setText("Please select what you wish to trade with.");
                                 }
-                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numGrain + " grain.");
+                                if (numGrain > 0) System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numGrain + " grain.");
                                 for (int i = 0; i < numGrain; i++) {
                                     trading.add("Grain");
                                 }
@@ -269,7 +269,7 @@ public class MainPanel extends JPanel implements MouseListener {
                                     numBrick = Integer.parseInt(n);
                                     tradeMessage.setText("Please select what you wish to trade with.");
                                 }
-                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numBrick + " brick.");
+                                if (numBrick > 0) System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numBrick + " brick.");
                                 for (int i = 0; i < numBrick; i++) {
                                     trading.add("Brick");
                                 }
@@ -288,7 +288,7 @@ public class MainPanel extends JPanel implements MouseListener {
                                     numLumber = Integer.parseInt(n);
                                     tradeMessage.setText("Please select what you wish to trade with.");
                                 }
-                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numLumber + " lumber.");
+                                if (numLumber > 0) System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numLumber + " lumber.");
                                 for (int i = 0; i < numLumber; i++) {
                                     trading.add("Lumber");
                                 }
@@ -307,7 +307,7 @@ public class MainPanel extends JPanel implements MouseListener {
                                     numWool = Integer.parseInt(n);
                                     tradeMessage.setText("Please select what you wish to trade with.");
                                 }
-                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + text + " wool.");
+                                if (numWool > 0) System.out.println(GameState.currentPlayer.toString() + " has requested to trade " + numWool + " wool.");
                                 for (int i = 0; i < numWool; i++) {
                                     trading.add("Wool");
                                 }
@@ -387,7 +387,7 @@ public class MainPanel extends JPanel implements MouseListener {
                                 } catch (NumberFormatException E) {
                                     numOreTwo = 0;
                                 }
-                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numOreTwo + " ore.");
+                                if (numOreTwo > 0)System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numOreTwo + " ore.");
                                 for (int i = 0; i < numOreTwo; i++) {
                                     tradingTwo.add("Ore");
                                 }
@@ -400,7 +400,7 @@ public class MainPanel extends JPanel implements MouseListener {
                                 } catch (NumberFormatException E) {
                                     numGrainTwo = 0;
                                 }
-                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numGrainTwo + " grain.");
+                                if (numGrainTwo > 0) System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numGrainTwo + " grain.");
                                 for (int i = 0; i < numGrainTwo; i++) {
                                     tradingTwo.add("Grain");
                                 }
@@ -413,7 +413,7 @@ public class MainPanel extends JPanel implements MouseListener {
                                 } catch (NumberFormatException E) {
                                     numBrickTwo = 0;
                                 }
-                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numBrickTwo + " brick.");
+                                if (numBrickTwo > 0) System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numBrickTwo + " brick.");
                                 for (int i = 0; i < numBrickTwo; i++) {
                                     tradingTwo.add("Brick");
                                 }
@@ -426,7 +426,7 @@ public class MainPanel extends JPanel implements MouseListener {
                                 } catch (NumberFormatException E) {
                                     numWoolTwo = 0;
                                 }
-                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numWoolTwo + " wool.");
+                                if (numWoolTwo > 0) System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numWoolTwo + " wool.");
                                 for (int i = 0; i < numWoolTwo; i++) {
                                     tradingTwo.add("Wool");
                                 }
@@ -439,7 +439,7 @@ public class MainPanel extends JPanel implements MouseListener {
                                 } catch (NumberFormatException E) {
                                     numLumberTwo = 0;
                                 }
-                                System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numLumberTwo + " lumber.");
+                                if (numLumberTwo > 0) System.out.println(GameState.currentPlayer.toString() + " has requested to trade for " + numLumberTwo + " lumber.");
                                 for (int i = 0; i < numLumberTwo; i++) {
                                     tradingTwo.add("Lumber");
                                 }
@@ -449,13 +449,13 @@ public class MainPanel extends JPanel implements MouseListener {
                             for (Player player:GameState.getPlayers()) {
                                 if (player != GameState.currentPlayer) players.add(player);
                             }
-                            Player[] options = (Player[])players.toArray();
+                            String[] options = new String[]{players.get(0).toString(), players.get(1).toString(), players.get(2).toString()};
+                            int response = JOptionPane.showOptionDialog(null, "Choose player you want to trade with.", "Trade Phase", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
                             boolean oreLeft = players.get(response).numCards("Ore") >= numOreTwo;
                             boolean grainLeft = players.get(response).numCards("Grain") >= numGrainTwo;
                             boolean brickLeft = players.get(response).numCards("Brick") >= numBrickTwo;
                             boolean lumberLeft = players.get(response).numCards("Lumber") >= numLumberTwo;
                             boolean woolLeft = players.get(response).numCards("Wool") >= numWoolTwo;
-                            int response = JOptionPane.showOptionDialog(null, "Choose player you want to trade with.", "Trade Phase", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0].toString());
                             JLabel playerLabel = new JLabel(players.get(response).toString());
                             playerLabel.setFont(new Font("Serif", 1, 15));
                             playerLabel.setBounds(10, 50, 30, 30);
@@ -486,6 +486,7 @@ public class MainPanel extends JPanel implements MouseListener {
                     });
                     p.add(done);
                     p2.add(done2);
+                    repaint();
                 }
                 if (response == 1) {
                     //maritime
