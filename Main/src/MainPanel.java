@@ -1140,7 +1140,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.players[3].getResourceCards().size() + "", 190, 300);
         g.drawImage(resource, 150, 278, 30, 30, null);
         //img:road stat:roadsbuilt
-        g.drawString((15 - GameState.players[0].getRoadsLeft()) + "", 250, 180);
+        g.drawString((GameState.players[0].getRoadsLeft()) + "", 250, 180);
         g.drawImage(road, 210, 158, 30, 30, null);
         g.drawString(GameState.players[1].getRoadsLeft() + "", 250, 220);
         g.drawImage(road, 210, 198, 30, 30, null);
@@ -1149,7 +1149,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.players[3].getRoadsLeft() + "", 250, 300);
         g.drawImage(road, 210, 278, 30, 30, null);
         //img:settlement stat:settlementsbuilt
-        g.drawString((5 - GameState.players[0].getStlmtsLeft()) + "", 315, 180);
+        g.drawString((GameState.players[0].getStlmtsLeft()) + "", 315, 180);
         g.drawImage(settlement, 280, 158, 30, 30, null);
         g.drawString(GameState.players[1].getStlmtsLeft() + "", 315, 220);
         g.drawImage(settlement, 280, 198, 30, 30, null);
@@ -1158,7 +1158,7 @@ public class MainPanel extends JPanel implements MouseListener {
         g.drawString(GameState.players[3].getStlmtsLeft() + "", 315, 300);
         g.drawImage(settlement, 280, 278, 30, 30, null);
         //img:city stat:citiesbuilt
-        g.drawString((4 - GameState.players[0].getCitiesLeft()) + "", 375, 180);
+        g.drawString((GameState.players[0].getCitiesLeft()) + "", 375, 180);
         g.drawImage(city, 340, 158, 30, 30, null);
         g.drawString(GameState.players[1].getCitiesLeft() + "", 375, 220);
         g.drawImage(city, 340, 198, 30, 30, null);
